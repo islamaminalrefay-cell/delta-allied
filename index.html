@@ -1,0 +1,4052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delta Allied Sports</title>
+<link rel="icon" href="images/img-a5a8aa3d.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Colors */
+  --color-void-black:#040506;
+  --color-ink:#07080a;
+  --color-obsidian:#111214;
+  --color-graphite:#1b1c1e;
+  --color-smoke:#6a6b6c;
+  --color-ash:#9c9c9d;
+  --color-mist:#e6e6e6;
+  --color-iron:#454647;
+  --color-slate:#2f3031;
+  --color-pure-white:#ffffff;
+  --color-coral-pulse:#c41230;
+  --color-brand-red:#980f21;
+  --color-ember-hush:#2b0c10;
+  --color-electric-sky:#63a1ff;
+  --color-cobalt-edge:#143ca3;
+  --color-deep-space:#02193b;
+  --color-info-blue:#56c2ff;
+  --color-border:#363739;
+  --color-electric:#ff2d55;
+
+  --font-inter:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+
+  --radius-buttons:8px;
+  --radius-inputs:8px;
+  --radius-badges:6px;
+  --radius-cards:16px;
+  --radius-large-cards:20px;
+  --radius-pills:9999px;
+  --radius-icon:99999px;
+
+  --shadow-key:
+    rgba(255,255,255,0.05) 0px 1px 0px 0px inset,
+    rgba(255,255,255,0.25) 0px 0px 0px 1px,
+    rgba(0,0,0,0.2) 0px -1px 0px 0px inset;
+  --shadow-btn:
+    rgba(0,0,0,0.03) 0px 7px 3px 0px,
+    rgba(0,0,0,0.25) 0px 4px 4px 0px;
+}
+
+/* ============ LIGHT THEME ============
+   A genuine second palette, not an inverted dark theme — warm off-white
+   canvas (not stark white), dark button fills so the "neutral action"
+   role still reads correctly, borders/shadows re-tuned for light
+   surfaces. Same electric-red accent both themes for brand consistency. */
+[data-theme="light"]{
+  --color-void-black:#f7f6f4;
+  --color-ink:#ffffff;
+  --color-obsidian:#eeece9;
+  --color-graphite:#e5e3df;
+  --color-smoke:#6f7173;
+  --color-ash:#5b5d60;
+  --color-mist:#17181a;
+  --color-iron:#f2f1ef;
+  --color-slate:#d8d6d2;
+  --color-pure-white:#111213;
+  --color-border:#ddd9d4;
+
+  --shadow-key:
+    rgba(0,0,0,0.03) 0px 1px 0px 0px inset,
+    rgba(0,0,0,0.08) 0px 0px 0px 1px,
+    rgba(0,0,0,0.05) 0px 2px 6px 0px;
+  --shadow-btn:
+    rgba(0,0,0,0.06) 0px 1px 2px 0px,
+    rgba(0,0,0,0.1) 0px 2px 6px 0px;
+}
+
+body{ transition: background-color .5s ease, color .5s ease; }
+
+/* Hero and the 3D tunnel now follow the site theme like everything else.
+   Text sitting directly over the hero video (no background chip behind
+   it) is locked to a permanent light color further down — that's a
+   legibility requirement of sitting on dark footage, not a theme choice —
+   while badges/buttons there still swap normally since they carry their
+   own background fill. The 3D scene's actual WebGL rendering (fog, floor,
+   particle colors) is theme-aware via JS, set at scene init time. */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-void-black);
+  color:var(--color-pure-white);
+  font-family:var(--font-inter);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+.max{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+/* ---------- NAV ---------- */
+.nav-wrap{position:fixed;top:20px;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0 16px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+  width:100%;max-width:920px;
+  padding:8px 8px 8px 16px;
+  border-radius:var(--radius-pills);
+  border:1px solid var(--color-border);
+  background:rgba(4,5,6,0.6);
+  backdrop-filter:blur(48px);
+  -webkit-backdrop-filter:blur(48px);
+}
+[data-theme="light"] nav{
+  background:rgba(247,246,244,0.72);
+}
+.logo{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;letter-spacing:0.014em;}
+.logo img{width:24px;height:24px;object-fit:contain;flex-shrink:0;}
+.nav-links{display:flex;gap:26px;font-size:13px;font-weight:500;color:var(--color-ash);}
+.nav-links a{transition:color .2s;}
+.nav-links a:hover{color:var(--color-pure-white);}
+.theme-toggle{
+  background:none; border:none; padding:0; cursor:pointer;
+  flex-shrink:0;
+}
+.theme-toggle-track{
+  display:flex; align-items:center;
+  width:52px; height:28px;
+  padding:3px;
+  border-radius:var(--radius-pills);
+  background:var(--color-obsidian);
+  border:1px solid var(--color-border);
+  transition:background .4s ease, border-color .4s ease;
+}
+.theme-toggle-thumb{
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  width:20px; height:20px;
+  border-radius:50%;
+  background:var(--color-mist);
+  box-shadow:var(--shadow-btn);
+  transform:translateX(0);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1), background .4s ease;
+}
+[data-theme="light"] .theme-toggle-thumb{ transform:translateX(24px); }
+.theme-toggle-thumb svg{
+  width:13px; height:13px;
+  color:var(--color-iron);
+  position:absolute;
+  transition:opacity .3s ease, transform .3s ease;
+}
+.theme-toggle-thumb .icon-sun{ opacity:1; transform:scale(1) rotate(0deg); }
+.theme-toggle-thumb .icon-moon{ opacity:0; transform:scale(0.5) rotate(-90deg); }
+[data-theme="light"] .theme-toggle-thumb .icon-sun{ opacity:0; transform:scale(0.5) rotate(90deg); }
+[data-theme="light"] .theme-toggle-thumb .icon-moon{ opacity:1; transform:scale(1) rotate(0deg); }
+@media (max-width:820px){ .theme-toggle{ order:2; } }
+
+.sound-toggle{
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; cursor:pointer; flex-shrink:0;
+  transition:background .4s ease, border-color .4s ease;
+}
+.sound-toggle:hover{ border-color:var(--color-ash); }
+.sound-toggle svg{
+  width:16px; height:16px; color:var(--color-ash);
+  position:absolute;
+  transition:opacity .3s ease, transform .3s ease, color .3s ease;
+}
+.sound-toggle .icon-sound-on{ opacity:0; transform:scale(0.6); }
+.sound-toggle .icon-sound-off{ opacity:1; transform:scale(1); }
+.sound-toggle.is-on .icon-sound-on{ opacity:1; transform:scale(1); color:var(--color-electric); }
+.sound-toggle.is-on .icon-sound-off{ opacity:0; transform:scale(0.6); }
+@media (max-width:820px){ .sound-toggle{ order:2; } }
+
+@media (max-width:430px){
+  nav{ gap:10px; padding:8px 8px 8px 12px; }
+  .logo-text{ display:none; } /* icon-only logo — the full wordmark doesn't fit alongside the toggles and CTA on narrow phones */
+  .nav-btn{ padding:8px 12px; font-size:12px; }
+}
+
+.nav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--color-mist);color:var(--color-iron);
+  font-size:13px;font-weight:500;
+  padding:8px 14px;border-radius:var(--radius-buttons);
+  box-shadow:var(--shadow-btn);
+  white-space:nowrap;
+}
+@media (max-width:820px){ .nav-links{display:none;} }
+
+/* ---------- HERO ---------- */
+.hero-scroll{
+  position:relative;
+  height:400vh; /* extra scroll distance mapped to video duration */
+}
+.hero{
+  position:sticky;
+  top:0;
+  min-height:92vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:160px 24px 80px;
+  overflow:hidden;
+}
+.hero-art{
+  position:absolute;inset:0;z-index:-2;
+  background:var(--color-void-black) url('video/poster.jpg') center/cover no-repeat;
+}
+.hero-video{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  z-index:-2;
+  opacity:0;
+  transition:opacity 1s ease;
+}
+.hero-video.is-ready{opacity:1;}
+.hero-overlay{
+  position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(180deg, rgba(4,5,6,0.45) 0%, rgba(4,5,6,0.35) 40%, var(--color-void-black) 96%),
+    radial-gradient(30% 35% at 72% 22%, rgba(196,18,48,0.28), transparent 70%);
+  transition:background .5s ease;
+}
+[data-theme="light"] .hero-overlay{
+  background:
+    linear-gradient(180deg, rgba(20,16,14,0.34) 0%, rgba(20,16,14,0.22) 40%, var(--color-void-black) 96%),
+    radial-gradient(30% 35% at 72% 22%, rgba(196,18,48,0.24), transparent 70%);
+}
+.hero-copy{
+  display:flex;flex-direction:column;align-items:center;
+  will-change:opacity, transform;
+}
+.hero-copy-2{
+  position:absolute;
+  left:7%;
+  top:50%;
+  max-width:420px;
+  text-align:left;
+  opacity:0;
+  will-change:opacity, transform;
+}
+.hero-copy-2 .eyebrow-badge{margin-bottom:20px;}
+.hero-copy-2 h2{
+  font-size:38px;font-weight:400;line-height:1.18;letter-spacing:0.1px;
+  margin-bottom:16px;
+  color:#ffffff;
+}
+.hero-copy-2 p{color:rgba(255,255,255,0.78);font-size:16px;line-height:1.6;max-width:380px;}
+@media (max-width:900px){
+  .hero-copy-2{left:6%;max-width:280px;}
+  .hero-copy-2 h2{font-size:28px;}
+}
+.scroll-hint{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.55);
+  letter-spacing:0.05em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.scroll-hint::after{
+  content:"";width:1px;height:24px;background:rgba(255,255,255,0.35);
+  animation:scrollPulse 1.8s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:0.2;transform:scaleY(0.6);transform-origin:top;}
+  50%{opacity:1;transform:scaleY(1);transform-origin:top;}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-video{display:none;}
+}
+.eyebrow-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--color-graphite);color:var(--color-pure-white);
+  font-size:11px;letter-spacing:0.073em;text-transform:uppercase;font-weight:500;
+  padding:5px 12px 5px 8px;border-radius:var(--radius-badges);
+  margin-bottom:28px;
+}
+.eyebrow-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--color-coral-pulse);}
+h1.hero-title{
+  font-size:56px;font-weight:400;line-height:1.17;letter-spacing:0.22px;
+  max-width:15ch;
+  color:#ffffff;
+}
+.hero-sub{
+  margin-top:20px;max-width:480px;color:rgba(255,255,255,0.78);font-size:16px;line-height:1.55;
+}
+.hero-actions{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;justify-content:center;}
+.btn-filled{
+  background:var(--color-mist);color:var(--color-iron);
+  font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--radius-buttons);
+  box-shadow:var(--shadow-btn);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-ghost{
+  background:transparent;color:#ffffff;
+  font-size:14px;font-weight:500;padding:10px 18px;border-radius:var(--radius-buttons);
+  border:1px solid rgba(255,255,255,0.35);
+}
+.hero-meta{
+  margin-top:56px;
+  font-family:var(--font-mono);font-size:12px;color:rgba(255,255,255,0.55);
+  letter-spacing:0.017em;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
+}
+.hero-meta span:not(:last-child)::after{content:"|";margin-left:10px;color:rgba(255,255,255,0.3);}
+
+/* ---------- SECTIONS ---------- */
+.section{padding:100px 24px;}
+#services{position:relative;overflow:hidden;}
+#services::before{
+  content:"";
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(38% 45% at 12% 15%, rgba(255,45,85,0.14), transparent 70%),
+    radial-gradient(32% 40% at 88% 75%, rgba(99,161,255,0.10), transparent 70%);
+}
+#services > *{ position:relative; z-index:1; }
+.section-head{text-align:center;max-width:560px;margin:0 auto 56px;}
+.section-head .eyebrow{
+  font-size:11px;letter-spacing:0.073em;text-transform:uppercase;color:var(--color-ash);
+  font-weight:500;margin-bottom:14px;
+}
+.section-head h2{font-size:32px;font-weight:500;line-height:1.15;}
+.section-head p{margin-top:14px;color:var(--color-ash);font-size:16px;line-height:1.55;}
+
+/* ---------- FEATURE CARDS (key shadow) ---------- */
+.grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 24px;}
+@media (max-width:1000px){ .grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:560px){ .grid{grid-template-columns:1fr;} }
+
+.card{
+  display:block;
+  position:relative;
+  border-radius:22px;
+  padding:26px;
+  overflow:hidden;
+  background:
+    linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.012) 45%, rgba(255,255,255,0.02) 100%),
+    rgba(255,255,255,0.025);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:var(--shadow-key);
+  transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s ease, box-shadow .5s ease, background .5s ease;
+}
+.card::before{
+  content:"";
+  position:absolute; top:-45%; left:-25%; width:80%; height:80%;
+  background:radial-gradient(circle, rgba(255,45,85,0.38), transparent 70%);
+  filter:blur(46px);
+  opacity:0;
+  transition:opacity .6s ease;
+  pointer-events:none;
+}
+.card::after{
+  content:"";
+  position:absolute; inset:0; border-radius:inherit;
+  background:linear-gradient(200deg, rgba(255,255,255,0.14) 0%, transparent 30%);
+  opacity:0.6;
+  pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(255,255,255,0.18);
+  background:
+    linear-gradient(155deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 45%, rgba(255,255,255,0.03) 100%),
+    rgba(255,255,255,0.045);
+  box-shadow:
+    rgba(255,255,255,0.1) 0px 1px 0px 0px inset,
+    rgba(255,45,85,0.22) 0px 24px 60px -14px,
+    rgba(0,0,0,0.55) 0px 24px 48px -12px;
+}
+.card:hover::before{ opacity:1; }
+.card > *{ position:relative; z-index:1; }
+
+[data-theme="light"] .card{
+  background:
+    linear-gradient(155deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 45%, rgba(255,255,255,0.5) 100%),
+    rgba(255,255,255,0.55);
+  border:1px solid rgba(0,0,0,0.07);
+  box-shadow:
+    rgba(255,255,255,0.6) 0px 1px 0px 0px inset,
+    rgba(0,0,0,0.06) 0px 0px 0px 1px,
+    rgba(0,0,0,0.05) 0px 4px 16px 0px;
+}
+[data-theme="light"] .card::after{
+  background:linear-gradient(200deg, rgba(255,255,255,0.5) 0%, transparent 30%);
+}
+[data-theme="light"] .card:hover{
+  border-color:rgba(0,0,0,0.12);
+  background:
+    linear-gradient(155deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.6) 100%),
+    rgba(255,255,255,0.7);
+  box-shadow:
+    rgba(255,255,255,0.7) 0px 1px 0px 0px inset,
+    rgba(255,45,85,0.16) 0px 24px 48px -16px,
+    rgba(0,0,0,0.1) 0px 16px 32px -12px;
+}
+.card-photo{
+  display:block;
+  width:calc(100% + 52px);
+  margin:-26px -26px 20px -26px;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  border-radius:22px 22px 0 0;
+}
+.icon-container{
+  width:44px;height:44px;border-radius:var(--radius-icon);
+  background:var(--color-obsidian);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+  transition:background .5s ease, transform .5s ease;
+}
+.card:hover .icon-container{
+  background:rgba(255,255,255,0.08);
+  transform:scale(1.06);
+}
+[data-theme="light"] .card:hover .icon-container{
+  background:rgba(0,0,0,0.06);
+}
+.icon-container svg{width:20px;height:20px;stroke:var(--color-mist);fill:none;stroke-width:1.6;}
+.card h3{font-size:16px;font-weight:500;margin-bottom:8px;}
+.card p{font-size:14px;color:var(--color-ash);line-height:1.55;}
+.card .badge{
+  display:inline-block;margin-top:16px;
+  background:var(--color-graphite);color:var(--color-ash);
+  font-size:11px;font-weight:500;padding:0 8px;line-height:20px;border-radius:var(--radius-badges);
+}
+
+/* ---------- EDGE-HIGHLIGHT SECTORS ---------- */
+.operate-layout{
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  display:grid;grid-template-columns:0.95fr 1.05fr;gap:64px;align-items:center;
+}
+.operate-content .eyebrow{
+  font-size:11px;letter-spacing:0.073em;text-transform:uppercase;color:var(--color-ash);
+  font-weight:500;margin-bottom:14px;
+}
+.operate-content h2{font-size:32px;font-weight:500;line-height:1.15;max-width:460px;}
+.operate-content > p{margin-top:14px;color:var(--color-ash);font-size:16px;line-height:1.55;max-width:440px;}
+.sector-list{display:flex;flex-direction:column;gap:14px;margin-top:40px;}
+@media (max-width:900px){
+  .operate-layout{grid-template-columns:1fr;gap:40px;}
+  .operate-map{order:-1;}
+}
+
+.operate-map{display:flex;justify-content:center;}
+.gulf-map{width:100%;max-width:480px;height:auto;overflow:visible;}
+.gulf-map .dot{fill:var(--color-slate);}
+.gulf-map .dot-AE{fill:var(--color-electric);opacity:0.85;}
+.gulf-map .connector{
+  fill:none;stroke:var(--color-electric);stroke-width:1;opacity:0.4;
+  stroke-dasharray:600; stroke-dashoffset:600;
+  transition:stroke-dashoffset 1.6s ease;
+}
+.gulf-map.is-visible .connector{stroke-dashoffset:0;}
+.pin-dot{fill:var(--color-pure-white);}
+.pin-hq .pin-dot{fill:var(--color-electric);}
+.pin-pulse{
+  fill:none;stroke:var(--color-electric);stroke-width:1;
+  transform-origin:center;
+  animation:pinPulse 2.4s ease-out infinite;
+}
+@keyframes pinPulse{
+  0%{ r:3; opacity:0.9; }
+  100%{ r:14; opacity:0; }
+}
+.pin-label{
+  font-family:var(--font-mono); font-size:9px; fill:var(--color-ash);
+  letter-spacing:0.02em;
+}
+.pin-hq .pin-label{fill:var(--color-pure-white);}
+.sector{
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-large-cards);
+  padding:28px;
+  position:relative;
+}
+.sector .num{font-family:var(--font-mono);font-size:12px;color:var(--color-smoke);margin-bottom:16px;display:block;}
+.sector h4{font-size:18px;font-weight:500;margin-bottom:10px;}
+.sector p{font-size:14px;color:var(--color-ash);line-height:1.6;}
+
+/* ---------- CTA STRIP ---------- */
+.cta{
+  max-width:1200px;margin:0 auto;padding:64px 24px;
+  border-top:1px solid var(--color-border);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.cta h3{font-size:24px;font-weight:500;}
+.cta p{color:var(--color-ash);font-size:14px;margin-top:6px;}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--color-border);padding:40px 24px;}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-links{display:flex;gap:22px;font-size:13px;color:var(--color-ash);}
+.footer-meta{font-family:var(--font-mono);font-size:12px;color:var(--color-smoke);}
+.footer-social{display:flex;gap:12px;}
+.footer-social-link{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--color-obsidian);border:1px solid var(--color-border);
+  color:var(--color-ash);
+  transition:background .3s ease, color .3s ease, transform .3s ease;
+}
+.footer-social-link:hover{
+  background:var(--color-electric);color:#fff;
+  transform:translateY(-2px);
+}
+.footer-social-link svg{width:17px;height:17px;}
+
+.reveal{opacity:0;transform:translateY(20px);}
+
+.scene-transition-veil{
+  position:fixed; inset:0; z-index:60;
+  background:var(--color-void-black);
+  opacity:0; pointer-events:none;
+}
+
+#services, #sectors{
+  will-change: transform, filter, clip-path;
+}
+
+/* ============ PERFORMANCE ENGINE (Three.js scroll section) ============ */
+.perf-wrapper{
+  position:relative;
+  height:600vh;
+  background:var(--color-void-black);
+  transition:background .5s ease;
+}
+.perf-wrapper::before,
+.perf-wrapper::after{
+  content:"";
+  position:absolute; left:0; right:0; height:64px; z-index:5;
+  background:var(--color-void-black);
+  pointer-events:none;
+}
+.perf-wrapper::before{ top:-1px; clip-path:polygon(0 100%, 100% 0, 100% 100%); }
+.perf-wrapper::after{ bottom:-1px; clip-path:polygon(0 0, 100% 100%, 0 100%); }
+
+.perf-pin{
+  position:sticky; top:0; height:100vh; overflow:hidden;
+}
+#perf-canvas{
+  position:absolute; inset:0; width:100%; height:100%; display:block;
+}
+.perf-vignette{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(120% 85% at 50% 45%, transparent 45%, rgba(8,9,11,0.92) 100%),
+    linear-gradient(180deg, rgba(8,9,11,0.55) 0%, transparent 18%, transparent 78%, rgba(8,9,11,0.75) 100%);
+  transition:background .5s ease;
+}
+[data-theme="light"] .perf-vignette{
+  background:
+    radial-gradient(120% 85% at 50% 45%, transparent 45%, rgba(236,233,227,0.92) 100%),
+    linear-gradient(180deg, rgba(236,233,227,0.55) 0%, transparent 18%, transparent 78%, rgba(236,233,227,0.75) 100%);
+}
+
+.perf-rail{
+  position:absolute; right:40px; top:50%; transform:translateY(-50%); z-index:4;
+  display:flex; flex-direction:column; align-items:center; gap:16px;
+  font-family:var(--font-mono); font-size:11px; color:var(--color-smoke); letter-spacing:0.05em;
+}
+.perf-rail .tick{width:5px;height:5px;border-radius:50%;background:var(--color-slate);transition:background .3s, transform .3s;}
+.perf-rail .tick.is-active{background:var(--color-electric);transform:scale(1.6);}
+@media (max-width:760px){ .perf-rail{display:none;} }
+
+.perf-eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); margin-bottom:20px; font-weight:500;
+}
+.perf-eyebrow::before{content:"";width:22px;height:1px;background:var(--color-electric);}
+
+.perf-stage{
+  position:absolute; inset:0; z-index:3;
+  display:flex; align-items:center;
+  padding:0 8%;
+  opacity:0; pointer-events:none;
+}
+.perf-stage-inner{ max-width:520px; }
+.stage-align-left{ justify-content:flex-start; }
+.stage-align-right{ justify-content:flex-end; }
+.stage-align-right .perf-stage-inner{ text-align:right; margin-left:auto; }
+.stage-align-center{ justify-content:center; text-align:center; }
+
+.perf-heading{
+  font-size:clamp(30px, 4.2vw, 54px);
+  font-weight:650;
+  line-height:1.08;
+  letter-spacing:-0.01em;
+  color:var(--color-pure-white);
+}
+.perf-sub{
+  margin-top:18px; color:var(--color-ash); font-size:15px; line-height:1.65; max-width:420px;
+}
+.stage-align-right .perf-sub{ margin-left:auto; }
+.stage-align-center .perf-sub{ margin-left:auto; margin-right:auto; }
+
+.perf-cards{
+  display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;
+}
+.stage-align-right .perf-cards{ justify-content:flex-end; }
+.stage-align-center .perf-cards{ justify-content:center; }
+
+.perf-card{
+  background:rgba(255,255,255,0.035);
+  border:1px solid rgba(255,255,255,0.09);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-radius:14px;
+  padding:16px 20px;
+  min-width:132px;
+  box-shadow: rgba(255,255,255,0.06) 0px 1px 0px 0px inset, rgba(0,0,0,0.35) 0px 12px 24px -8px;
+}
+[data-theme="light"] .perf-card{
+  background:rgba(255,255,255,0.5);
+  border:1px solid rgba(0,0,0,0.08);
+  box-shadow: rgba(255,255,255,0.6) 0px 1px 0px 0px inset, rgba(0,0,0,0.08) 0px 12px 24px -8px;
+}
+.perf-card .num{ font-size:26px; font-weight:700; color:var(--color-pure-white); letter-spacing:-0.02em; }
+.perf-card .num span{ color:var(--color-electric); }
+.perf-card .label{ margin-top:4px; font-size:11px; color:var(--color-ash); text-transform:uppercase; letter-spacing:0.06em; }
+
+.perf-cta{
+  display:inline-flex; align-items:center; gap:10px;
+  margin-top:8px;
+}
+
+@media (max-width:760px){
+  .perf-stage{ padding:0 7%; }
+  .perf-stage-inner, .stage-align-right .perf-stage-inner{ max-width:100%; text-align:left !important; margin-left:0 !important; }
+  .stage-align-right .perf-cards{ justify-content:flex-start; }
+  .perf-wrapper{ height:440vh; }
+}
+
+/* ============ ATHLETE FINALE (cursor-reactive wave/particle field) ============ */
+.athlete-finale{
+  position:relative;
+  min-height:100vh;
+  overflow:hidden;
+  background:var(--color-void-black);
+  display:flex; align-items:center; justify-content:flex-start;
+  padding:100px 8%;
+}
+.athlete-canvas{
+  position:absolute; inset:0; width:100%; height:100%;
+  display:block;
+  opacity:0; transition:opacity 1.4s ease;
+}
+.athlete-canvas.is-ready{ opacity:1; }
+.athlete-vignette{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(48% 65% at 18% 50%, var(--color-void-black) 45%, transparent 88%),
+    radial-gradient(55% 70% at 78% 55%, transparent 45%, var(--color-void-black) 96%),
+    linear-gradient(180deg, var(--color-void-black) 0%, transparent 18%, transparent 80%, var(--color-void-black) 100%);
+}
+/* static gradient shown until the canvas fades in (or permanently, on the
+   reduced-motion / no-webgl fallback path) so there's never a flash of
+   flat color before the scene is ready */
+.athlete-particles-fallback{
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 65% 20%, rgba(255,45,85,0.5), transparent),
+    radial-gradient(1px 1px at 80% 65%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 35% 75%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1px 1px at 50% 45%, rgba(255,45,85,0.4), transparent);
+}
+
+.athlete-content{
+  position:relative; z-index:2;
+  text-align:left;
+  max-width:520px;
+}
+.athlete-eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); margin-bottom:22px; font-weight:500;
+}
+.athlete-eyebrow::before{content:"";width:22px;height:1px;background:var(--color-electric);}
+.athlete-heading{
+  font-size:clamp(38px, 6vw, 68px);
+  font-weight:600;
+  line-height:1.04;
+  letter-spacing:-0.01em;
+  color:var(--color-pure-white);
+}
+.af-line{
+  display:block;
+  will-change:opacity, transform, filter;
+}
+.af-accent{ color:var(--color-electric); }
+.athlete-sub{
+  margin-top:26px; color:var(--color-ash); font-size:16px; line-height:1.6;
+  max-width:420px;
+  will-change:opacity, transform;
+}
+.athlete-cta{
+  margin-top:36px; display:inline-flex;
+  will-change:opacity, transform;
+}
+@media (max-width:900px){
+  .athlete-finale{ justify-content:center; padding:100px 24px; text-align:center; }
+  .athlete-content{ text-align:center; max-width:560px; }
+  .athlete-sub{ margin-left:auto; margin-right:auto; }
+}
+@media (max-width:600px){
+  .athlete-finale{ padding:80px 20px; min-height:90vh; }
+}
+
+/* ============ PARTNERS & SPONSORS ============
+   Logos sit on their own white "plate" card regardless of site theme —
+   a white card with a logo on it stays legible whether the section
+   background behind it is near-black or off-white, which sidesteps the
+   fact that the source logos have wildly different native backgrounds
+   (transparent, white, black circle marks, etc). */
+.partners-section{
+  padding:90px 24px 70px;
+  overflow:hidden;
+}
+.partners-head{
+  text-align:center; max-width:560px; margin:0 auto 48px;
+}
+.partners-head .eyebrow{
+  font-size:11px;letter-spacing:0.073em;text-transform:uppercase;color:var(--color-ash);
+  font-weight:500;margin-bottom:14px;
+}
+.partners-head h2{font-size:30px;font-weight:500;line-height:1.15;color:var(--color-pure-white);}
+
+.partners-marquee{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image:linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+.partners-track{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  width:max-content;
+  animation:partnersScroll 38s linear infinite;
+}
+.partners-marquee:hover .partners-track{ animation-play-state:paused; }
+@keyframes partnersScroll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+
+.partner-card{
+  flex:0 0 auto;
+  display:flex; align-items:center; justify-content:center;
+  height:96px;
+  padding:0 32px;
+  background:#f5f4f2;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  transition:transform .35s ease, box-shadow .35s ease;
+}
+.partner-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 26px rgba(0,0,0,0.14);
+}
+.partner-card img{
+  max-height:56px;
+  max-width:170px;
+  width:auto; height:auto;
+  object-fit:contain;
+  filter:grayscale(1) opacity(0.72);
+  transition:filter .35s ease;
+}
+.partner-card:hover img{
+  filter:grayscale(0) opacity(1);
+}
+
+@media (max-width:760px){
+  .partners-section{ padding:70px 20px 50px; }
+  .partner-card{ height:80px; padding:0 22px; }
+  .partner-card img{ max-height:44px; max-width:130px; }
+}
+/* ============ CONTACT MODAL ============ */
+.contact-modal{
+  position:fixed; inset:0; z-index:500;
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+  opacity:0; pointer-events:none;
+  transition:opacity .35s ease;
+}
+.contact-modal.is-open{ opacity:1; pointer-events:auto; }
+
+.contact-modal-backdrop{
+  position:absolute; inset:0;
+  background:rgba(4,5,6,0.7);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+}
+[data-theme="light"] .contact-modal-backdrop{ background:rgba(30,26,22,0.4); }
+
+.contact-modal-panel{
+  position:relative; z-index:1;
+  width:100%; max-width:560px; max-height:88vh; overflow-y:auto;
+  background:var(--color-ink);
+  border:1px solid var(--color-border);
+  border-radius:20px;
+  padding:44px 40px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  transform:scale(0.94) translateY(14px);
+  opacity:0;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1), opacity .4s ease;
+}
+.contact-modal.is-open .contact-modal-panel{ transform:scale(1) translateY(0); opacity:1; }
+
+@keyframes modalShake{
+  10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(4px);}
+  30%,50%,70%{transform:translateX(-8px);} 40%,60%{transform:translateX(8px);}
+}
+.contact-modal-panel.shake{ animation:modalShake .5s; }
+
+.contact-modal-close{
+  position:absolute; top:20px; right:20px;
+  width:36px; height:36px; border-radius:50%;
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--color-ash); cursor:pointer;
+  transition:background .3s ease, color .3s ease;
+}
+.contact-modal-close:hover{ background:var(--color-graphite); color:var(--color-pure-white); }
+.contact-modal-close svg{ width:16px; height:16px; }
+
+.contact-form-eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); font-weight:500; margin-bottom:14px;
+}
+.contact-modal-panel h2{ font-size:28px; font-weight:500; color:var(--color-pure-white); margin-bottom:10px; line-height:1.15; }
+.contact-form-sub{ color:var(--color-ash); font-size:14px; line-height:1.6; margin-bottom:28px; }
+.contact-error{
+  background:rgba(255,45,85,0.1); border:1px solid rgba(255,45,85,0.3);
+  color:var(--color-electric); font-size:13px; line-height:1.5;
+  padding:12px 14px; border-radius:10px; margin:-12px 0 22px;
+}
+
+.contact-form-row{ display:flex; gap:14px; }
+.contact-field{ margin-bottom:18px; flex:1; display:flex; flex-direction:column; gap:7px; }
+.contact-field label{ font-size:12px; color:var(--color-ash); font-weight:500; }
+.contact-field input, .contact-field textarea{
+  background:var(--color-obsidian); border:1px solid var(--color-border); border-radius:10px;
+  padding:11px 14px; font-family:var(--font-inter); font-size:14px; color:var(--color-pure-white);
+  outline:none; transition:border-color .25s ease, background .25s ease;
+  resize:vertical;
+}
+.contact-field input:focus, .contact-field textarea:focus{
+  border-color:var(--color-electric); background:var(--color-ink);
+}
+.contact-submit-btn{
+  width:100%; justify-content:center; margin-top:8px;
+  border:none; cursor:pointer; font-family:inherit;
+}
+.contact-submit-btn:disabled{ opacity:0.7; cursor:default; }
+
+.contact-success{ text-align:center; padding:16px 0 8px; }
+.contact-success-check{ width:84px; height:84px; margin:0 auto 22px; display:block; }
+.contact-success-circle{ stroke:var(--color-electric); stroke-dasharray:264; stroke-dashoffset:264; }
+.contact-success-tick{ stroke:var(--color-electric); stroke-dasharray:60; stroke-dashoffset:60; }
+.contact-success.is-playing .contact-success-circle{ animation:successCircle .6s ease-out forwards; }
+.contact-success.is-playing .contact-success-tick{ animation:successTick .45s ease-out forwards .5s; }
+@keyframes successCircle{ to{ stroke-dashoffset:0; } }
+@keyframes successTick{ to{ stroke-dashoffset:0; } }
+.contact-success h3{ font-size:22px; font-weight:500; color:var(--color-pure-white); margin-bottom:10px; }
+.contact-success p{ color:var(--color-ash); font-size:14px; line-height:1.6; margin-bottom:24px; max-width:380px; margin-left:auto; margin-right:auto; }
+
+@media (max-width:560px){
+  .contact-modal-panel{ padding:32px 24px; border-radius:16px; }
+  .contact-form-row{ flex-direction:column; gap:0; }
+}
+/* ============ ENTRANCE GATE ============
+   Locked to dark regardless of the visitor's saved theme preference —
+   this is a fixed cinematic first impression, the same reasoning used
+   for the hero video: it shouldn't look washed out just because someone
+   previously chose light mode. */
+.entrance-gate{
+  --color-void-black:#040506;
+  --color-pure-white:#ffffff;
+  --color-ash:#9c9c9d;
+  --color-electric:#ff2d55;
+  position:fixed; inset:0; z-index:2000;
+  background:var(--color-void-black);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity 0.9s ease, visibility 0.9s ease;
+  cursor:pointer;
+}
+.entrance-gate.is-leaving{ opacity:0; pointer-events:none; }
+.entrance-gate.is-hidden{ display:none; }
+
+.gate-canvas{
+  position:absolute; inset:0; width:100%; height:100%;
+  opacity:0; transition:opacity 1.2s ease;
+}
+.gate-canvas.is-ready{ opacity:1; }
+
+.gate-vignette{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(60% 60% at 50% 50%, transparent 30%, var(--color-void-black) 92%);
+}
+
+.gate-content{
+  position:relative; z-index:2;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+  transform:translateY(0);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+}
+.entrance-gate.is-leaving .gate-content{ opacity:0; transform:translateY(-16px); }
+
+.gate-headline{
+  font-family:'Clash Display', var(--font-inter);
+  font-weight:600;
+  font-size:clamp(38px, 7vw, 84px);
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  color:var(--color-pure-white);
+  margin-bottom:34px;
+  text-transform:capitalize;
+}
+.gate-accent{ color:var(--color-electric); }
+
+.gate-enter{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--color-ash);
+  margin-bottom:56px;
+}
+.gate-enter-dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--color-electric);
+  animation:gateDotPulse 1.8s ease-in-out infinite;
+}
+@keyframes gateDotPulse{
+  0%,100%{ opacity:0.4; transform:scale(0.85); }
+  50%{ opacity:1; transform:scale(1.15); }
+}
+.gate-logo-bottom{
+  width:34px; height:34px; object-fit:contain;
+  opacity:0.9;
+}
+@media (max-width:600px){
+  .gate-headline{ margin-bottom:26px; }
+  .gate-enter{ margin-bottom:40px; }
+}
+</style>
+<script>
+// Applied synchronously, before first paint, so the page never flashes the
+// wrong theme for a frame — reads a saved preference, otherwise falls back
+// to the visitor's OS-level light/dark setting.
+(function(){
+  try{
+    var saved = localStorage.getItem('delta-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    if(theme === 'light'){ document.documentElement.setAttribute('data-theme', 'light'); }
+  } catch(e){ /* localStorage unavailable — default dark theme applies */ }
+})();
+</script>
+</head>
+<body>
+<div class="entrance-gate" id="entrance-gate">
+  <canvas id="gate-canvas" class="gate-canvas"></canvas>
+  <div class="gate-vignette"></div>
+  <div class="gate-content">
+    <div class="gate-headline">Enter the<br><span class="gate-accent">Arena</span></div>
+    <div class="gate-enter">
+      <span class="gate-enter-dot"></span>
+      Click anywhere
+    </div>
+    <img class="gate-logo-bottom" src="images/img-a5a8aa3d.png" alt="Delta Allied Sports">
+  </div>
+</div>
+<script>
+// Runs immediately, before the rest of the page paints — if this visitor
+// already clicked through the gate earlier in this browser session, hide
+// it instantly instead of flashing it again on every reload/navigation.
+(function(){
+  try{
+    if(sessionStorage.getItem('delta-gate-entered') === '1'){
+      document.getElementById('entrance-gate').classList.add('is-hidden');
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  } catch(e){ document.body.style.overflow = 'hidden'; }
+})();
+</script>
+<div class="scene-transition-veil" id="scene-veil"></div>
+
+<div class="contact-modal" id="contact-modal" aria-hidden="true">
+  <div class="contact-modal-backdrop" data-close></div>
+  <div class="contact-modal-panel" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <button type="button" class="contact-modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="contact-modal-body" id="contact-modal-body">
+      <div class="contact-form-eyebrow">Get in touch</div>
+      <h2 id="contact-modal-title">Let's build something together</h2>
+      <p class="contact-form-sub">Tell us about your club, athlete, or event — we'll get back to you within one business day.</p>
+      <p class="contact-error" id="contact-error" hidden></p>
+
+      <form id="contact-form" novalidate>
+        <div class="contact-form-row">
+          <div class="contact-field">
+            <label for="cf-first">First name</label>
+            <input type="text" id="cf-first" name="firstName" required autocomplete="given-name">
+          </div>
+          <div class="contact-field">
+            <label for="cf-last">Last name</label>
+            <input type="text" id="cf-last" name="lastName" required autocomplete="family-name">
+          </div>
+        </div>
+        <div class="contact-field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" required autocomplete="email">
+        </div>
+        <div class="contact-field">
+          <label for="cf-subject">Subject</label>
+          <input type="text" id="cf-subject" name="subject" required>
+        </div>
+        <div class="contact-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-filled contact-submit-btn">
+          <span class="contact-submit-label">Send message</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="contact-success" id="contact-success" hidden>
+      <svg class="contact-success-check" viewBox="0 0 100 100">
+        <circle class="contact-success-circle" cx="50" cy="50" r="42" fill="none" stroke-width="4"/>
+        <path class="contact-success-tick" d="M30 52 L44 66 L72 34" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3>Message sent</h3>
+      <p>Thanks for reaching out — our team will get back to you within one business day.</p>
+      <button type="button" class="btn-ghost contact-success-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <nav>
+    <div class="logo"><img src="images/img-a5a8aa3d.png" alt="Delta Allied Sports logo"><span class="logo-text">Delta Allied Sports</span></div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#">Partners</a>
+      <a href="#">Insights</a>
+    </div>
+    <button type="button" class="theme-toggle" id="theme-toggle-btn" aria-label="Switch between light and dark mode">
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-thumb">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </span>
+    </button>
+    <button type="button" class="sound-toggle" id="sound-toggle-btn" aria-label="Turn background music on">
+      <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      <svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M23 9l-6 6"/><path d="M17 9l6 6"/></svg>
+    </button>
+    <audio id="dark-theme-audio" src="audio/dark-theme.mp3" loop preload="none"></audio>
+    <audio id="light-theme-audio" src="audio/light-theme.mp3" loop preload="none"></audio>
+    <a class="nav-btn" href="#contact">Get in touch</a>
+  </nav>
+</div>
+
+<div class="hero-scroll">
+<section class="hero">
+  <div class="hero-art"></div>
+  <video
+    class="hero-video"
+    poster="video/poster.jpg"
+    muted
+    playsinline
+    preload="metadata"
+    aria-hidden="true">
+    <source src="video/hero-scroll.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-copy">
+    <div class="eyebrow-badge"><span class="dot"></span>Sports Management &amp; Consulting</div>
+    <h1 class="hero-title">The operating system for sport in the region.</h1>
+    <p class="hero-sub">Delta Allied Sports manages athlete careers, runs tournaments, and structures the deals behind competitive sport across the UAE and the wider Middle East.</p>
+    <div class="hero-actions">
+      <a class="btn-filled" href="#services">Explore services</a>
+      <a class="btn-ghost" href="#contact">Partner with us</a>
+    </div>
+    <div class="hero-meta">
+      <span>Est. 2019</span>
+      <span>Dubai, UAE</span>
+      <span>Licensed sports consultancy</span>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+  <div class="hero-copy-2">
+    <div class="eyebrow-badge"><span class="dot"></span>How we do it</div>
+    <h2>From athletes to arenas, we build what the game runs on.</h2>
+    <p>One team managing careers, negotiating rights, and delivering the venues and events competitive sport in the region depends on.</p>
+  </div>
+</section>
+</div>
+
+<section class="perf-wrapper" id="performance">
+  <div class="perf-pin">
+    <canvas id="perf-canvas"></canvas>
+    <div class="perf-vignette"></div>
+
+    <div class="perf-rail">
+      <span>01</span>
+      <div class="tick is-active" data-tick="0"></div>
+      <div class="tick" data-tick="1"></div>
+      <div class="tick" data-tick="2"></div>
+      <div class="tick" data-tick="3"></div>
+      <span>04</span>
+    </div>
+
+    <div class="perf-stage stage-align-left" data-stage="0">
+      <div class="perf-stage-inner">
+        <div class="perf-eyebrow">The Performance Engine</div>
+        <h2 class="perf-heading">Every operation, engineered for speed.</h2>
+        <p class="perf-sub">Delta Allied Sports runs like the athletes it represents — precise, fast, and built to perform under pressure.</p>
+        <div class="perf-cards">
+          <div class="perf-card"><div class="num"><span>48</span>hr</div><div class="label">Contract turnaround</div></div>
+          <div class="perf-card"><div class="num"><span>120</span>+</div><div class="label">Athletes represented</div></div>
+          <div class="perf-card"><div class="num"><span>9</span></div><div class="label">Leagues managed</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="perf-stage stage-align-right" data-stage="1">
+      <div class="perf-stage-inner">
+        <div class="perf-eyebrow">Tournament Operations</div>
+        <h2 class="perf-heading">From draw to final whistle, zero friction.</h2>
+        <p class="perf-sub">Licensing, logistics, and matchday delivery run as one system — so organizers focus on the competition, not the chaos behind it.</p>
+        <div class="perf-cards">
+          <div class="perf-card"><div class="num"><span>32</span></div><div class="label">Tournaments delivered</div></div>
+          <div class="perf-card"><div class="num"><span>6</span></div><div class="label">Countries</div></div>
+          <div class="perf-card"><div class="num"><span>0</span></div><div class="label">Missed kickoffs</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="perf-stage stage-align-left" data-stage="2">
+      <div class="perf-stage-inner">
+        <div class="perf-eyebrow">Media &amp; Sponsorship</div>
+        <h2 class="perf-heading">A big team of photographers.</h2>
+        <p class="perf-sub">Filming of all matches and events using state-of-the-art sports media equipment, conducting interviews, live broadcasting of matches and managing social media platforms.</p>
+        <div class="perf-cards">
+          <div class="perf-card"><div class="num"><span>32</span></div><div class="label">Tournaments covered</div></div>
+          <div class="perf-card"><div class="num"><span>6</span></div><div class="label">Countries</div></div>
+          <div class="perf-card"><div class="num"><span>500</span>+</div><div class="label">Hours produced</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="perf-stage stage-align-center" data-stage="3">
+      <div class="perf-stage-inner">
+        <div class="perf-eyebrow">Ready when you are</div>
+        <h2 class="perf-heading">Let's build your performance system.</h2>
+        <p class="perf-sub" style="margin-left:auto;margin-right:auto;">Tell us about your club, athlete, or event — we'll get back within one business day.</p>
+        <div class="perf-cta">
+          <a class="btn-filled" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-head">
+    <div class="eyebrow">What we do</div>
+    <h2>Four disciplines, one operation</h2>
+    <p>Built to move a club, an athlete, or a tournament from ambition to execution.</p>
+  </div>
+  <div class="grid">
+    <a href="services/youth-football.html" class="card">
+      <img class="card-photo" src="images/card-youth.jpg" alt="Young players from a Delta Allied Sports youth academy celebrating on the pitch" loading="lazy" width="640" height="480">
+      <div class="icon-container"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
+      <h3>Youth Football &amp; Basketball</h3>
+      <p>Football and basketball for young players and juniors. Specialists in managing and operating competitions and tournaments for grassroots and youth players.</p>
+      <span class="badge">01</span>
+    </a>
+    <a href="services/tournament-ops.html" class="card">
+      <img class="card-photo" src="images/card-tournament.jpg" alt="Award ceremony at the Dubai Open for Football Academies tournament" loading="lazy" width="640" height="480">
+      <div class="icon-container"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
+      <h3>Tournament Ops</h3>
+      <p>Federation licensing, logistics, and matchday delivery from kickoff to broadcast.</p>
+      <span class="badge">02</span>
+    </a>
+    <a href="services/digital-gaming.html" class="card">
+      <img class="card-photo" src="images/card-game.jpg" alt="Dribble Dodge Dash mobile game screen, developed by Delta Allied Sports" loading="lazy" width="640" height="480">
+      <div class="icon-container"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></div>
+      <h3>Digital &amp; Game Technology</h3>
+      <p>Digital information technology and digital games; analysis of game plans and strategies and development of mobile digital games.</p>
+      <span class="badge">03</span>
+    </a>
+    <a href="services/media-sponsorship.html" class="card">
+      <img class="card-photo" src="images/card-media.jpg" alt="Media crew interviewing a young player on the sidelines" loading="lazy" width="640" height="480">
+      <div class="icon-container"><svg viewBox="0 0 24 24"><path d="M4 12l4-8 4 8-4 8z"/><path d="M12 12l4-8 4 8-4 8z"/></svg></div>
+      <h3>Media &amp; Sponsorship</h3>
+      <p>Rights sales and brand partnerships that connect sponsors with regional sport.</p>
+      <span class="badge">04</span>
+    </a>
+  </div>
+</section>
+
+<section class="section" id="sectors">
+  <div class="operate-layout">
+    <div class="operate-content">
+      <div class="eyebrow">Where we operate</div>
+      <h2>Six markets, one regional operation</h2>
+      <p>Headquartered in Dubai, running across the GCC — from grassroots football to basketball and girls' football development.</p>
+      <div class="sector-list">
+        <div class="sector">
+          <span class="num">MENA-01</span>
+          <h4>Football</h4>
+          <p>Academy tournaments and grassroots development across the Gulf — including the AEC Arab Elite Cup, the biggest tournament for football academies in the region.</p>
+        </div>
+        <div class="sector">
+          <span class="num">MENA-02</span>
+          <h4>Basketball</h4>
+          <p>Junior and academy-level basketball competitions run alongside our football programs across the region.</p>
+        </div>
+        <div class="sector">
+          <span class="num">MENA-03</span>
+          <h4>Girls' Football</h4>
+          <p>Operating the UAE Girls Football League, expanding competitive pathways for young female footballers.</p>
+        </div>
+      </div>
+    </div>
+    <div class="operate-map">
+      <svg class="gulf-map" viewBox="0 0 520 560" xmlns="http://www.w3.org/2000/svg" aria-label="Map of UAE, Saudi Arabia, Oman, Kuwait, Bahrain and Qatar">
+  <g class="connectors">
+    <path d="M413.1,248.4 Q329.7,238.5 249.9,264.6" class="connector" data-len="1"/><path d="M413.1,248.4 Q433.0,288.8 476.2,301.8" class="connector" data-len="1"/><path d="M413.1,248.4 Q356.6,166.7 274.6,110.6" class="connector" data-len="1"/><path d="M413.1,248.4 Q375.0,214.6 324.1,214.6" class="connector" data-len="1"/><path d="M413.1,248.4 Q378.3,229.0 342.1,245.7" class="connector" data-len="1"/>
+  </g>
+  <g class="dots">
+    <circle cx="28.0" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="28.0" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="28.0" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="36.0" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="36.0" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="36.0" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="43.9" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="43.9" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="43.9" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="43.9" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="43.9" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="51.9" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="51.9" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="51.9" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="51.9" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="51.9" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="51.9" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="59.9" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="67.9" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="75.8" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="83.8" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="91.8" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="99.8" cy="26.9" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="107.8" cy="26.9" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="115.7" cy="26.9" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="123.7" cy="26.9" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="131.7" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="139.7" cy="40.8" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="147.6" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="155.6" cy="54.7" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="163.6" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="512.3" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="171.6" cy="68.5" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="526.1" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="512.3" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="179.5" cy="82.4" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="187.5" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="195.5" cy="96.3" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="203.5" cy="110.1" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="211.5" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="219.4" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="227.4" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="235.4" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="243.4" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="251.3" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="512.3" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="124.0" r="1.15" class="dot dot-SA"/>
+<circle cx="259.3" cy="110.1" r="1.15" class="dot dot-KW"/>
+<circle cx="259.3" cy="96.3" r="1.15" class="dot dot-KW"/>
+<circle cx="267.3" cy="498.4" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="137.9" r="1.15" class="dot dot-SA"/>
+<circle cx="267.3" cy="124.0" r="1.15" class="dot dot-KW"/>
+<circle cx="267.3" cy="110.1" r="1.15" class="dot dot-KW"/>
+<circle cx="267.3" cy="96.3" r="1.15" class="dot dot-KW"/>
+<circle cx="275.3" cy="484.5" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="275.3" cy="137.9" r="1.15" class="dot dot-KW"/>
+<circle cx="275.3" cy="124.0" r="1.15" class="dot dot-KW"/>
+<circle cx="283.3" cy="470.7" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="165.6" r="1.15" class="dot dot-SA"/>
+<circle cx="283.3" cy="151.7" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="291.2" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="299.2" cy="179.5" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="221.1" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="207.2" r="1.15" class="dot dot-SA"/>
+<circle cx="307.2" cy="193.3" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="315.2" cy="234.9" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="262.7" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="248.8" r="1.15" class="dot dot-SA"/>
+<circle cx="323.1" cy="221.1" r="1.15" class="dot dot-BH"/>
+<circle cx="331.1" cy="456.8" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="276.5" r="1.15" class="dot dot-SA"/>
+<circle cx="331.1" cy="262.7" r="1.15" class="dot dot-QA"/>
+<circle cx="331.1" cy="248.8" r="1.15" class="dot dot-QA"/>
+<circle cx="339.1" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="290.4" r="1.15" class="dot dot-SA"/>
+<circle cx="339.1" cy="262.7" r="1.15" class="dot dot-QA"/>
+<circle cx="339.1" cy="248.8" r="1.15" class="dot dot-QA"/>
+<circle cx="339.1" cy="234.9" r="1.15" class="dot dot-QA"/>
+<circle cx="347.1" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="304.3" r="1.15" class="dot dot-SA"/>
+<circle cx="347.1" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="355.0" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="355.0" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="355.0" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="318.1" r="1.15" class="dot dot-SA"/>
+<circle cx="355.0" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="355.0" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="363.0" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="363.0" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="363.0" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="363.0" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="363.0" cy="442.9" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="363.0" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="363.0" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="363.0" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="363.0" cy="276.5" r="1.15" class="dot dot-AE"/>
+<circle cx="371.0" cy="526.1" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="512.3" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="371.0" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="371.0" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="371.0" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="371.0" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="379.0" cy="526.1" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="512.3" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="379.0" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="379.0" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="379.0" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="379.0" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="387.0" cy="512.3" r="1.15" class="dot dot-OM"/>
+<circle cx="387.0" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="387.0" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="387.0" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="387.0" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="387.0" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="387.0" cy="429.1" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="387.0" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="387.0" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="387.0" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="394.9" cy="512.3" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="394.9" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="332.0" r="1.15" class="dot dot-SA"/>
+<circle cx="394.9" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="394.9" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="394.9" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="394.9" cy="276.5" r="1.15" class="dot dot-AE"/>
+<circle cx="402.9" cy="512.3" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="402.9" cy="415.2" r="1.15" class="dot dot-SA"/>
+<circle cx="402.9" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="402.9" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="402.9" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="402.9" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="402.9" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="402.9" cy="332.0" r="1.15" class="dot dot-AE"/>
+<circle cx="402.9" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="402.9" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="402.9" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="402.9" cy="276.5" r="1.15" class="dot dot-AE"/>
+<circle cx="402.9" cy="262.7" r="1.15" class="dot dot-AE"/>
+<circle cx="410.9" cy="512.3" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="498.4" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="410.9" cy="401.3" r="1.15" class="dot dot-SA"/>
+<circle cx="410.9" cy="387.5" r="1.15" class="dot dot-SA"/>
+<circle cx="410.9" cy="373.6" r="1.15" class="dot dot-SA"/>
+<circle cx="410.9" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="410.9" cy="345.9" r="1.15" class="dot dot-SA"/>
+<circle cx="410.9" cy="332.0" r="1.15" class="dot dot-AE"/>
+<circle cx="410.9" cy="318.1" r="1.15" class="dot dot-AE"/>
+<circle cx="410.9" cy="304.3" r="1.15" class="dot dot-AE"/>
+<circle cx="410.9" cy="290.4" r="1.15" class="dot dot-AE"/>
+<circle cx="410.9" cy="276.5" r="1.15" class="dot dot-AE"/>
+<circle cx="410.9" cy="262.7" r="1.15" class="dot dot-AE"/>
+<circle cx="418.9" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="359.7" r="1.15" class="dot dot-SA"/>
+<circle cx="418.9" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="290.4" r="1.15" class="dot dot-OM"/>
+<circle cx="418.9" cy="276.5" r="1.15" class="dot dot-AE"/>
+<circle cx="418.9" cy="262.7" r="1.15" class="dot dot-AE"/>
+<circle cx="418.9" cy="248.8" r="1.15" class="dot dot-AE"/>
+<circle cx="426.8" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="290.4" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="276.5" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="262.7" r="1.15" class="dot dot-OM"/>
+<circle cx="426.8" cy="248.8" r="1.15" class="dot dot-AE"/>
+<circle cx="426.8" cy="234.9" r="1.15" class="dot dot-AE"/>
+<circle cx="434.8" cy="484.5" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="470.7" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="290.4" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="276.5" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="262.7" r="1.15" class="dot dot-OM"/>
+<circle cx="434.8" cy="221.1" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="456.8" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="442.8" cy="290.4" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="450.8" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="442.9" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="429.1" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="415.2" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="458.8" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="466.7" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="401.3" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="387.5" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="474.7" cy="304.3" r="1.15" class="dot dot-OM"/>
+<circle cx="482.7" cy="373.6" r="1.15" class="dot dot-OM"/>
+<circle cx="482.7" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="482.7" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="482.7" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="482.7" cy="318.1" r="1.15" class="dot dot-OM"/>
+<circle cx="490.7" cy="359.7" r="1.15" class="dot dot-OM"/>
+<circle cx="490.7" cy="345.9" r="1.15" class="dot dot-OM"/>
+<circle cx="490.7" cy="332.0" r="1.15" class="dot dot-OM"/>
+<circle cx="498.6" cy="345.9" r="1.15" class="dot dot-OM"/>
+  </g>
+  <g class="pins">
+    <g class="pin pin-hq" style="transform: translate(413.1px, 248.4px);"><circle class="pin-pulse" r="3"/><circle class="pin-dot" r="3.4"/><text class="pin-label" y="-12" text-anchor="middle">Dubai — HQ</text></g><g class="pin" style="transform: translate(249.9px, 264.6px);"><circle class="pin-dot" r="2.6"/><text class="pin-label" y="16" text-anchor="middle">Riyadh</text></g><g class="pin" style="transform: translate(476.2px, 301.8px);"><circle class="pin-dot" r="2.6"/><text class="pin-label" y="16" text-anchor="middle">Muscat</text></g><g class="pin" style="transform: translate(274.6px, 110.6px);"><circle class="pin-dot" r="2.6"/><text class="pin-label" y="-12" text-anchor="middle">Kuwait City</text></g><g class="pin" style="transform: translate(324.1px, 214.6px);"><circle class="pin-dot" r="2.6"/><text class="pin-label" y="-12" text-anchor="middle">Manama</text></g><g class="pin" style="transform: translate(342.1px, 245.7px);"><circle class="pin-dot" r="2.6"/><text class="pin-label" y="16" text-anchor="middle">Doha</text></g>
+  </g>
+</svg>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div>
+    <h3>Ready to build something with us?</h3>
+    <p>Tell us about your club, athlete, or event — we'll get back within one business day.</p>
+  </div>
+  <a class="btn-filled" id="contact" href="#">Get in touch</a>
+</div>
+
+<section class="partners-section" id="partners">
+  <div class="partners-head">
+    <div class="eyebrow">Trusted collaborations</div>
+    <h2>Our Partners &amp; Sponsors</h2>
+  </div>
+  <div class="partners-marquee">
+    <div class="partners-track">
+      <div class="partner-card"><img src="images/img-19ab2f16.png" alt="AlBaraka Food & Beverage Industry" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-1303e146.png" alt="Smashi Sports" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-e9ba00f5.png" alt="Rixos Hotels" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-6f57ad0f.png" alt="FIFA" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-8618e660.png" alt="Adidas" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-1d8092bd.png" alt="UAE Football Association" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-29efe71f.png" alt="Abu Dhabi Sports Council" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-c3fdb09c.png" alt="Dubai Sports Council" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-19ab2f16.png" alt="AlBaraka Food & Beverage Industry" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-1303e146.png" alt="Smashi Sports" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-e9ba00f5.png" alt="Rixos Hotels" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-6f57ad0f.png" alt="FIFA" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-8618e660.png" alt="Adidas" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-1d8092bd.png" alt="UAE Football Association" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-29efe71f.png" alt="Abu Dhabi Sports Council" loading="lazy"/></div>
+      <div class="partner-card"><img src="images/img-c3fdb09c.png" alt="Dubai Sports Council" loading="lazy"/></div>
+    </div>
+  </div>
+</section>
+
+<section class="athlete-finale" id="athlete-finale">
+  <canvas id="athlete-canvas" class="athlete-canvas"></canvas>
+  <div class="athlete-vignette"></div>
+  <div class="athlete-particles-fallback"></div>
+
+  <div class="athlete-content">
+    <div class="athlete-eyebrow">Built for the game</div>
+    <h2 class="athlete-heading">
+      <span class="af-line" data-line="0">Precision.</span>
+      <span class="af-line" data-line="1">Power.</span>
+      <span class="af-line af-accent" data-line="2">Performance.</span>
+    </h2>
+    <p class="athlete-sub">Every athlete we manage, every tournament we run, every deal we close — built on the same standard the game demands.</p>
+    <a class="btn-filled athlete-cta" href="#contact">Get in touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">Services</a>
+      <a href="#">Sectors</a>
+      <a href="#">Partners</a>
+      <a href="#">Insights</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://wa.me/971528801994" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="footer-social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.85 13.24L3 21l3.86-1.15a8.9 8.9 0 0 0 5.19 1.65 8.94 8.94 0 0 0 8.94-8.94 8.86 8.86 0 0 0-3.39-6.24Zm-5.55 13.72a7.4 7.4 0 0 1-3.79-1.03l-.27-.16-2.28.68.68-2.23-.18-.28a7.44 7.44 0 1 1 5.84 3.02Zm4.08-5.58c-.22-.11-1.32-.65-1.53-.73-.2-.08-.35-.11-.5.11-.15.22-.57.73-.7.88-.13.15-.26.16-.48.05a6.1 6.1 0 0 1-1.8-1.11 6.7 6.7 0 0 1-1.25-1.55c-.13-.22 0-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.65-.18-.44-.37-.38-.5-.38h-.43c-.15 0-.39.06-.6.28-.2.22-.79.77-.79 1.87s.81 2.17.92 2.32c.11.15 1.6 2.44 3.87 3.42.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.32-.54 1.51-1.06.19-.52.19-.96.13-1.06-.06-.09-.2-.15-.42-.26Z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/delta.allied.sports" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer-social-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      </a>
+      <a href="https://www.facebook.com/share/1D88s6zn9y/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="footer-social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.7V3.7C16.4 3.66 15.4 3.58 14.24 3.58 11.8 3.58 10.1 5.1 10.1 7.7v2.2H7.4V13h2.7v8h3.4Z"/></svg>
+      </a>
+    </div>
+    <div class="footer-meta">v1.0 &nbsp;|&nbsp; Dubai, UAE &nbsp;|&nbsp; © 2026 Delta Allied Sports</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var wrapper = document.querySelector('.hero-scroll');
+  var video = document.querySelector('.hero-video');
+  var copy = document.querySelector('.hero-copy');
+  var copy2 = document.querySelector('.hero-copy-2');
+  if(!wrapper || !video) return;
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+  var saveData = conn && (conn.saveData || /2g/.test(conn.effectiveType || ''));
+  var tooNarrow = window.innerWidth < 640;
+
+  if(reducedMotion || saveData){
+    // no video at all: poster stays as a static hero background
+    wrapper.style.height = '92vh';
+    if(copy2) copy2.style.display = 'none';
+    return;
+  }
+
+  if(tooNarrow){
+    // mobile: seeking on every scroll frame is expensive and often janky on
+    // phone browsers, so skip scroll-scrubbing but still play the clip as a
+    // simple autoplay/loop background — much cheaper than per-frame seeks
+    wrapper.style.height = '92vh';
+    if(copy2) copy2.style.display = 'none';
+    video.loop = true;
+    video.muted = true;              // required for autoplay to be permitted at all
+    video.setAttribute('playsinline', '');
+
+    function revealVideo(){ video.classList.add('is-ready'); }
+    // The video may already have buffered before this script ran, in which
+    // case 'loadeddata' has been and gone — so check readyState directly
+    // instead of relying solely on catching the event.
+    if(video.readyState >= 2){ revealVideo(); }
+    else { video.addEventListener('loadeddata', revealVideo, {once:true}); }
+
+    function tryPlay(){
+      var p = video.play();
+      if(p && p.catch){ p.catch(function(){ /* still blocked; a later gesture may succeed */ }); }
+    }
+    tryPlay();
+    // Mobile browsers refuse autoplay until the visitor has interacted with
+    // the page. On first load the entrance gate is covering everything, so
+    // the initial attempt above always fails there — retry once the gate is
+    // clicked away, and again on the first touch/scroll as a fallback for
+    // repeat visits where the gate is skipped entirely.
+    window.addEventListener('delta-gate-dismissed', tryPlay);
+    ['touchstart','scroll','click'].forEach(function(evt){
+      window.addEventListener(evt, function once(){
+        window.removeEventListener(evt, once);
+        tryPlay();
+      }, {passive:true});
+    });
+    return;
+  }
+
+  var ready = false;
+  var duration = 0;
+  var ticking = false;
+
+  video.addEventListener('loadedmetadata', function(){
+    duration = video.duration || 8;
+    ready = true;
+    video.classList.add('is-ready');
+  }, {once:true});
+
+  function clamp01(n){ return Math.min(1, Math.max(0, n)); }
+
+  function update(){
+    ticking = false;
+    if(!ready) return;
+
+    var rect = wrapper.getBoundingClientRect();
+    var scrollable = wrapper.offsetHeight - window.innerHeight;
+    var progress = scrollable > 0 ? (-rect.top) / scrollable : 0;
+    progress = clamp01(progress);
+
+    var targetTime = progress * duration;
+    if(Math.abs(video.currentTime - targetTime) > 0.03){
+      video.currentTime = targetTime;
+    }
+
+    if(copy){
+      // first text: fully visible, then exits upward between 8%-24% scroll
+      var outP = clamp01((progress - 0.08) / 0.16);
+      copy.style.opacity = 1 - outP;
+      copy.style.transform = 'translateY(' + (-outP * 36) + 'px)';
+    }
+
+    if(copy2){
+      // second text: enters from the left between 30%-50% scroll, holds after
+      var inP = clamp01((progress - 0.30) / 0.20);
+      copy2.style.opacity = inP;
+      copy2.style.transform = 'translateY(-50%) translateX(' + ((1 - inP) * -28) + 'px)';
+    }
+  }
+
+  function onScroll(){
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  // Desktop scroll-scrubbing seeks through the whole clip, so it does need the
+  // full file buffered. The markup only asks for metadata (to keep the initial
+  // mobile download small) — upgrade it here, on the desktop path only.
+  video.preload = 'auto';
+  video.load();
+})();
+</script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+
+  if(reducedMotion || typeof gsap === 'undefined'){
+    // no GSAP or motion disabled: just show everything, no animation
+    revealEls.forEach(function(el){ el.style.opacity = 1; el.style.transform = 'none'; });
+  } else {
+    gsap.registerPlugin(ScrollTrigger);
+    revealEls.forEach(function(el, i){
+      gsap.fromTo(el,
+        {opacity:0, y:28, filter:'blur(6px)'},
+        {
+          opacity:1, y:0, filter:'blur(0px)',
+          duration:0.9, ease:'power3.out',
+          scrollTrigger:{trigger:el, start:'top 88%', toggleActions:'play none none none'}
+        }
+      );
+    });
+  }
+})();
+
+const gulfMap = document.querySelector('.gulf-map');
+if(gulfMap){
+  const mapIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        gulfMap.classList.add('is-visible');
+        mapIo.unobserve(gulfMap);
+      }
+    });
+  }, {threshold:0.3});
+  mapIo.observe(gulfMap);
+}
+</script>
+
+<script src="vendor/three.min.js"></script>
+<script src="vendor/GLTFLoader.js"></script>
+<script>
+(function(){
+  var wrapper = document.getElementById('performance');
+  var pin = wrapper ? wrapper.querySelector('.perf-pin') : null;
+  var canvas = document.getElementById('perf-canvas');
+  if(!wrapper || !canvas || typeof THREE === 'undefined') return;
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+  var saveData = conn && (conn.saveData || /2g/.test(conn.effectiveType || ''));
+  var isMobile = window.innerWidth < 760 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+  var lowPower = reducedMotion || saveData || isMobile;
+
+  var STAGE_COUNT = 4;
+  var stages = Array.prototype.slice.call(wrapper.querySelectorAll('.perf-stage'));
+  var ticks = Array.prototype.slice.call(wrapper.querySelectorAll('.perf-rail .tick'));
+
+  // Scene palette: the tunnel is a real WebGL render, so unlike the hero
+  // video it CAN genuinely relight for the active theme rather than just
+  // matching text colors around a fixed dark backdrop. Read once at init —
+  // the brand red accent (electricColor, defined below) stays identical in
+  // both themes for consistency.
+  var isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+  var scenePalette = isLightTheme ? {
+    bg: 0xece9e3,
+    fogDensity: 0.03,
+    ambient: 0xcac6bf,
+    ambientIntensity: 1.3,
+    rim: 0x9a958c,
+    lineNeutral: 0x57534c,
+    waypointBase: 0xe9e6e0,
+    waypointOpacity: 0.85,
+    edgeColor: 0x2a2724,
+    gridMain: 0xc4c0b8,
+    gridSec: 0xdcd9d2
+  } : {
+    bg: 0x08090b,
+    fogDensity: 0.028,
+    ambient: 0x2a2d31,
+    ambientIntensity: 1.2,
+    rim: 0x7d8890,
+    lineNeutral: 0x8a8f96,
+    waypointBase: 0x14171b,
+    waypointOpacity: 0.9,
+    edgeColor: 0xffffff,
+    gridMain: 0x2a2d31,
+    gridSec: 0x1a1c1f
+  };
+
+  /* ---------------- Three.js scene ---------------- */
+  var scene = new THREE.Scene();
+  var electricColor = 0xff2d55;
+  scene.fog = new THREE.FogExp2(scenePalette.bg, scenePalette.fogDensity);
+
+  var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 300);
+  camera.position.set(0, 0, 40);
+
+  var renderer;
+  try{
+    renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: !lowPower, alpha:false, powerPreference: lowPower ? 'low-power' : 'high-performance'});
+  } catch(e){ return; }
+  // GLTF models are authored expecting sRGB output. Three.js r128 defaults
+  // the renderer to Linear encoding, which renders loaded models massively
+  // oversaturated and blown out (this was the cause of the basketball
+  // rendering as a garbled red mess). GLTFLoader already tags its textures
+  // as sRGB — the renderer just has to match.
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 1.75));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(scenePalette.bg, 1);
+
+  // ---- Ambient + key light ----
+  var ambient = new THREE.AmbientLight(scenePalette.ambient, scenePalette.ambientIntensity);
+  scene.add(ambient);
+  var keyLight = new THREE.PointLight(electricColor, 0.6, 140, 2);
+  keyLight.position.set(0, 6, 30);
+  scene.add(keyLight);
+  var rimLight = new THREE.DirectionalLight(scenePalette.rim, 0.5);
+  rimLight.position.set(-20, 30, 10);
+  scene.add(rimLight);
+
+  // ---- Diagonal speed-line tunnel ----
+  var lineGroup = new THREE.Group();
+  scene.add(lineGroup);
+  var LINE_COUNT = isMobile ? 32 : (lowPower ? 60 : 160);
+  var lineMat = new THREE.LineBasicMaterial({color:scenePalette.lineNeutral, transparent:true, opacity:0.35});
+  var lineMatAccent = new THREE.LineBasicMaterial({color:electricColor, transparent:true, opacity:0.5});
+  var lineSpans = [];
+  for(var i=0;i<LINE_COUNT;i++){
+    var radius = 8 + Math.random()*22;
+    var angle = Math.random()*Math.PI*2;
+    var z0 = -Math.random()*260;
+    var len = 4 + Math.random()*10;
+    var diag = (Math.random()-0.5)*6;
+    var x = Math.cos(angle)*radius;
+    var y = Math.sin(angle)*radius;
+    var geo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(x, y, z0),
+      new THREE.Vector3(x+diag, y+diag*0.6, z0+len)
+    ]);
+    var mat = (i % 7 === 0) ? lineMatAccent : lineMat;
+    var line = new THREE.Line(geo, mat);
+    lineGroup.add(line);
+    lineSpans.push({line:line, baseZ:z0, radius:radius, angle:angle});
+  }
+
+  // ---- Energy particle field ----
+  var PARTICLE_COUNT = isMobile ? 40 : (lowPower ? 90 : 220);
+  var pGeo = new THREE.BufferGeometry();
+  var positions = new Float32Array(PARTICLE_COUNT*3);
+  for(var p=0; p<PARTICLE_COUNT; p++){
+    var pr = 5 + Math.random()*30;
+    var pa = Math.random()*Math.PI*2;
+    positions[p*3]   = Math.cos(pa)*pr;
+    positions[p*3+1] = Math.sin(pa)*pr;
+    positions[p*3+2] = -Math.random()*260;
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  var pMat = new THREE.PointsMaterial({color: electricColor, size: 0.6, transparent:true, opacity:0.55});
+  var particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
+
+  // ---- Training-zone waypoints (one per stage): real models — football,
+  // trophy, camera, basketball, in that order — each with its own fixed,
+  // clean light rig (independent of theme, same reasoning as the closing
+  // section's ball: the model's own colors don't change with the site
+  // theme, so its lighting shouldn't either). Async-loaded; mobile gets
+  // a lightweight placeholder instead of real textured models. ----
+  var waypointZ = [-30, -95, -160, -225];
+  var waypoints = [null, null, null, null];
+  var waypointModelSources = ['models/football.glb', 'models/trophy.glb', 'models/camera.glb', 'models/basketball.glb'];
+
+  function placeTunnelWaypoint(model, index){
+    var box = new THREE.Box3().setFromObject(model);
+    var size = new THREE.Vector3();
+    box.getSize(size);
+    var center = new THREE.Vector3();
+    box.getCenter(center);
+    model.position.sub(center);
+
+    var maxDim = Math.max(size.x, size.y, size.z) || 1;
+    var targetSize = 9;
+    var group = new THREE.Group();
+    group.add(model);
+    var baseScale = targetSize / maxDim;
+    group.userData.baseScale = baseScale;
+    group.scale.setScalar(baseScale);
+    group.position.set((index % 2 === 0 ? -9 : 9), 0, waypointZ[index]);
+    scene.add(group);
+
+    // Per-model light rigs. The football (index 0) uses the same rig this
+    // model has always had in the closing section — its "original" lighting.
+    // The other three keep the current shared values.
+    var footballRig = {key: 1.8, fillSky: 0xffffff, fillGround: 0x2c2e30, fill: 0.75, rim: 2.1, rimDist: 13};
+    var defaultRig  = {key: 1.6, fillSky: 0xffffff, fillGround: 0x33363a, fill: 0.85, rim: 1.1, rimDist: 22};
+    var rig = (index === 0) ? footballRig : defaultRig;
+
+    var key = new THREE.DirectionalLight(0xffffff, rig.key);
+    key.position.set(3, 5, 4);
+    group.add(key);
+    var fill = new THREE.HemisphereLight(rig.fillSky, rig.fillGround, rig.fill);
+    group.add(fill);
+    var rim = new THREE.PointLight(electricColor, rig.rim, rig.rimDist, 2);
+    rim.position.set(-3, 2, -3);
+    group.add(rim);
+
+    // invisible hit proxy — a simple sphere covering the model, slightly
+    // oversized. Clicking is raycast against this instead of the detailed
+    // mesh, so grabbing a model stays easy the whole time it's on screen
+    // rather than only when it's close enough to be a big precise target.
+    var proxyRadius = (maxDim / 2) * 1.45;
+    var proxy = new THREE.Mesh(
+      new THREE.SphereGeometry(proxyRadius, 12, 12),
+      new THREE.MeshBasicMaterial({transparent:true, opacity:0, depthWrite:false})
+    );
+    group.add(proxy);
+    group.userData.hitProxy = proxy;
+
+    waypoints[index] = group;
+  }
+
+  // Models still load on mobile (only reduced-motion or an explicit data-saver
+  // connection falls back to placeholders) — but the download is deferred until
+  // the visitor is actually approaching this section. Fetching ~2MB of GLB
+  // during initial page load competes with the hero video for bandwidth and is
+  // the main reason the page felt slow to become usable on phones.
+  var skipRealModels = reducedMotion || saveData;
+  if(!skipRealModels && typeof THREE.GLTFLoader !== 'undefined'){
+    var modelsRequested = false;
+    function loadTunnelModels(){
+      if(modelsRequested) return;
+      modelsRequested = true;
+      var tunnelGltfLoader = new THREE.GLTFLoader();
+      waypointModelSources.forEach(function(src, index){
+        tunnelGltfLoader.load(
+          src,
+          function(gltf){ placeTunnelWaypoint(gltf.scene, index); },
+          undefined,
+          function(err){ /* failed to load — that waypoint just stays empty */ }
+        );
+      });
+    }
+    if('IntersectionObserver' in window){
+      // rootMargin gives a generous head start so models are ready by the time
+      // the section is actually reached, rather than popping in late
+      var modelObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            loadTunnelModels();
+            modelObserver.disconnect();
+          }
+        });
+      }, {rootMargin: '200% 0px'});
+      modelObserver.observe(wrapper);
+    } else {
+      loadTunnelModels(); // no observer support — just load them
+    }
+  } else {
+    // mobile / low-power: skip real-model loading and use a lightweight
+    // placeholder so the tunnel still has waypoint markers
+    for(var w=0; w<STAGE_COUNT; w++){
+      var placeholderMat = new THREE.MeshStandardMaterial({
+        color: scenePalette.waypointBase, emissive: electricColor, emissiveIntensity: 0.15,
+        roughness:0.4, metalness:0.6
+      });
+      var placeholderGeo = new THREE.IcosahedronGeometry(6, 0);
+      var placeholder = new THREE.Mesh(placeholderGeo, placeholderMat);
+      var group = new THREE.Group();
+      group.add(placeholder);
+      group.userData.baseScale = 1;
+      group.userData.placeholderMaterial = placeholderMat;
+      group.position.set((w%2===0? -9: 9), 0, waypointZ[w]);
+      scene.add(group);
+      waypoints[w] = group;
+    }
+  }
+
+  // ---- Floor grid for forward-motion cue ----
+  var grid = new THREE.GridHelper(400, 40, scenePalette.gridMain, scenePalette.gridSec);
+  grid.position.y = -16;
+  grid.material.transparent = true;
+  grid.material.opacity = 0.35;
+  scene.add(grid);
+
+  function onResize(){
+    var w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+  window.addEventListener('resize', onResize);
+
+  /* ---------------- Scroll-driven progress ---------------- */
+  var targetCamZ = 40;
+  var currentCamZ = 40;
+  var progress = 0;
+
+  function clamp01(n){ return Math.min(1, Math.max(0, n)); }
+
+  function computeProgress(){
+    var rect = wrapper.getBoundingClientRect();
+    var scrollable = wrapper.offsetHeight - window.innerHeight;
+    var p = scrollable > 0 ? (-rect.top) / scrollable : 0;
+    return clamp01(p);
+  }
+
+  function updateStages(p){
+    var per = 1 / STAGE_COUNT;
+    var activeIndex = Math.min(STAGE_COUNT-1, Math.floor(p / per));
+
+    stages.forEach(function(stage, idx){
+      var start = idx * per;
+      var end = start + per;
+      var fadeIn = clamp01((p - start) / (per*0.28));
+      var fadeOut = clamp01((p - (end - per*0.28)) / (per*0.28));
+      var local = fadeIn - fadeOut;
+      local = clamp01(local);
+      // hold fully visible mid-stage
+      if(p >= start + per*0.28 && p <= end - per*0.28){ local = 1; }
+
+      stage.style.opacity = local;
+      var dir = stage.classList.contains('stage-align-right') ? 1 : -1;
+      var slide = (1 - local) * 26 * dir;
+      stage.style.transform = 'translateX(' + slide + 'px)';
+      stage.style.pointerEvents = local > 0.5 ? 'auto' : 'none';
+    });
+
+    ticks.forEach(function(t, idx){
+      t.classList.toggle('is-active', idx === activeIndex);
+    });
+  }
+
+  function updateScene(p){
+    // camera dolly: forward through the tunnel across full scroll range
+    targetCamZ = 40 - p * 250;
+
+    // light intensity pulses brighter near each waypoint, dims between
+    var per = 1/STAGE_COUNT;
+    var stageP = (p % per) / per;
+    var proximity = 1 - Math.abs(stageP - 0.5) * 2; // peaks mid-stage
+    keyLight.intensity = 0.5 + proximity * 1.4;
+    ambient.intensity = 1.0 + proximity * 0.5;
+
+    // fog thins slightly as "speed" increases mid-scroll for a depth/clarity shift
+    scene.fog.density = scenePalette.fogDensity + 0.004 - proximity * 0.01;
+
+    waypoints.forEach(function(wp, idx){
+      if(!wp) return; // model hasn't finished loading yet
+      var dz = camera.position.z - wp.position.z;
+      var dist = Math.abs(dz);
+      // gentler size falloff than before — models stay reasonably large
+      // (and therefore grabbable) the whole time they're on screen instead
+      // of shrinking to a tiny, hard-to-hit target when further away
+      var scale = THREE.MathUtils.clamp(1.35 - dist/110, 0.8, 1.45);
+      wp.scale.setScalar(scale * (wp.userData.baseScale || 1));
+      // once a visitor has manually dragged a model, its idle auto-rotation
+      // stops for good — their chosen orientation sticks instead of the
+      // model drifting back into a spin on the next scroll event
+      if(wp === draggedWaypoint || manuallyRotated[idx]) return;
+      wp.rotation.y += 0.0015 * (idx%2===0?1:-1);
+      wp.rotation.x += 0.0008;
+    });
+  }
+
+  /* ---------------- Render loop (paused when off-screen) ---------------- */
+  var clock = new THREE.Clock();
+  var sectionVisible = true;
+  var loopRunning = false;
+
+  var visIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      sectionVisible = e.isIntersecting;
+      if(sectionVisible && !loopRunning){
+        loopRunning = true;
+        clock.getDelta(); // discard the stale gap since the loop last ran
+        requestAnimationFrame(animate);
+      }
+    });
+  }, {threshold: 0.01});
+  visIo.observe(wrapper);
+
+  function animate(){
+    if(!sectionVisible){ loopRunning = false; return; } // stop scheduling; observer restarts it later
+    requestAnimationFrame(animate);
+    var dt = clock.getDelta();
+
+    // smooth camera dolly toward scroll-driven target
+    currentCamZ += (targetCamZ - currentCamZ) * Math.min(1, dt*4);
+    camera.position.z = currentCamZ;
+    keyLight.position.z = currentCamZ - 10;
+
+    // gentle ambient life: rotate tunnel + particles slowly
+    lineGroup.rotation.z += 0.0006;
+    particles.rotation.z -= 0.0004;
+
+    renderer.render(scene, camera);
+  }
+
+  function applyScroll(){
+    scrollTicking = false;
+    progress = computeProgress();
+    updateStages(progress);
+    updateScene(progress);
+  }
+
+  var scrollTicking = false;
+  function onScroll(){
+    // Throttle to one update per animation frame. Scroll events fire far more
+    // often than the screen refreshes (especially on phones), and each update
+    // reads layout then writes styles across every stage — doing that per
+    // event rather than per frame is wasted work and visible jank.
+    if(!scrollTicking){
+      scrollTicking = true;
+      requestAnimationFrame(applyScroll);
+    }
+  }
+
+  /* ---------------- Click-and-drag rotation for waypoint models ----------------
+     Click any model (football, trophy, camera, basketball) and drag to spin
+     it manually — separate from the automatic idle rotation, which pauses
+     for that specific model while the visitor is actively dragging it.
+     Declared here, before the first onScroll() call below, since that call
+     runs synchronously and updateScene() already reads these variables. */
+  var raycaster = new THREE.Raycaster();
+  var pointerNDC = new THREE.Vector2();
+  var draggedWaypoint = null;
+  var dragLast = {x:0, y:0};
+  var manuallyRotated = {}; // once a model's been dragged, stop its idle auto-rotation for good
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  applyScroll(); // set initial state synchronously, before the first render
+  loopRunning = true;
+  animate();
+
+  function getWaypointAtPointer(clientX, clientY){
+    var rect = canvas.getBoundingClientRect();
+    pointerNDC.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    pointerNDC.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointerNDC, camera);
+
+    // test against the simple invisible proxy spheres rather than the
+    // detailed model meshes — far more forgiving, and works consistently
+    // from the moment a model appears until it leaves the view
+    var proxies = [];
+    var proxyToGroup = new Map();
+    waypoints.forEach(function(wp){
+      if(wp && wp.userData.hitProxy){
+        proxies.push(wp.userData.hitProxy);
+        proxyToGroup.set(wp.userData.hitProxy, wp);
+      }
+    });
+    if(!proxies.length) return null;
+
+    var hits = raycaster.intersectObjects(proxies, false);
+    if(!hits.length) return null;
+    return proxyToGroup.get(hits[0].object) || null;
+  }
+
+  canvas.addEventListener('mousedown', function(e){
+    var wp = getWaypointAtPointer(e.clientX, e.clientY);
+    if(wp){
+      draggedWaypoint = wp;
+      dragLast.x = e.clientX; dragLast.y = e.clientY;
+      canvas.style.cursor = 'grabbing';
+      e.preventDefault();
+    }
+  });
+
+  window.addEventListener('mousemove', function(e){
+    if(draggedWaypoint){
+      var dx = e.clientX - dragLast.x;
+      var dy = e.clientY - dragLast.y;
+      draggedWaypoint.rotation.y += dx * 0.012;
+      draggedWaypoint.rotation.x += dy * 0.012;
+      dragLast.x = e.clientX; dragLast.y = e.clientY;
+      return;
+    }
+    // hover affordance — show a grab cursor over draggable models even before clicking
+    var hovered = getWaypointAtPointer(e.clientX, e.clientY);
+    canvas.style.cursor = hovered ? 'grab' : '';
+  });
+
+  function endDrag(){
+    if(draggedWaypoint){
+      manuallyRotated[waypoints.indexOf(draggedWaypoint)] = true;
+      draggedWaypoint = null;
+      canvas.style.cursor = '';
+    }
+  }
+  window.addEventListener('mouseup', endDrag);
+  canvas.addEventListener('mouseleave', function(){
+    if(!draggedWaypoint) canvas.style.cursor = '';
+  });
+
+  // touch support — same drag-to-rotate, one finger
+  canvas.addEventListener('touchstart', function(e){
+    if(!e.touches || !e.touches[0]) return;
+    var t = e.touches[0];
+    var wp = getWaypointAtPointer(t.clientX, t.clientY);
+    if(wp){
+      draggedWaypoint = wp;
+      dragLast.x = t.clientX; dragLast.y = t.clientY;
+    }
+  }, {passive:true});
+  canvas.addEventListener('touchmove', function(e){
+    if(draggedWaypoint && e.touches && e.touches[0]){
+      var t = e.touches[0];
+      var dx = t.clientX - dragLast.x, dy = t.clientY - dragLast.y;
+      draggedWaypoint.rotation.y += dx * 0.012;
+      draggedWaypoint.rotation.x += dy * 0.012;
+      dragLast.x = t.clientX; dragLast.y = t.clientY;
+    }
+  }, {passive:true});
+  canvas.addEventListener('touchend', endDrag);
+
+  // live palette swap when the theme toggle is used — recomputes the same
+  // scenePalette this scene was built from and pushes the new colors into
+  // every material/light already created, so the tunnel actually relights
+  // instead of waiting for a page reload to catch up with the toggle
+  window.addEventListener('delta-theme-change', function(e){
+    var lightNow = e.detail.theme === 'light';
+    var p = lightNow ? {
+      bg: 0xece9e3, fogDensity: 0.03, ambient: 0xcac6bf, ambientIntensity: 1.3,
+      rim: 0x9a958c, lineNeutral: 0x57534c, waypointBase: 0xe9e6e0,
+      waypointOpacity: 0.85, edgeColor: 0x2a2724, gridMain: 0xc4c0b8, gridSec: 0xdcd9d2
+    } : {
+      bg: 0x08090b, fogDensity: 0.028, ambient: 0x2a2d31, ambientIntensity: 1.2,
+      rim: 0x7d8890, lineNeutral: 0x8a8f96, waypointBase: 0x14171b,
+      waypointOpacity: 0.9, edgeColor: 0xffffff, gridMain: 0x2a2d31, gridSec: 0x1a1c1f
+    };
+    scenePalette = p;
+    renderer.setClearColor(p.bg, 1);
+    scene.fog.color.setHex(p.bg);
+    ambient.color.setHex(p.ambient);
+    ambient.intensity = p.ambientIntensity;
+    rimLight.color.setHex(p.rim);
+    lineMat.color.setHex(p.lineNeutral);
+
+    // GridHelper bakes its two colors into per-vertex color attributes at
+    // construction time — there's no material.color to update live, so the
+    // correct fix is to swap the object rather than mutate a nonexistent property
+    scene.remove(grid);
+    grid.geometry.dispose();
+    grid.material.dispose();
+    grid = new THREE.GridHelper(400, 40, p.gridMain, p.gridSec);
+    grid.position.y = -16;
+    grid.material.transparent = true;
+    grid.material.opacity = 0.35;
+    scene.add(grid);
+
+    waypoints.forEach(function(wp){
+      if(!wp) return;
+      // real GLTF models (football/trophy/camera/basketball) keep their own
+      // textures and colors regardless of theme, same reasoning as the
+      // closing section's ball — only the mobile placeholder (a plain
+      // colored shape, not a real model) responds to the theme swap
+      if(wp.userData.placeholderMaterial){
+        wp.userData.placeholderMaterial.color.setHex(p.waypointBase);
+      }
+    });
+  });
+})();
+</script>
+
+
+
+<script>
+(function(){
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  var isMobile = window.innerWidth < 760;
+  var veil = document.getElementById('scene-veil');
+
+  /* ============================================================
+     SEAM 1 — Hero video → 3D Performance scene
+     "Entering another dimension": the 3D world grows outward from
+     a single point at screen-center (iris wipe) while the camera
+     that's already dollying forward inside the tunnel keeps moving
+     — so the cut reads as the hero's forward motion continuing
+     through a portal, not a new section starting.
+     ============================================================ */
+  (function heroToPerf(){
+    var heroWrap = document.querySelector('.hero-scroll');
+    var perfPin = document.querySelector('.perf-pin');
+    if(!heroWrap || !perfPin) return;
+
+    gsap.set(perfPin, {clipPath: 'circle(14% at 50% 48%)'});
+
+    gsap.timeline({
+      scrollTrigger:{trigger: heroWrap, start:'bottom bottom', end:'bottom top', scrub:0.5}
+    })
+    .to(perfPin, {clipPath: 'circle(75% at 50% 48%)', ease:'power2.inOut', duration:1}, 0)
+    .fromTo('.perf-vignette', {opacity:0.15}, {opacity:1, ease:'power1.in', duration:1}, 0)
+    .fromTo('#perf-canvas', {filter:'brightness(2.2) saturate(0.4)'}, {filter:'brightness(1) saturate(1)', ease:'power1.out', duration:1}, 0.15);
+  })();
+
+  /* ============================================================
+     SEAM 2 — 3D Performance scene → Services
+     "Built from the scene": a diagonal wipe (matching the perf
+     section's own diagonal-composition language) cuts across as
+     the service cards emerge — each card starts from a shared
+     point low-center (as if assembled from the geometry below),
+     staggered, rotated slightly off-axis, settling into the grid.
+     ============================================================ */
+  (function perfToServices(){
+    var services = document.getElementById('services');
+    var cards = gsap.utils.toArray('#services .card');
+    if(!services) return;
+
+    gsap.set(services, {
+      clipPath: 'polygon(-10% 110%, -10% 110%, 110% -10%, 110% -10%)'
+    });
+
+    var master = gsap.timeline({
+      scrollTrigger:{trigger: services, start:'top bottom', end:'top 30%', scrub:0.6}
+    });
+
+    master.to(services, {
+      clipPath: 'polygon(-10% 110%, 0% -10%, 110% -10%, 110% 110%)',
+      ease:'power2.inOut', duration:1
+    }, 0);
+
+    if(veil){
+      master.fromTo(veil, {opacity:0}, {opacity:0.55, ease:'power1.in', duration:0.45}, 0)
+            .to(veil, {opacity:0, ease:'power1.out', duration:0.45}, 0.5);
+    }
+
+    if(cards.length){
+      gsap.set(cards, {transformOrigin:'50% 100%'});
+      master.fromTo(cards,
+        {opacity:0, y:70, scale:0.82, rotate:function(i){ return isMobile ? 0 : (i%2===0 ? -3 : 3); }, filter:'blur(10px)'},
+        {opacity:1, y:0, scale:1, rotate:0, filter:'blur(0px)', ease:'power3.out', stagger:0.09, duration:1},
+        0.25
+      );
+    }
+  })();
+
+  /* ============================================================
+     SEAM 3 — Services → Sectors (map)
+     "Dissolve and reform": outgoing cards shrink/blur/drift upward
+     together (a CSS-only stand-in for a particle dissolve — same
+     visual read, none of the WebGL-particle risk), then the map
+     column reforms from the opposite diagonal with a matching
+     blur-in, so motion direction carries through the cut.
+     ============================================================ */
+  (function servicesToSectors(){
+    var sectors = document.getElementById('sectors');
+    var outgoingCards = gsap.utils.toArray('#services .card');
+    var sectorCards = gsap.utils.toArray('#sectors .sector');
+    var mapEl = document.querySelector('.operate-map');
+    if(!sectors) return;
+
+    var master = gsap.timeline({
+      scrollTrigger:{trigger: sectors, start:'top 85%', end:'top 20%', scrub:0.6}
+    });
+
+    if(outgoingCards.length){
+      master.to(outgoingCards, {
+        opacity:0.15, y:-34, scale:0.94, filter:'blur(6px)',
+        ease:'power1.in', stagger:0.03, duration:0.6
+      }, 0);
+    }
+
+    if(sectorCards.length){
+      gsap.set(sectorCards, {transformOrigin:'0% 50%'});
+      master.fromTo(sectorCards,
+        {opacity:0, x:-36, filter:'blur(8px)'},
+        {opacity:1, x:0, filter:'blur(0px)', ease:'power3.out', stagger:0.1, duration:1},
+        0.35
+      );
+    }
+
+    if(mapEl){
+      master.fromTo(mapEl,
+        {opacity:0, x:36, scale:0.94, filter:'blur(10px)'},
+        {opacity:1, x:0, scale:1, filter:'blur(0px)', ease:'power3.out', duration:1},
+        0.4
+      );
+    }
+  })();
+
+  /* ============================================================
+     Partners & Sponsors — the section fades/focuses into view as a
+     whole (matching the same materialize language used at the other
+     seams), then the individual logo cards emerge staggered from below
+     with a blur-to-sharp focus pull. The infinite scroll (CSS animation)
+     keeps running underneath the whole time — this only governs the
+     one-time entrance, not the marquee itself.
+     ============================================================ */
+  (function partnersEntrance(){
+    var partners = document.getElementById('partners');
+    var head = partners ? partners.querySelector('.partners-head') : null;
+    var marquee = partners ? partners.querySelector('.partners-marquee') : null;
+    var cards = partners ? gsap.utils.toArray('#partners .partner-card').slice(0, 8) : []; // first pass only — the duplicated set for seamless looping doesn't need its own entrance
+    if(!partners) return;
+
+    var tl = gsap.timeline({
+      scrollTrigger:{trigger: partners, start:'top 82%', end:'top 40%', scrub:0.6}
+    });
+
+    if(head){
+      tl.fromTo(head, {opacity:0, y:24, filter:'blur(8px)'}, {opacity:1, y:0, filter:'blur(0px)', ease:'power3.out', duration:1}, 0);
+    }
+    if(marquee){
+      tl.fromTo(marquee, {opacity:0, scale:0.97}, {opacity:1, scale:1, ease:'power2.out', duration:1}, 0.1);
+    }
+    if(cards.length){
+      tl.fromTo(cards,
+        {opacity:0, y:26, filter:'blur(6px)'},
+        {opacity:1, y:0, filter:'blur(0px)', ease:'power3.out', stagger:0.06, duration:0.9},
+        0.2
+      );
+    }
+  })();
+
+  // subtle diagonal drift on section headings as they enter — echoes the
+  // hero's diagonal-composition language rather than a flat vertical scroll
+  document.querySelectorAll('.section-head, .operate-content').forEach(function(head){
+    gsap.fromTo(head,
+      {x:-24, opacity:0.001},
+      {
+        x:0, opacity:1, ease:'power2.out',
+        scrollTrigger:{trigger:head, start:'top 90%', end:'top 55%', scrub:0.5}
+      }
+    );
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('theme-toggle-btn');
+  if(!btn) return;
+
+  btn.addEventListener('click', function(){
+    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    var newTheme;
+    if(isLight){
+      document.documentElement.removeAttribute('data-theme');
+      newTheme = 'dark';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      newTheme = 'light';
+    }
+    try{ localStorage.setItem('delta-theme', newTheme); } catch(e){}
+    window.dispatchEvent(new CustomEvent('delta-theme-change', {detail:{theme:newTheme}}));
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var section = document.getElementById('athlete-finale');
+  var canvas = document.getElementById('athlete-canvas');
+  if(!section || !canvas) return;
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+  var saveData = conn && (conn.saveData || /2g/.test(conn.effectiveType || ''));
+  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  var isMobile = window.innerWidth < 760 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+  var lowPower = reducedMotion || saveData;
+
+  var hasWebGL = (function(){
+    try{
+      var c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch(e){ return false; }
+  })();
+
+  /* ---------------- Typography reveal (works regardless of the 3D scene) ---------------- */
+  function revealTypography(){
+    var lines = section.querySelectorAll('.af-line');
+    var sub = section.querySelector('.athlete-sub');
+    var cta = section.querySelector('.athlete-cta');
+
+    if(reducedMotion || typeof gsap === 'undefined'){
+      return; // default CSS state is already fully visible — nothing to do
+    }
+
+    gsap.set(lines, {opacity:0, y:'0.5em', filter:'blur(6px)'});
+    gsap.set([sub, cta], {opacity:0, y:14});
+
+    var tl = gsap.timeline({
+      scrollTrigger: (typeof ScrollTrigger !== 'undefined')
+        ? {trigger: section, start:'top 70%', toggleActions:'play none none none'}
+        : undefined
+    });
+    tl.to(lines, {opacity:1, y:'0em', filter:'blur(0px)', duration:0.9, ease:'power3.out', stagger:0.12})
+      .to(sub, {opacity:1, y:0, duration:0.7, ease:'power2.out'}, '-=0.5')
+      .to(cta, {opacity:1, y:0, duration:0.6, ease:'power2.out'}, '-=0.45');
+  }
+  revealTypography();
+
+  if(reducedMotion || saveData || !hasWebGL || typeof THREE === 'undefined'){
+    return; // static gradient fallback (.athlete-particles-fallback) stays visible, no 3D
+  }
+
+  /* ---------------- Lazy init: build the scene only once this section nears the viewport ---------------- */
+  var built = false;
+  var lazyIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !built){
+        built = true;
+        buildScene();
+        lazyIo.disconnect();
+      }
+    });
+  }, {rootMargin:'400px 0px'});
+  lazyIo.observe(section);
+
+  function buildScene(){
+    var isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+    var palette = isLightTheme
+      ? {bg: 0xece9e3, particleNeutral: 0xff2d55}
+      : {bg: 0x040506, particleNeutral: 0x8a8f96};
+    var electricColor = 0xff2d55;
+
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(palette.bg, 0.022);
+    var camera = new THREE.PerspectiveCamera(45, section.clientWidth / section.clientHeight, 0.1, 100);
+    camera.position.set(0, 1.2, 13);
+    camera.lookAt(0, 0.5, 0);
+
+    var renderer;
+    try{
+      renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: !lowPower && !isMobile, alpha:false, powerPreference: (lowPower||isMobile) ? 'low-power' : 'high-performance'});
+    } catch(e){ return; }
+    renderer.outputEncoding = THREE.sRGBEncoding; // match GLTF's expected sRGB output (see tunnel section note)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.75));
+    renderer.setSize(section.clientWidth, section.clientHeight);
+    renderer.setClearColor(palette.bg, 1);
+
+    /* ---------------- Cursor-reactive wave field ----------------
+       A dot-grid plane (same visual language as the Gulf map and tunnel
+       waypoints — faceted/wireframe, not solid-shaded) whose vertices
+       ripple in real time based on distance from the cursor, plus a
+       constant slow ambient swell so it's never static. Cursor position
+       is tracked in the plane's own local X/Y units directly (no raycast
+       needed since the plane directly faces the camera), then every
+       vertex computes its height from: ambient sine swell + a
+       cursor-centered ripple that falls off with distance. ---------------- */
+    var WAVE_COLS = isMobile ? 44 : 88;
+    var WAVE_ROWS = isMobile ? 26 : 52;
+    var waveWidth = 15, waveDepth = 9;
+    var waveGeo = new THREE.PlaneGeometry(waveWidth, waveDepth, WAVE_COLS, WAVE_ROWS);
+    waveGeo.rotateX(-Math.PI/2.6);
+    var waveBasePositions = waveGeo.attributes.position.array.slice();
+
+    // additive blending glows beautifully on a dark backdrop, but on a
+    // light backdrop it adds toward white instead of reading as color —
+    // even solid red particles wash out to a faint pink. Light theme
+    // needs normal blending (paints the actual color) plus more opacity.
+    var particleBlending = isLightTheme ? THREE.NormalBlending : THREE.AdditiveBlending;
+
+    var waveMat = new THREE.PointsMaterial({
+      color: electricColor, size: isMobile ? 0.032 : 0.026,
+      transparent:true, opacity: isLightTheme ? 0.85 : 0.5,
+      blending: particleBlending, depthWrite:false
+    });
+    var waveNeutralMat = new THREE.PointsMaterial({
+      color: palette.particleNeutral, size: isMobile ? 0.026 : 0.02,
+      transparent:true, opacity: isLightTheme ? 0.8 : 0.4,
+      blending: particleBlending, depthWrite:false
+    });
+    // two overlapping point layers sharing the same base geometry: a
+    // denser neutral layer for field texture, plus a dimmer red-accent
+    // layer on top for a subtle glow — both ripple identically since they
+    // share the same underlying vertex data
+    var waveMesh = new THREE.Points(waveGeo, waveNeutralMat);
+    waveMesh.position.set(0, -1.6, -1.5);
+    scene.add(waveMesh);
+
+    var accentGeo = waveGeo.clone();
+    var waveAccent = new THREE.Points(accentGeo, waveMat);
+    waveAccent.position.copy(waveMesh.position);
+    scene.add(waveAccent);
+
+    // sparse diagonal speed-lines — same motion-cue language as the tunnel
+    // section, so "athletic motion depth" reads as part of the same
+    // design system rather than a new idea introduced late
+    var streakGroup = new THREE.Group();
+    var streakMat = new THREE.LineBasicMaterial({color: electricColor, transparent:true, opacity: isLightTheme ? 0.5 : 0.22});
+    var streakMatNeutral = new THREE.LineBasicMaterial({color: palette.particleNeutral, transparent:true, opacity: isLightTheme ? 0.4 : 0.16});
+    var STREAK_COUNT = isMobile ? 16 : 34;
+    for(var s=0; s<STREAK_COUNT; s++){
+      var sx = (Math.random()-0.5) * 16;
+      var sy = (Math.random()-0.5) * 8;
+      var sz = -6 - Math.random()*10;
+      var slen = 1.5 + Math.random()*3;
+      var pts = [new THREE.Vector3(sx, sy, sz), new THREE.Vector3(sx+slen*0.5, sy+slen*0.25, sz)];
+      var line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), (s % 5 === 0) ? streakMat : streakMatNeutral);
+      streakGroup.add(line);
+    }
+    scene.add(streakGroup);
+
+    // free-floating ambient particles above the wave field
+    var PARTICLE_COUNT = isMobile ? 100 : (lowPower ? 150 : 280);
+    var pPos = new Float32Array(PARTICLE_COUNT * 3);
+    for(var p=0; p<PARTICLE_COUNT; p++){
+      pPos[p*3]   = (Math.random()-0.5) * 14;
+      pPos[p*3+1] = (Math.random()-0.5) * 9 + 0.5;
+      pPos[p*3+2] = (Math.random()-0.5) * 10 - 2;
+    }
+    var pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    var pMat = new THREE.PointsMaterial({
+      color: electricColor, size:0.045,
+      transparent:true, opacity: isLightTheme ? 0.85 : 0.55,
+      blending: particleBlending, depthWrite:false
+    });
+    var particles = new THREE.Points(pGeo, pMat);
+    scene.add(particles);
+    var pMatBaseOpacity = isLightTheme ? 0.82 : 0.5; // the idle pulse below modulates around this each frame
+
+    /* ---------------- Ball model ----------------
+       A real textured model — unlike the wave/particle field above, this
+       uses lit materials, so it gets its own dedicated light rig. That rig
+       is intentionally fixed/strong regardless of theme: the model's own
+       colors don't change when the site theme changes, only the backdrop
+       behind it does, so lighting tuned to read clearly against a dark
+       backdrop needs to stay just as strong against a light one.
+       Loads on mobile too — only reduced-motion or an explicit data-saver
+       connection falls back to the wave field alone. ---------------- */
+    var athleteModel = null;
+    if(!reducedMotion && !saveData && typeof THREE.GLTFLoader !== 'undefined'){
+      var athleteKey = new THREE.DirectionalLight(0xffffff, 1.8);
+      athleteKey.position.set(5.5, 5.5, 4.5);
+      scene.add(athleteKey);
+      var athleteFill = new THREE.HemisphereLight(0xffffff, 0x2c2e30, 0.75);
+      scene.add(athleteFill);
+      var athleteRim = new THREE.PointLight(electricColor, 2.1, 13, 2);
+      athleteRim.position.set(1, 2.8, -3);
+      scene.add(athleteRim);
+      var athleteBounce = new THREE.PointLight(0xffffff, 0.5, 10, 2);
+      athleteBounce.position.set(4.5, 0.5, 3.5);
+      scene.add(athleteBounce);
+
+      var gltfLoader = new THREE.GLTFLoader();
+      gltfLoader.load(
+        'models/ball.glb',
+        function(gltf){
+          var model = gltf.scene;
+          var box = new THREE.Box3().setFromObject(model);
+          var size = new THREE.Vector3();
+          box.getSize(size);
+          var center = new THREE.Vector3();
+          box.getCenter(center);
+          model.position.sub(center); // ball's own center becomes the group's pivot — it floats, no floor contact to align
+
+          var targetDiameter = 2.6;
+          var maxDim = Math.max(size.x, size.y, size.z) || 1;
+          var scale = targetDiameter / maxDim;
+          var group = new THREE.Group();
+          group.add(model);
+          group.scale.setScalar(scale);
+          group.position.set(3.6, 0.5, 0.2);
+          scene.add(group);
+          athleteModel = group;
+        },
+        undefined,
+        function(err){ /* failed to load — wave/particle field carries the section alone */ }
+      );
+    }
+
+    /* ---------------- Cursor tracking (desktop) / simulated drift (touch) ---------------- */
+    // cursor position mapped directly into the wave plane's local X/Z units
+    var targetCursorX = 0, targetCursorZ = 0;
+    var currentCursorX = 0, currentCursorZ = 0;
+    var targetCamX = 0, targetCamY = 1.2;
+    var currentCamX = 0, currentCamY = 1.2;
+    // the ball spins continuously like a product-showcase piece; cursor
+    // vertical position tilts it, horizontal position speeds up or slows
+    // the spin — reads as "reacting" to the cursor without a "facing"
+    // concept that wouldn't make sense for a ball the way it did for a figure
+    var targetBallTilt = 0, currentBallTilt = 0;
+    var ballSpinSpeed = 0.35;
+
+    if(!isTouch){
+      section.addEventListener('mousemove', function(e){
+        var rect = section.getBoundingClientRect();
+        var nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        var ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+        targetCursorX = nx * (waveWidth/2);
+        targetCursorZ = ny * (waveDepth/2);
+        targetCamX = nx * 0.6;
+        targetCamY = 1.2 - ny * 0.25;
+        targetBallTilt = ny * 0.3;
+        ballSpinSpeed = 0.35 + nx * 0.55;
+      });
+      section.addEventListener('mouseleave', function(){
+        targetCursorX = 0; targetCursorZ = 0;
+        targetCamX = 0; targetCamY = 1.2;
+        targetBallTilt = 0;
+        ballSpinSpeed = 0.35;
+      });
+    }
+
+    function onResize(){
+      var w = section.clientWidth, h = section.clientHeight;
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', onResize);
+
+    /* ---------------- Render loop, paused when off-screen ---------------- */
+    var visible = true;
+    var loopRunning = false;
+    var visIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        visible = e.isIntersecting;
+        if(visible && !loopRunning){ loopRunning = true; animate(); }
+      });
+    }, {threshold: 0.01});
+    visIo.observe(section);
+
+    var clock = new THREE.Clock();
+    var idlePhase = Math.random() * Math.PI * 2;
+    var elapsed = 0;
+
+    function updateWave(){
+      var posAttr = waveGeo.attributes.position;
+      var accentAttr = accentGeo.attributes.position;
+      for(var i=0; i<posAttr.count; i++){
+        var bx = waveBasePositions[i*3];
+        var bz = waveBasePositions[i*3+2];
+        // ambient swell: two overlapping sine waves for a less mechanical motion
+        var swell = Math.sin(bx*0.35 + elapsed*0.6) * 0.13 + Math.sin(bz*0.5 - elapsed*0.45) * 0.09;
+        // cursor ripple: falls off with distance, expands/settles over time
+        var dx = bx - currentCursorX, dz = bz - currentCursorZ;
+        var dist = Math.sqrt(dx*dx + dz*dz);
+        var ripple = Math.exp(-dist*dist/6) * Math.sin(dist*2.4 - elapsed*3.2) * 0.55;
+        var y = swell + ripple;
+        posAttr.setY(i, y);
+        accentAttr.setY(i, y);
+      }
+      posAttr.needsUpdate = true;
+      accentAttr.needsUpdate = true;
+    }
+
+    function animate(){
+      if(!visible){ loopRunning = false; return; }
+      requestAnimationFrame(animate);
+      var dt = clock.getDelta();
+      elapsed += dt;
+      idlePhase += dt * 0.4;
+
+      if(isTouch){
+        // no persistent cursor on touch — simulate a slow drifting focal
+        // point so the field still feels alive and interactive-looking
+        targetCursorX = Math.sin(idlePhase*0.6) * (waveWidth*0.28);
+        targetCursorZ = Math.cos(idlePhase*0.4) * (waveDepth*0.28);
+        targetBallTilt = Math.sin(idlePhase*0.6) * 0.25;
+      }
+
+      currentCursorX += (targetCursorX - currentCursorX) * Math.min(1, dt*2.6);
+      currentCursorZ += (targetCursorZ - currentCursorZ) * Math.min(1, dt*2.6);
+      currentCamX += (targetCamX - currentCamX) * Math.min(1, dt*2.2);
+      currentCamY += (targetCamY - currentCamY) * Math.min(1, dt*2.2);
+      camera.position.x = currentCamX;
+      camera.position.y = currentCamY;
+      // slow, barely-perceptible dolly breathing — keeps the shot from
+      // feeling like a locked-off still frame even when the cursor is idle
+      camera.position.z = 13 + Math.sin(idlePhase*0.35) * 0.35;
+      camera.lookAt(1.1, 0.3, 0);
+
+      if(athleteModel){
+        currentBallTilt += (targetBallTilt - currentBallTilt) * Math.min(1, dt*3.2);
+        athleteModel.rotation.x = currentBallTilt;
+        athleteModel.rotation.y += ballSpinSpeed * dt;
+      }
+
+      updateWave();
+
+      particles.rotation.y += 0.0006;
+      streakGroup.rotation.y += 0.0003;
+
+      var pulse = pMatBaseOpacity + Math.sin(idlePhase*1.6) * 0.12;
+      pMat.opacity = pulse;
+
+      renderer.render(scene, camera);
+    }
+    loopRunning = true;
+    animate();
+
+    requestAnimationFrame(function(){ canvas.classList.add('is-ready'); });
+
+    // live palette swap on theme toggle, matching the tunnel section's approach
+    window.addEventListener('delta-theme-change', function(e){
+      var lightNow = e.detail.theme === 'light';
+      var p = lightNow
+        ? {bg:0xece9e3, particleNeutral:0xff2d55}
+        : {bg:0x040506, particleNeutral:0x8a8f96};
+      renderer.setClearColor(p.bg, 1);
+      waveNeutralMat.color.setHex(p.particleNeutral);
+      streakMatNeutral.color.setHex(p.particleNeutral);
+
+      // additive blending glows on dark but washes to near-white on
+      // light — this is the actual fix, not just the color swap above
+      var newBlending = lightNow ? THREE.NormalBlending : THREE.AdditiveBlending;
+      [waveMat, waveNeutralMat, pMat].forEach(function(mat){
+        mat.blending = newBlending;
+      });
+      waveMat.opacity = lightNow ? 0.85 : 0.5;
+      waveNeutralMat.opacity = lightNow ? 0.8 : 0.4;
+      pMatBaseOpacity = lightNow ? 0.82 : 0.5; // pMat.opacity itself is set every frame by the idle pulse
+      streakMat.opacity = lightNow ? 0.5 : 0.22;
+      streakMatNeutral.opacity = lightNow ? 0.4 : 0.16;
+    });
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var triggers = document.querySelectorAll('a[href="#contact"], #contact');
+  var modal = document.getElementById('contact-modal');
+  if(!modal || !triggers.length) return;
+
+  var panel = modal.querySelector('.contact-modal-panel');
+  var closeBtn = modal.querySelector('.contact-modal-close');
+  var backdrop = modal.querySelector('.contact-modal-backdrop');
+  var form = document.getElementById('contact-form');
+  var body = document.getElementById('contact-modal-body');
+  var success = document.getElementById('contact-success');
+  var successCloseBtn = success ? success.querySelector('.contact-success-close') : null;
+
+  var lastFocused = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function openModal(){
+    lastFocused = document.activeElement;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    var firstInput = form.querySelector('input');
+    if(firstInput) setTimeout(function(){ firstInput.focus(); }, 300);
+  }
+
+  function closeModal(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(lastFocused && lastFocused.focus) lastFocused.focus();
+    // reset back to the form view after the close transition finishes,
+    // so it doesn't flash the success state the next time it opens
+    setTimeout(function(){
+      success.hidden = true;
+      success.classList.remove('is-playing');
+      body.hidden = false;
+      form.reset();
+      var err = document.getElementById('contact-error');
+      if(err) err.hidden = true;
+    }, 400);
+  }
+
+  triggers.forEach(function(t){
+    t.addEventListener('click', function(e){
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  if(closeBtn) closeBtn.addEventListener('click', closeModal);
+  if(backdrop) backdrop.addEventListener('click', closeModal);
+  if(successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+  });
+
+  if(form){
+    // Live Formspree endpoint — submissions go to the connected inbox
+    var FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeajegrb';
+
+    var errorBanner = document.getElementById('contact-error');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      if(!form.checkValidity()){
+        form.reportValidity();
+        if(panel && !reducedMotion){
+          panel.classList.remove('shake');
+          void panel.offsetWidth; // restart the animation if triggered twice in a row
+          panel.classList.add('shake');
+        }
+        return;
+      }
+
+      var submitBtn = form.querySelector('.contact-submit-btn');
+      var label = submitBtn.querySelector('.contact-submit-label');
+      var originalLabel = label.textContent;
+      label.textContent = 'Sending…';
+      submitBtn.disabled = true;
+      if(errorBanner) errorBanner.hidden = true;
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+        .then(function(response){
+          if(response.ok){
+            body.hidden = true;
+            success.hidden = false;
+            success.classList.add('is-playing');
+          } else {
+            return response.json().then(function(data){
+              throw new Error((data && data.errors && data.errors.map(function(x){return x.message;}).join(', ')) || 'Something went wrong.');
+            });
+          }
+        })
+        .catch(function(err){
+          if(errorBanner){
+            errorBanner.textContent = 'Couldn\'t send your message — ' + (err.message || 'please try again in a moment.');
+            errorBanner.hidden = false;
+          }
+        })
+        .finally(function(){
+          label.textContent = originalLabel;
+          submitBtn.disabled = false;
+        });
+    });
+  }
+})();
+</script>
+
+<script>
+// Both themes now play real tracks: dark mode = Henry Neeson — Darkstar,
+// light mode = Rainshow — Listen. Both are routed through the same Web
+// Audio gain graph so switching themes crossfades smoothly between them
+// instead of cutting. Both elements are started playing (at zero gain,
+// inaudible) together on the very first click — that click is the one
+// genuine user gesture browsers require, so once both are running,
+// switching themes afterward only needs a gain change, never a fresh
+// play() call that could otherwise get blocked by autoplay policy.
+(function(){
+  var btn = document.getElementById('sound-toggle-btn');
+  var darkAudioEl = document.getElementById('dark-theme-audio');
+  var lightAudioEl = document.getElementById('light-theme-audio');
+  if(!btn) return;
+
+  var ctx = null, masterGain = null, darkGain = null, lightGain = null;
+  var started = false, soundOn = false;
+
+  function currentTheme(){
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  }
+
+  function applyThemeGains(){
+    if(!ctx) return;
+    var now = ctx.currentTime;
+    var theme = currentTheme();
+    var dTarget = (theme === 'dark' && soundOn) ? 0.55 : 0;
+    var lTarget = (theme === 'light' && soundOn) ? 0.55 : 0;
+    darkGain.gain.setTargetAtTime(dTarget, now, 0.6);
+    lightGain.gain.setTargetAtTime(lTarget, now, 0.6);
+  }
+
+  function routeTrack(context, audioEl, destination){
+    var gain = context.createGain();
+    gain.gain.value = 0;
+    gain.connect(destination);
+    if(audioEl){
+      var source = context.createMediaElementSource(audioEl);
+      source.connect(gain);
+    }
+    return gain;
+  }
+
+  function ensureStarted(){
+    if(started) return;
+    started = true;
+    try{
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = 0;
+      masterGain.connect(ctx.destination);
+
+      darkGain = routeTrack(ctx, darkAudioEl, masterGain);
+      lightGain = routeTrack(ctx, lightAudioEl, masterGain);
+    } catch(e){ /* Web Audio unavailable — toggle stays visual-only */ }
+  }
+
+  btn.addEventListener('click', function(){
+    ensureStarted();
+    soundOn = !soundOn;
+    btn.classList.toggle('is-on', soundOn);
+    btn.setAttribute('aria-label', soundOn ? 'Turn background music off' : 'Turn background music on');
+    try{ localStorage.setItem('delta-sound', soundOn ? 'on' : 'off'); } catch(e){}
+
+    if(ctx){
+      if(ctx.state === 'suspended') ctx.resume();
+      masterGain.gain.setTargetAtTime(soundOn ? 1 : 0, ctx.currentTime, 0.3);
+      applyThemeGains();
+    }
+
+    if(soundOn){
+      // start both tracks together on this click (the one real user
+      // gesture) — gain nodes above control which one is actually audible
+      if(darkAudioEl) darkAudioEl.play().catch(function(){});
+      if(lightAudioEl) lightAudioEl.play().catch(function(){});
+    }
+    // leave both playing silently under their gain nodes when turned off,
+    // so re-toggling resumes instantly with no reload/restart gap
+  });
+
+  window.addEventListener('delta-theme-change', applyThemeGains);
+})();
+</script>
+
+<script>
+(function(){
+  var gate = document.getElementById('entrance-gate');
+  if(!gate || gate.classList.contains('is-hidden')) return; // already dismissed this session
+
+  var canvas = document.getElementById('gate-canvas');
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = window.innerWidth < 760;
+
+  function exitGate(){
+    try{ sessionStorage.setItem('delta-gate-entered', '1'); } catch(e){}
+    gate.classList.add('is-leaving');
+    document.body.style.overflow = '';
+    setTimeout(function(){ gate.classList.add('is-hidden'); }, 950);
+    // Tell the rest of the page that a real user gesture has now happened.
+    // Mobile browsers block video autoplay until the visitor interacts with
+    // the page, and this click is the first interaction there is — the hero
+    // video listens for this to (re)try playback.
+    window.dispatchEvent(new CustomEvent('delta-gate-dismissed'));
+  }
+  gate.addEventListener('click', exitGate);
+  document.addEventListener('keydown', function(e){
+    if((e.key === 'Enter' || e.key === ' ') && !gate.classList.contains('is-hidden')) exitGate();
+  });
+
+  // reduced-motion or no canvas support: static gate, click-to-enter still works
+  if(reducedMotion || !canvas || !canvas.getContext) return;
+
+  var ctx = canvas.getContext('2d');
+  var w, h, dpr;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var COUNT = isMobile ? 120 : 280;
+  var particles = [];
+  var clusterCX = w/2, clusterCY = h*0.46;
+  var clusterR = Math.min(w, h) * 0.4;
+  for(var i=0; i<COUNT; i++){
+    var angle = Math.random()*Math.PI*2;
+    var radiusFactor = (Math.random()+Math.random()+Math.random())/3; // bell-shaped falloff — denser mid-cluster, sparse at center and edges
+    var radius = clusterR * radiusFactor;
+    var px = clusterCX + Math.cos(angle)*radius;
+    var py = clusterCY + Math.sin(angle)*radius;
+    particles.push({
+      x: px, y: py,
+      baseX: px, baseY: py,
+      r: Math.random()*1.7 + 0.7,
+      opacity: 0.5 + Math.random()*0.35,
+      driftPhase: Math.random()*Math.PI*2,
+      driftSpeed: 0.4 + Math.random()*0.5
+    });
+  }
+
+  var mouseX = w/2, mouseY = h/2, mouseActive = false;
+  gate.addEventListener('mousemove', function(e){
+    mouseX = e.clientX; mouseY = e.clientY; mouseActive = true;
+  });
+  gate.addEventListener('mouseleave', function(){ mouseActive = false; });
+  gate.addEventListener('touchmove', function(e){
+    if(e.touches && e.touches[0]){
+      mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; mouseActive = true;
+    }
+  }, {passive:true});
+
+  var pageVisible = true;
+  document.addEventListener('visibilitychange', function(){
+    pageVisible = document.visibilityState === 'visible';
+    if(pageVisible) requestAnimationFrame(draw);
+  });
+
+  var clock = 0;
+  function draw(){
+    if(gate.classList.contains('is-hidden') || !pageVisible) return; // stop the loop once dismissed / tab hidden
+    requestAnimationFrame(draw);
+    clock += 0.016;
+    ctx.clearRect(0, 0, w, h);
+
+    for(var i=0; i<particles.length; i++){
+      var p = particles[i];
+
+      // gentle wobble around the particle's own place in the cluster —
+      // keeps the circular cloud shape intact instead of drifting apart
+      var targetX = p.baseX + Math.sin(clock*p.driftSpeed + p.driftPhase) * 4;
+      var targetY = p.baseY + Math.cos(clock*p.driftSpeed*0.8 + p.driftPhase) * 4;
+
+      if(mouseActive){
+        var dx = targetX - mouseX, dy = targetY - mouseY;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        var radius = 130;
+        if(dist < radius && dist > 0.01){
+          var force = (radius - dist) / radius * 42;
+          targetX += (dx/dist) * force;
+          targetY += (dy/dist) * force;
+        }
+      }
+
+      p.x += (targetX - p.x) * 0.14;
+      p.y += (targetY - p.y) * 0.14;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,45,85,' + p.opacity + ')';
+      ctx.fill();
+    }
+  }
+
+  requestAnimationFrame(function(){
+    canvas.classList.add('is-ready');
+    draw();
+  });
+})();
+</script>
+
+</body>
+</html>
