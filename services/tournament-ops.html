@@ -8,9 +8,10 @@
 <script>
 (function(){
   try{
+    // Dark is the brand default regardless of the visitor's OS setting —
+    // only an explicit toggle choice (saved in localStorage) shows light.
     var saved = localStorage.getItem('delta-theme');
-    var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
   } catch(e){}
 })();
 </script>

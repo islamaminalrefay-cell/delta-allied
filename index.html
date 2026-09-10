@@ -950,13 +950,14 @@ footer{border-top:1px solid var(--color-border);padding:40px 24px;}
 </style>
 <script>
 // Applied synchronously, before first paint, so the page never flashes the
-// wrong theme for a frame — reads a saved preference, otherwise falls back
-// to the visitor's OS-level light/dark setting.
+// wrong theme for a frame. Dark is the brand default and every first-time
+// visitor gets it regardless of their OS light/dark setting — only an
+// explicit choice made with the toggle (saved in localStorage) shows light.
 (function(){
   try{
-    var saved = localStorage.getItem('delta-theme');
-    var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-    if(theme === 'light'){ document.documentElement.setAttribute('data-theme', 'light'); }
+    if(localStorage.getItem('delta-theme') === 'light'){
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   } catch(e){ /* localStorage unavailable — default dark theme applies */ }
 })();
 </script>
