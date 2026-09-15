@@ -3862,10 +3862,14 @@ if(gulfMap){
 // light mode = Rainshow — Listen. Both are routed through the same Web
 // Audio gain graph so switching themes crossfades smoothly between them
 // instead of cutting. Both elements are started playing (at zero gain,
-// inaudible) together on the very first click — that click is the one
-// genuine user gesture browsers require, so once both are running,
+// inaudible) together on the first user gesture — browsers require one
+// genuine gesture before any audio, and once both tracks are running,
 // switching themes afterward only needs a gain change, never a fresh
 // play() call that could otherwise get blocked by autoplay policy.
+//
+// The gesture is the sound toggle itself on a fresh visit, or — when a
+// saved preference is being restored — whatever the visitor touches first.
+// register.html carries the same module, so the choice follows them both ways.
 (function(){
   var btn = document.getElementById('sound-toggle-btn');
   var darkAudioEl = document.getElementById('dark-theme-audio');
@@ -3914,13 +3918,13 @@ if(gulfMap){
     } catch(e){ /* Web Audio unavailable — toggle stays visual-only */ }
   }
 
-  btn.addEventListener('click', function(){
-    ensureStarted();
-    soundOn = !soundOn;
+  function paint(){
     btn.classList.toggle('is-on', soundOn);
     btn.setAttribute('aria-label', soundOn ? 'Turn background music off' : 'Turn background music on');
-    try{ localStorage.setItem('delta-sound', soundOn ? 'on' : 'off'); } catch(e){}
+  }
 
+  function engage(){
+    ensureStarted();
     if(ctx){
       if(ctx.state === 'suspended') ctx.resume();
       masterGain.gain.setTargetAtTime(soundOn ? 1 : 0, ctx.currentTime, 0.3);
@@ -3928,16 +3932,42 @@ if(gulfMap){
     }
 
     if(soundOn){
-      // start both tracks together on this click (the one real user
-      // gesture) — gain nodes above control which one is actually audible
+      // start both tracks together on this gesture — the gain nodes above
+      // control which one is actually audible
       if(darkAudioEl) darkAudioEl.play().catch(function(){});
       if(lightAudioEl) lightAudioEl.play().catch(function(){});
     }
     // leave both playing silently under their gain nodes when turned off,
     // so re-toggling resumes instantly with no reload/restart gap
+  }
+
+  btn.addEventListener('click', function(){
+    soundOn = !soundOn;
+    paint();
+    try{ localStorage.setItem('delta-sound', soundOn ? 'on' : 'off'); } catch(e){}
+    engage();
   });
 
   window.addEventListener('delta-theme-change', applyThemeGains);
+
+  // Restore the saved choice, so music carries back from register.html and
+  // survives a reload. Autoplay policy blocks playback until this page has had
+  // a gesture of its own — on a first visit that is the entrance gate click,
+  // otherwise it is whatever the visitor touches first. Show the button in its
+  // restored state immediately either way, rather than claiming to be off.
+  var saved = null;
+  try{ saved = localStorage.getItem('delta-sound'); } catch(e){}
+  if(saved === 'on'){
+    soundOn = true;
+    paint();
+    var resume = function(){
+      document.removeEventListener('pointerdown', resume);
+      document.removeEventListener('keydown', resume);
+      engage();
+    };
+    document.addEventListener('pointerdown', resume, {once:true});
+    document.addEventListener('keydown', resume, {once:true});
+  }
 })();
 </script>
 
