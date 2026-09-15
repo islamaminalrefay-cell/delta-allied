@@ -79,6 +79,26 @@ nav{
   transition:transform .4s ease;
 }
 [data-theme="light"] .theme-toggle-thumb{ transform:translateX(24px); }
+
+/* Sound toggle — same markup, icons and states as the homepage nav. */
+.sound-toggle{
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; cursor:pointer; flex-shrink:0;
+  transition:background .4s ease, border-color .4s ease;
+}
+.sound-toggle:hover{ border-color:var(--color-ash); }
+.sound-toggle svg{
+  width:16px; height:16px; color:var(--color-ash);
+  position:absolute;
+  transition:opacity .3s ease, transform .3s ease, color .3s ease;
+}
+.sound-toggle .icon-sound-on{ opacity:0; transform:scale(0.6); }
+.sound-toggle .icon-sound-off{ opacity:1; transform:scale(1); }
+.sound-toggle.is-on .icon-sound-on{ opacity:1; transform:scale(1); color:var(--color-electric); }
+.sound-toggle.is-on .icon-sound-off{ opacity:0; transform:scale(0.6); }
+
 .nav-btn{
   padding:10px 18px; border-radius:var(--radius-pills);
   background:var(--color-electric); color:#fff; font-size:13px; font-weight:600;
@@ -226,6 +246,12 @@ footer{
   <div class="theme-toggle-track" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle light/dark theme">
     <div class="theme-toggle-thumb"></div>
   </div>
+  <button type="button" class="sound-toggle" id="sound-toggle-btn" aria-label="Turn background music on">
+    <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+    <svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M23 9l-6 6"/><path d="M17 9l6 6"/></svg>
+  </button>
+  <audio id="dark-theme-audio" src="audio/dark-theme.mp3" loop preload="none"></audio>
+  <audio id="light-theme-audio" src="audio/light-theme.mp3" loop preload="none"></audio>
   <a href="index.html#contact" class="nav-btn">Get in touch</a>
 </nav>
 
@@ -413,11 +439,115 @@ footer{
     var next = current === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', next);
     try{ localStorage.setItem('delta-theme', next); } catch(e){}
+    // Same event the homepage fires — the audio module listens for it and
+    // crossfades between the two theme tracks.
+    window.dispatchEvent(new CustomEvent('delta-theme-change', {detail:{theme:next}}));
   }
   toggle.addEventListener('click', flip);
   toggle.addEventListener('keydown', function(e){
     if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
   });
+})();
+</script>
+
+<script>
+// Background music — same two tracks and the same Web Audio gain graph as the
+// homepage: dark mode plays dark-theme.mp3, light mode plays light-theme.mp3,
+// and switching theme crossfades between them instead of cutting. Both
+// elements run together at zero gain, so a theme switch only changes gain and
+// never needs a fresh play() that autoplay policy could block.
+(function(){
+  var btn = document.getElementById('sound-toggle-btn');
+  var darkAudioEl = document.getElementById('dark-theme-audio');
+  var lightAudioEl = document.getElementById('light-theme-audio');
+  if(!btn) return;
+
+  var ctx = null, masterGain = null, darkGain = null, lightGain = null;
+  var started = false, soundOn = false;
+
+  function currentTheme(){
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  }
+
+  function applyThemeGains(){
+    if(!ctx) return;
+    var now = ctx.currentTime;
+    var theme = currentTheme();
+    darkGain.gain.setTargetAtTime((theme === 'dark'  && soundOn) ? 0.55 : 0, now, 0.6);
+    lightGain.gain.setTargetAtTime((theme === 'light' && soundOn) ? 0.55 : 0, now, 0.6);
+  }
+
+  function routeTrack(context, audioEl, destination){
+    var gain = context.createGain();
+    gain.gain.value = 0;
+    gain.connect(destination);
+    if(audioEl){
+      var source = context.createMediaElementSource(audioEl);
+      source.connect(gain);
+    }
+    return gain;
+  }
+
+  function ensureStarted(){
+    if(started) return;
+    started = true;
+    try{
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = 0;
+      masterGain.connect(ctx.destination);
+      darkGain = routeTrack(ctx, darkAudioEl, masterGain);
+      lightGain = routeTrack(ctx, lightAudioEl, masterGain);
+    } catch(e){ /* Web Audio unavailable — the toggle stays visual-only */ }
+  }
+
+  function paint(){
+    btn.classList.toggle('is-on', soundOn);
+    btn.setAttribute('aria-label', soundOn ? 'Turn background music off' : 'Turn background music on');
+  }
+
+  function engage(){
+    ensureStarted();
+    if(ctx){
+      if(ctx.state === 'suspended') ctx.resume();
+      masterGain.gain.setTargetAtTime(soundOn ? 1 : 0, ctx.currentTime, 0.3);
+      applyThemeGains();
+    }
+    if(soundOn){
+      // Start both tracks; the gain nodes decide which one is audible.
+      if(darkAudioEl) darkAudioEl.play().catch(function(){});
+      if(lightAudioEl) lightAudioEl.play().catch(function(){});
+    }
+    // Left playing silently under their gain nodes when switched off, so
+    // re-toggling resumes instantly with no reload gap.
+  }
+
+  btn.addEventListener('click', function(){
+    soundOn = !soundOn;
+    paint();
+    try{ localStorage.setItem('delta-sound', soundOn ? 'on' : 'off'); } catch(e){}
+    engage();
+  });
+
+  window.addEventListener('delta-theme-change', applyThemeGains);
+
+  // Carry the choice over from the homepage. Browsers block audio until this
+  // page has had a user gesture of its own, so show the button already on and
+  // start playback at the first interaction — a click, tap or key, whichever
+  // comes first.
+  var saved = null;
+  try{ saved = localStorage.getItem('delta-sound'); } catch(e){}
+  if(saved === 'on'){
+    soundOn = true;
+    paint();
+    var resume = function(){
+      document.removeEventListener('pointerdown', resume);
+      document.removeEventListener('keydown', resume);
+      engage();
+    };
+    document.addEventListener('pointerdown', resume, {once:true});
+    document.addEventListener('keydown', resume, {once:true});
+  }
 })();
 </script>
 
