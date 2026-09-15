@@ -118,6 +118,10 @@ nav{
 .nav-links{display:flex;gap:26px;font-size:13px;font-weight:500;color:var(--color-ash);}
 .nav-links a{transition:color .2s;}
 .nav-links a:hover{color:var(--color-pure-white);}
+/* Registration is a conversion action, so it reads in the brand accent
+   rather than sitting flat among the section jump-links. */
+.nav-links a.nav-link-accent{color:var(--color-electric);}
+.nav-links a.nav-link-accent:hover{color:var(--color-electric);opacity:.75;}
 .theme-toggle{
   background:none; border:none; padding:0; cursor:pointer;
   flex-shrink:0;
@@ -488,6 +492,9 @@ h1.hero-title{
 }
 .cta h3{font-size:24px;font-weight:500;}
 .cta p{color:var(--color-ash);font-size:14px;margin-top:6px;}
+/* Stacks on narrow screens. This is also the only route to the registration
+   page on mobile, where .nav-links is hidden. */
+.cta-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 
 /* ---------- FOOTER ---------- */
 footer{border-top:1px solid var(--color-border);padding:40px 24px;}
@@ -1051,6 +1058,7 @@ footer{border-top:1px solid var(--color-border);padding:40px 24px;}
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#sectors">Sectors</a>
+      <a href="register.html" class="nav-link-accent">Register</a>
       <a href="#">Partners</a>
       <a href="#">Insights</a>
     </div>
@@ -2429,7 +2437,10 @@ footer{border-top:1px solid var(--color-border);padding:40px 24px;}
     <h3>Ready to build something with us?</h3>
     <p>Tell us about your club, athlete, or event — we'll get back within one business day.</p>
   </div>
-  <a class="btn-filled" id="contact" href="#">Get in touch</a>
+  <div class="cta-actions">
+    <a class="btn-filled" id="contact" href="#">Get in touch</a>
+    <a class="btn-ghost" href="register.html">Register for a tournament</a>
+  </div>
 </div>
 
 <section class="partners-section" id="partners">
@@ -2481,6 +2492,7 @@ footer{border-top:1px solid var(--color-border);padding:40px 24px;}
     <div class="footer-links">
       <a href="#">Services</a>
       <a href="#">Sectors</a>
+      <a href="register.html">Register</a>
       <a href="#">Partners</a>
       <a href="#">Insights</a>
     </div>

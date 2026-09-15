@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tournament Registration — Delta Allied Sports</title>
+<meta name="description" content="Register a player or an academy team for a Delta Allied Sports tournament. Youth football and basketball competitions across the UAE and the wider Middle East.">
+<link rel="icon" href="images/img-a5a8aa3d.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try{
+    // Dark is the brand default regardless of the visitor's OS setting —
+    // only an explicit toggle choice (saved in localStorage) shows light.
+    var saved = localStorage.getItem('delta-theme');
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  } catch(e){}
+})();
+</script>
+<style>
+/* Palette lifted from index.html so the form fields are pixel-identical to
+   the contact modal's, in both themes. */
+:root{
+  --color-void-black:#040506;
+  --color-ink:#07080a;
+  --color-obsidian:#111214;
+  --color-graphite:#1b1c1e;
+  --color-ash:#9c9c9d;
+  --color-mist:#e6e6e6;
+  --color-pure-white:#ffffff;
+  --color-border:#363739;
+  --color-electric:#ff2d55;
+  --font-inter:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+  --radius-pills:9999px;
+}
+[data-theme="light"]{
+  --color-void-black:#f7f6f4;
+  --color-ink:#ffffff;
+  --color-obsidian:#eeece9;
+  --color-graphite:#e5e3df;
+  --color-ash:#5b5d60;
+  --color-mist:#17181a;
+  --color-pure-white:#111213;
+  --color-border:#ddd9d4;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:var(--font-inter);
+  background:var(--color-void-black);
+  color:var(--color-mist);
+  transition:background .4s ease, color .4s ease;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit; text-decoration:none;}
+img{max-width:100%; display:block;}
+
+/* ---------- NAV (matches services/*.html) ---------- */
+nav{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  z-index:100; width:calc(100% - 32px); max-width:920px;
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:8px 8px 8px 16px;
+  border-radius:var(--radius-pills);
+  border:1px solid var(--color-border);
+  background:rgba(4,5,6,0.6);
+  backdrop-filter:blur(48px); -webkit-backdrop-filter:blur(48px);
+}
+[data-theme="light"] nav{ background:rgba(247,246,244,0.7); }
+.logo{display:flex; align-items:center; gap:9px; font-size:13px; font-weight:500;}
+.logo-dot{width:9px; height:9px; border-radius:50%; background:var(--color-electric);}
+.theme-toggle-track{
+  display:flex; align-items:center; width:52px; height:28px; padding:3px;
+  border-radius:var(--radius-pills); background:var(--color-obsidian);
+  border:1px solid var(--color-border); cursor:pointer;
+}
+.theme-toggle-thumb{
+  width:20px; height:20px; border-radius:50%; background:var(--color-electric);
+  transition:transform .4s ease;
+}
+[data-theme="light"] .theme-toggle-thumb{ transform:translateX(24px); }
+.nav-btn{
+  padding:10px 18px; border-radius:var(--radius-pills);
+  background:var(--color-electric); color:#fff; font-size:13px; font-weight:600;
+  border:none; cursor:pointer; white-space:nowrap;
+}
+@media (max-width:430px){
+  nav{ gap:10px; padding:8px 8px 8px 12px; }
+  .logo-text{ display:none; }
+  .nav-btn{ padding:8px 12px; font-size:12px; }
+}
+
+/* ---------- PAGE HEAD ---------- */
+.reg-head{ padding:140px 24px 0; max-width:640px; margin:0 auto; text-align:center; }
+.eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); font-weight:500; margin-bottom:14px;
+}
+.reg-head h1{
+  font-size:clamp(30px,5vw,44px); line-height:1.1; font-weight:600;
+  color:var(--color-pure-white); margin-bottom:14px; letter-spacing:-0.01em;
+}
+.reg-head p{ font-size:16px; line-height:1.65; color:var(--color-ash); }
+
+/* ---------- PLAYER / ACADEMY SWITCH ---------- */
+.reg-switch{
+  display:flex; gap:6px; margin:32px auto 0; width:max-content; max-width:100%;
+  padding:5px; border-radius:var(--radius-pills);
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+}
+.reg-switch button{
+  padding:10px 24px; border-radius:var(--radius-pills); border:none; cursor:pointer;
+  background:transparent; color:var(--color-ash);
+  font-family:inherit; font-size:13px; font-weight:600; white-space:nowrap;
+  transition:background .3s ease, color .3s ease;
+}
+.reg-switch button.is-active{ background:var(--color-electric); color:#fff; }
+.reg-switch button:focus-visible{ outline:2px solid var(--color-electric); outline-offset:2px; }
+
+/* ---------- PANEL (mirrors .contact-modal-panel) ---------- */
+.reg-wrap{ padding:28px 24px 100px; }
+.reg-panel{
+  width:100%; max-width:560px; margin:0 auto;
+  background:var(--color-ink);
+  border:1px solid var(--color-border);
+  border-radius:20px;
+  padding:40px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.35);
+}
+@media (max-width:560px){ .reg-panel{ padding:28px 22px; } }
+
+@keyframes panelShake{
+  10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(4px);}
+  30%,50%,70%{transform:translateX(-8px);} 40%,60%{transform:translateX(8px);}
+}
+.reg-panel.shake{ animation:panelShake .5s; }
+
+.reg-form-eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); font-weight:500; margin-bottom:12px;
+}
+.reg-panel h2{ font-size:24px; font-weight:500; color:var(--color-pure-white); margin-bottom:8px; line-height:1.15; }
+.reg-form-sub{ color:var(--color-ash); font-size:14px; line-height:1.6; margin-bottom:26px; }
+
+.reg-error{
+  background:rgba(255,45,85,0.1); border:1px solid rgba(255,45,85,0.3);
+  color:var(--color-electric); font-size:13px; line-height:1.5;
+  padding:12px 14px; border-radius:10px; margin:-10px 0 20px;
+}
+
+/* ---------- FIELDS (mirrors .contact-field) ---------- */
+.reg-row{ display:flex; gap:14px; }
+@media (max-width:520px){ .reg-row{ flex-direction:column; gap:0; } }
+.reg-field{ margin-bottom:18px; flex:1; display:flex; flex-direction:column; gap:7px; min-width:0; }
+.reg-field label{ font-size:12px; color:var(--color-ash); font-weight:500; }
+.reg-field .opt{ color:var(--color-ash); opacity:.7; font-weight:400; }
+.reg-field input, .reg-field select, .reg-field textarea{
+  background:var(--color-obsidian); border:1px solid var(--color-border); border-radius:10px;
+  padding:11px 14px; font-family:var(--font-inter); font-size:14px; color:var(--color-pure-white);
+  outline:none; transition:border-color .25s ease, background .25s ease;
+  resize:vertical; width:100%;
+}
+.reg-field select{
+  appearance:none; -webkit-appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239c9c9d' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 12px center; background-size:16px;
+  padding-right:38px;
+}
+.reg-field input:focus, .reg-field select:focus, .reg-field textarea:focus{
+  border-color:var(--color-electric); background:var(--color-ink);
+}
+/* Keep the native date picker legible in dark mode */
+.reg-field input[type="date"]::-webkit-calendar-picker-indicator{
+  filter:invert(0.7); cursor:pointer;
+}
+[data-theme="light"] .reg-field input[type="date"]::-webkit-calendar-picker-indicator{ filter:none; }
+
+/* Honeypot — off-screen rather than display:none, which bots detect */
+.reg-hp{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+.reg-submit{
+  width:100%; margin-top:8px; padding:13px 22px;
+  border-radius:var(--radius-pills); border:none; cursor:pointer;
+  background:var(--color-electric); color:#fff;
+  font-family:inherit; font-size:14px; font-weight:600;
+  transition:opacity .25s ease;
+}
+.reg-submit:disabled{ opacity:0.7; cursor:default; }
+.reg-note{ font-size:12px; color:var(--color-ash); line-height:1.6; margin-top:14px; text-align:center; }
+
+/* ---------- SUCCESS (mirrors .contact-success) ---------- */
+.reg-success{ text-align:center; padding:16px 0 8px; }
+.reg-success-check{ width:84px; height:84px; margin:0 auto 22px; display:block; }
+.reg-success-circle{ stroke:var(--color-electric); stroke-dasharray:264; stroke-dashoffset:264; }
+.reg-success-tick{ stroke:var(--color-electric); stroke-dasharray:60; stroke-dashoffset:60; }
+.reg-success.is-playing .reg-success-circle{ animation:successCircle .6s ease-out forwards; }
+.reg-success.is-playing .reg-success-tick{ animation:successTick .45s ease-out forwards .5s; }
+@keyframes successCircle{ to{ stroke-dashoffset:0; } }
+@keyframes successTick{ to{ stroke-dashoffset:0; } }
+.reg-success h3{ font-size:22px; font-weight:500; color:var(--color-pure-white); margin-bottom:10px; }
+.reg-success p{ color:var(--color-ash); font-size:14px; line-height:1.6; margin-bottom:24px; max-width:380px; margin-left:auto; margin-right:auto; }
+.reg-success .btn-ghost{
+  display:inline-block; padding:11px 22px; border-radius:var(--radius-pills);
+  border:1px solid var(--color-border); color:var(--color-pure-white);
+  font-size:13px; font-weight:600; cursor:pointer; background:transparent; font-family:inherit;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .reg-panel.shake{ animation:none; }
+  .reg-success.is-playing .reg-success-circle,
+  .reg-success.is-playing .reg-success-tick{ animation:none; stroke-dashoffset:0; }
+}
+
+footer{
+  padding:32px 24px; text-align:center; font-size:12px; color:var(--color-ash);
+  border-top:1px solid var(--color-border);
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-dot"></span>
+    <span class="logo-text">Delta Allied Sports</span>
+  </a>
+  <div class="theme-toggle-track" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle light/dark theme">
+    <div class="theme-toggle-thumb"></div>
+  </div>
+  <a href="index.html#contact" class="nav-btn">Get in touch</a>
+</nav>
+
+<section class="reg-head">
+  <div class="eyebrow">Tournament Registration</div>
+  <h1>Register for the season</h1>
+  <p>Sign up an individual player or enter a full academy team. We'll confirm your place by email within one business day.</p>
+
+  <div class="reg-switch" role="tablist" aria-label="Registration type">
+    <button type="button" id="tab-player"  role="tab" aria-selected="true"  aria-controls="panel-player"  class="is-active">Individual player</button>
+    <button type="button" id="tab-academy" role="tab" aria-selected="false" aria-controls="panel-academy">Academy / club</button>
+  </div>
+</section>
+
+<div class="reg-wrap">
+  <div class="reg-panel" id="reg-panel">
+
+    <!-- ============================= PLAYER ============================= -->
+    <div id="panel-player" role="tabpanel" aria-labelledby="tab-player">
+      <div class="reg-form-eyebrow">Player entry</div>
+      <h2>Individual player registration</h2>
+      <p class="reg-form-sub">For players joining a tournament on their own or through their academy.</p>
+      <p class="reg-error" id="player-error" hidden></p>
+
+      <form id="player-form" novalidate>
+        <div class="reg-hp" aria-hidden="true">
+          <label>Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div class="reg-field">
+          <label for="p-name">Full name</label>
+          <input type="text" id="p-name" name="full_name" required autocomplete="name" maxlength="120">
+        </div>
+
+        <div class="reg-row">
+          <div class="reg-field">
+            <label for="p-dob">Date of birth</label>
+            <input type="date" id="p-dob" name="date_of_birth" required min="1950-01-02" max="2029-12-31">
+          </div>
+          <div class="reg-field">
+            <label for="p-nat">Nationality</label>
+            <input type="text" id="p-nat" name="nationality" required maxlength="60">
+          </div>
+        </div>
+
+        <div class="reg-row">
+          <div class="reg-field">
+            <label for="p-academy">Academy / club</label>
+            <input type="text" id="p-academy" name="academy_affiliation" required maxlength="120" placeholder="Or type Independent">
+          </div>
+          <div class="reg-field">
+            <label for="p-position">Position <span class="opt">(optional)</span></label>
+            <input type="text" id="p-position" name="position" maxlength="40">
+          </div>
+        </div>
+
+        <div class="reg-field">
+          <label for="p-category">Tournament</label>
+          <select id="p-category" name="tournament_category" required>
+            <option value="" selected disabled>Select a tournament</option>
+            <option>DOFA</option>
+            <option>ADOFA</option>
+            <option>UAE GIRLS FOOTBALL</option>
+            <option>AEC</option>
+            <option>AEC RIYADH</option>
+            <option>UAE BASKETBALL</option>
+          </select>
+        </div>
+
+        <div class="reg-row">
+          <div class="reg-field">
+            <label for="p-guardian">Parent / guardian name</label>
+            <input type="text" id="p-guardian" name="guardian_name" required maxlength="120">
+          </div>
+          <div class="reg-field">
+            <label for="p-guardian-phone">Parent / guardian phone</label>
+            <input type="tel" id="p-guardian-phone" name="guardian_phone" required maxlength="32">
+          </div>
+        </div>
+
+        <div class="reg-row">
+          <div class="reg-field">
+            <label for="p-email">Email</label>
+            <input type="email" id="p-email" name="email" required autocomplete="email" maxlength="160">
+          </div>
+          <div class="reg-field">
+            <label for="p-phone">Phone</label>
+            <input type="tel" id="p-phone" name="phone" required autocomplete="tel" maxlength="32">
+          </div>
+        </div>
+
+        <button type="submit" class="reg-submit"><span class="reg-submit-label">Submit registration</span></button>
+        <p class="reg-note">By registering you agree to be contacted about this tournament.</p>
+      </form>
+    </div>
+
+    <!-- ============================= ACADEMY ============================ -->
+    <div id="panel-academy" role="tabpanel" aria-labelledby="tab-academy" hidden>
+      <div class="reg-form-eyebrow">Academy entry</div>
+      <h2>Academy / club registration</h2>
+      <p class="reg-form-sub">For academies and clubs entering a squad into a tournament.</p>
+      <p class="reg-error" id="academy-error" hidden></p>
+
+      <form id="academy-form" novalidate>
+        <div class="reg-hp" aria-hidden="true">
+          <label>Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div class="reg-field">
+          <label for="a-name">Academy / club name</label>
+          <input type="text" id="a-name" name="academy_name" required maxlength="140">
+        </div>
+
+        <div class="reg-field">
+          <label for="a-contact">Contact person</label>
+          <input type="text" id="a-contact" name="contact_name" required autocomplete="name" maxlength="120">
+        </div>
+
+        <div class="reg-row">
+          <div class="reg-field">
+            <label for="a-email">Email</label>
+            <input type="email" id="a-email" name="email" required autocomplete="email" maxlength="160">
+          </div>
+          <div class="reg-field">
+            <label for="a-phone">Phone</label>
+            <input type="tel" id="a-phone" name="phone" required autocomplete="tel" maxlength="32">
+          </div>
+        </div>
+
+        <div class="reg-row">
+          <div class="reg-field">
+            <label for="a-size">Number of players</label>
+            <input type="number" id="a-size" name="team_size" required min="1" max="60" step="1">
+          </div>
+          <div class="reg-field">
+            <label for="a-category">Tournament</label>
+            <select id="a-category" name="age_category" required>
+              <option value="" selected disabled>Select a tournament</option>
+              <option>DOFA</option>
+              <option>ADOFA</option>
+              <option>UAE GIRLS FOOTBALL</option>
+              <option>AEC</option>
+              <option>AEC RIYADH</option>
+              <option>UAE BASKETBALL</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="reg-field">
+          <label for="a-city">City / location</label>
+          <input type="text" id="a-city" name="city" required maxlength="80">
+        </div>
+
+        <div class="reg-field">
+          <label for="a-notes">Notes <span class="opt">(optional)</span></label>
+          <textarea id="a-notes" name="notes" rows="3" maxlength="2000"></textarea>
+        </div>
+
+        <button type="submit" class="reg-submit"><span class="reg-submit-label">Submit registration</span></button>
+        <p class="reg-note">By registering you agree to be contacted about this tournament.</p>
+      </form>
+    </div>
+
+    <!-- ============================= SUCCESS ============================ -->
+    <div class="reg-success" id="reg-success" hidden>
+      <svg class="reg-success-check" viewBox="0 0 100 100">
+        <circle class="reg-success-circle" cx="50" cy="50" r="42" fill="none" stroke-width="4"/>
+        <path class="reg-success-tick" d="M30 52 L44 66 L72 34" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3>Registration received</h3>
+      <p id="reg-success-msg">Thanks — we've got your entry. Our team will confirm your place by email within one business day.</p>
+      <button type="button" class="btn-ghost" id="reg-success-close">Register someone else</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 Delta Allied Sports. All rights reserved.</footer>
+
+<script>
+(function(){
+  var toggle = document.getElementById('theme-toggle');
+  function flip(){
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('delta-theme', next); } catch(e){}
+  }
+  toggle.addEventListener('click', flip);
+  toggle.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // --------------------------------------------------------------------
+  // Supabase project `delta-registrations` — standalone, sharing nothing with
+  // the `delta-tournament` project that backs the tournament app.
+  //
+  // Submissions go to the submit-registration Edge Function, never straight to
+  // the database. The anon role holds no privileges on the registration tables
+  // at all, so this key cannot read, write or tamper with anything even though
+  // it is public. Never put the service_role key on this page — that one
+  // bypasses RLS entirely and lives only inside the Edge Function.
+  // --------------------------------------------------------------------
+  var SUPABASE_URL      = 'https://omijppvwphqbuozqxliq.supabase.co';
+  // Publishable key (sb_publishable_…), not the legacy anon JWT — this is what
+  // the Edge Function's runtime exposes as SUPABASE_ANON_KEY, and it is the
+  // format Supabase recommends for new projects.
+  var SUPABASE_ANON_KEY = 'sb_publishable_j960XCS2me-UI3swy3kU2A_m__YzUOt';
+  var SUBMIT_ENDPOINT   = SUPABASE_URL + '/functions/v1/submit-registration';
+
+  var panel      = document.getElementById('reg-panel');
+  var tabPlayer  = document.getElementById('tab-player');
+  var tabAcademy = document.getElementById('tab-academy');
+  var panePlayer = document.getElementById('panel-player');
+  var paneAcademy= document.getElementById('panel-academy');
+  var success    = document.getElementById('reg-success');
+  var successMsg = document.getElementById('reg-success-msg');
+  var successBtn = document.getElementById('reg-success-close');
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var activeTab = 'player';
+
+  // ---------------- tab switching ----------------
+  function showTab(which){
+    activeTab = which;
+    var isPlayer = which === 'player';
+    tabPlayer.classList.toggle('is-active', isPlayer);
+    tabAcademy.classList.toggle('is-active', !isPlayer);
+    tabPlayer.setAttribute('aria-selected', String(isPlayer));
+    tabAcademy.setAttribute('aria-selected', String(!isPlayer));
+    panePlayer.hidden = !isPlayer;
+    paneAcademy.hidden = isPlayer;
+    success.hidden = true;
+    success.classList.remove('is-playing');
+  }
+  tabPlayer.addEventListener('click',  function(){ showTab('player'); });
+  tabAcademy.addEventListener('click', function(){ showTab('academy'); });
+
+  // Deep link: register.html#academy opens straight to the academy form
+  if((location.hash || '').toLowerCase() === '#academy') showTab('academy');
+
+  successBtn.addEventListener('click', function(){ showTab(activeTab); });
+
+  // ---------------- submit ----------------
+  function postRegistration(type, data, honeypot){
+    return fetch(SUBMIT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ type: type, data: data, company: honeypot })
+    });
+  }
+
+  // The Edge Function already returns visitor-ready wording, so prefer its
+  // message and only fall back to a generic line if something ate the body.
+  function friendlyError(status, body){
+    if(body && body.error) return body.error;
+    if(status === 429) return 'You’ve submitted a few registrations recently — please try again later.';
+    if(status === 401 || status === 403){
+      return 'Registration isn’t accepting entries right now. Please contact us directly and we’ll get you signed up.';
+    }
+    return 'Couldn’t submit your registration — please try again in a moment.';
+  }
+
+  function wire(formId, errorId, type, buildRow){
+    var form = document.getElementById(formId);
+    var errorBanner = document.getElementById(errorId);
+    var lastSubmit = 0;
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      // Honeypot: a real person never fills a field they cannot see.
+      // Pretend it worked so a bot gets no signal either way.
+      if(form.elements['company'] && form.elements['company'].value){
+        form.reset();
+        panePlayer.hidden = true; paneAcademy.hidden = true;
+        success.hidden = false;
+        return;
+      }
+
+      // Cheap throttle against double-clicks and naive scripted loops.
+      var now = Date.now();
+      if(now - lastSubmit < 20000 && lastSubmit !== 0){
+        errorBanner.textContent = 'Just a moment — that registration is already being processed.';
+        errorBanner.hidden = false;
+        return;
+      }
+
+      if(!form.checkValidity()){
+        form.reportValidity();
+        if(!reducedMotion){
+          panel.classList.remove('shake');
+          void panel.offsetWidth; // restart the animation on a repeat failure
+          panel.classList.add('shake');
+        }
+        return;
+      }
+
+      var btn = form.querySelector('.reg-submit');
+      var label = btn.querySelector('.reg-submit-label');
+      var originalLabel = label.textContent;
+      label.textContent = 'Submitting…';
+      btn.disabled = true;
+      errorBanner.hidden = true;
+      lastSubmit = now;
+
+      var honeypot = form.elements['company'] ? form.elements['company'].value : '';
+
+      postRegistration(type, buildRow(form), honeypot)
+        .then(function(res){
+          return res.json().catch(function(){ return null; }).then(function(body){
+            if(res.ok && body && body.ok){
+              form.reset();
+              panePlayer.hidden = true;
+              paneAcademy.hidden = true;
+              success.hidden = false;
+              successMsg.textContent = type === 'player'
+                ? 'Thanks — the player’s entry is in. Our team will confirm the place by email within one business day.'
+                : 'Thanks — your academy’s entry is in. Our team will confirm your squad’s place by email within one business day.';
+              success.classList.add('is-playing');
+              return;
+            }
+            throw { status: res.status, body: body };
+          });
+        })
+        .catch(function(err){
+          lastSubmit = 0; // a genuine failure shouldn't lock them out of retrying
+          errorBanner.textContent = (err && err.status)
+            ? friendlyError(err.status, err.body)
+            : 'Couldn’t reach the registration server — check your connection and try again.';
+          errorBanner.hidden = false;
+        })
+        .finally(function(){
+          label.textContent = originalLabel;
+          btn.disabled = false;
+        });
+    });
+  }
+
+  function val(form, name){
+    var el = form.elements[name];
+    if(!el) return null;
+    var v = String(el.value || '').trim();
+    return v === '' ? null : v;
+  }
+
+  wire('player-form', 'player-error', 'player', function(form){
+    return {
+      full_name:           val(form, 'full_name'),
+      date_of_birth:       val(form, 'date_of_birth'),
+      nationality:         val(form, 'nationality'),
+      academy_affiliation: val(form, 'academy_affiliation'),
+      position:            val(form, 'position'),          // nullable
+      guardian_name:       val(form, 'guardian_name'),
+      guardian_phone:      val(form, 'guardian_phone'),
+      email:               val(form, 'email'),
+      phone:               val(form, 'phone'),
+      tournament_category: val(form, 'tournament_category')
+    };
+  });
+
+  wire('academy-form', 'academy-error', 'academy', function(form){
+    return {
+      academy_name: val(form, 'academy_name'),
+      contact_name: val(form, 'contact_name'),
+      email:        val(form, 'email'),
+      phone:        val(form, 'phone'),
+      team_size:    parseInt(val(form, 'team_size'), 10),
+      age_category: val(form, 'age_category'),
+      city:         val(form, 'city'),
+      notes:        val(form, 'notes')                     // nullable
+    };
+  });
+})();
+</script>
+</body>
+</html>
