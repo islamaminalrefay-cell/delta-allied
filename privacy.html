@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Delta Allied Sports</title>
+<meta name="description" content="How Delta Allied Sports collects, uses and protects personal data across our website, tournament registration, tournament app and mobile games — including how we handle children's data.">
+<link rel="icon" href="images/img-a5a8aa3d.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('delta-theme');
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  } catch(e){}
+})();
+</script>
+<style>
+:root{
+  --color-void-black:#040506;
+  --color-ink:#07080a;
+  --color-obsidian:#111214;
+  --color-graphite:#1b1c1e;
+  --color-ash:#9c9c9d;
+  --color-mist:#e6e6e6;
+  --color-pure-white:#ffffff;
+  --color-border:#363739;
+  --color-electric:#ff2d55;
+  --font-inter:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+  --radius-pills:9999px;
+}
+[data-theme="light"]{
+  --color-void-black:#f7f6f4;
+  --color-ink:#ffffff;
+  --color-obsidian:#eeece9;
+  --color-graphite:#e5e3df;
+  --color-ash:#5b5d60;
+  --color-mist:#17181a;
+  --color-pure-white:#111213;
+  --color-border:#ddd9d4;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:var(--font-inter);
+  background:var(--color-void-black);
+  color:var(--color-mist);
+  transition:background .4s ease, color .4s ease;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+.doc a{color:var(--color-electric); text-decoration:none; border-bottom:1px solid rgba(255,45,85,0.35);}
+.doc a:hover{border-bottom-color:var(--color-electric);}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  z-index:100; width:calc(100% - 32px); max-width:920px;
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:8px 8px 8px 16px;
+  border-radius:var(--radius-pills);
+  border:1px solid var(--color-border);
+  background:rgba(4,5,6,0.6);
+  backdrop-filter:blur(48px); -webkit-backdrop-filter:blur(48px);
+}
+[data-theme="light"] nav{ background:rgba(247,246,244,0.7); }
+.logo{display:flex; align-items:center; gap:9px; font-size:13px; font-weight:500; text-decoration:none;}
+.logo-dot{width:9px; height:9px; border-radius:50%; background:var(--color-electric);}
+.theme-toggle-track{
+  display:flex; align-items:center; width:52px; height:28px; padding:3px;
+  border-radius:var(--radius-pills); background:var(--color-obsidian);
+  border:1px solid var(--color-border); cursor:pointer;
+}
+.theme-toggle-thumb{
+  width:20px; height:20px; border-radius:50%; background:var(--color-electric);
+  transition:transform .4s ease;
+}
+[data-theme="light"] .theme-toggle-thumb{ transform:translateX(24px); }
+.nav-btn{
+  padding:10px 18px; border-radius:var(--radius-pills);
+  background:var(--color-electric); color:#fff; font-size:13px; font-weight:600;
+  border:none; cursor:pointer; white-space:nowrap; text-decoration:none;
+}
+@media (max-width:430px){
+  nav{ gap:10px; padding:8px 8px 8px 12px; }
+  .logo-text{ display:none; }
+  .nav-btn{ padding:8px 12px; font-size:12px; }
+}
+
+/* ---------- DOC ---------- */
+.doc-head{ padding:140px 24px 0; max-width:760px; margin:0 auto; }
+.eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); font-weight:500; margin-bottom:14px;
+}
+.doc-head h1{
+  font-size:clamp(30px,5vw,46px); line-height:1.1; font-weight:600;
+  color:var(--color-pure-white); margin-bottom:16px; letter-spacing:-0.01em;
+}
+.doc-meta{ font-family:var(--font-mono); font-size:12px; color:var(--color-ash); margin-bottom:8px; }
+
+.doc{ max-width:760px; margin:0 auto; padding:0 24px 100px; }
+
+.callout{
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  border-left:3px solid var(--color-electric);
+  border-radius:12px; padding:20px 22px; margin:32px 0;
+}
+.callout strong{ color:var(--color-pure-white); }
+.callout p + p{ margin-top:10px; }
+
+.toc{
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  border-radius:16px; padding:24px 26px; margin:36px 0 48px;
+}
+.toc h2{ font-size:13px; font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.1em;
+  color:var(--color-ash); font-weight:500; margin-bottom:14px; }
+.toc ol{ margin:0; padding-left:20px; }
+.toc li{ margin-bottom:7px; font-size:14px; line-height:1.5; }
+.toc a{ color:var(--color-mist); text-decoration:none; border:none; }
+.toc a:hover{ color:var(--color-electric); }
+
+.doc h2{
+  font-size:22px; font-weight:600; color:var(--color-pure-white);
+  margin:52px 0 14px; letter-spacing:-0.01em; scroll-margin-top:100px;
+}
+.doc h3{
+  font-size:16px; font-weight:600; color:var(--color-pure-white);
+  margin:28px 0 10px;
+}
+.doc p{ font-size:15.5px; line-height:1.75; color:var(--color-mist); margin-bottom:16px; }
+.doc ul{ margin:0 0 18px 22px; }
+.doc li{ font-size:15.5px; line-height:1.75; color:var(--color-mist); margin-bottom:9px; }
+.doc .lede{ font-size:17px; line-height:1.7; color:var(--color-ash); margin-bottom:8px; }
+
+.tbl-wrap{ overflow-x:auto; margin:20px 0 26px; }
+table{ border-collapse:collapse; width:100%; min-width:520px; font-size:14px; }
+th, td{
+  text-align:left; padding:11px 14px; border-bottom:1px solid var(--color-border);
+  vertical-align:top; line-height:1.55;
+}
+th{ color:var(--color-pure-white); font-weight:600; font-size:12px;
+  text-transform:uppercase; letter-spacing:0.06em; }
+td{ color:var(--color-mist); }
+tbody tr:last-child td{ border-bottom:none; }
+
+.ph{
+  font-family:var(--font-mono); font-size:0.9em;
+  background:rgba(255,45,85,0.12); border:1px solid rgba(255,45,85,0.3);
+  color:var(--color-electric); padding:1px 6px; border-radius:4px;
+}
+
+footer{
+  padding:32px 24px; text-align:center; font-size:12px; color:var(--color-ash);
+  border-top:1px solid var(--color-border);
+}
+.footer-links{ margin-bottom:10px; display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+.footer-links a{ color:var(--color-ash); text-decoration:none; font-size:13px; }
+.footer-links a:hover{ color:var(--color-pure-white); }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-dot"></span>
+    <span class="logo-text">Delta Allied Sports</span>
+  </a>
+  <div class="theme-toggle-track" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle light/dark theme">
+    <div class="theme-toggle-thumb"></div>
+  </div>
+  <a href="index.html#contact" class="nav-btn">Get in touch</a>
+</nav>
+
+<section class="doc-head">
+  <div class="eyebrow">Legal</div>
+  <h1>Privacy Policy</h1>
+  <div class="doc-meta">Last updated: 27 September 2026 &nbsp;·&nbsp; Version 1.0</div>
+</section>
+
+<div class="doc">
+  <p class="lede">This policy explains what personal data Delta Allied Sports collects, why we collect it, who we share it with, and what rights you have. It covers our website, our tournament registration, our tournament app, and our mobile games.</p>
+
+  <div class="callout">
+    <p><strong>Draft pending legal review.</strong> This document accurately describes how our systems actually work, but it has not yet been reviewed by a qualified legal adviser. Items shown as <span class="ph">[LIKE THIS]</span> still need to be completed before it is relied upon.</p>
+  </div>
+
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#who-we-are">Who we are</a></li>
+      <li><a href="#scope">What this policy covers</a></li>
+      <li><a href="#website">The website</a></li>
+      <li><a href="#registration">Tournament registration</a></li>
+      <li><a href="#tournament-app">The tournament app</a></li>
+      <li><a href="#games">Our mobile games</a></li>
+      <li><a href="#children">Children's privacy</a></li>
+      <li><a href="#why">Why we process your data</a></li>
+      <li><a href="#sharing">Who we share data with</a></li>
+      <li><a href="#transfers">Where your data is stored</a></li>
+      <li><a href="#retention">How long we keep it</a></li>
+      <li><a href="#security">How we protect it</a></li>
+      <li><a href="#rights">Your rights</a></li>
+      <li><a href="#storage">Cookies and browser storage</a></li>
+      <li><a href="#changes">Changes to this policy</a></li>
+      <li><a href="#contact">How to contact us</a></li>
+    </ol>
+  </div>
+
+  <h2 id="who-we-are">1. Who we are</h2>
+  <p>Delta Allied Sports is a sports management and consulting company established in 2019 and headquartered in Dubai, United Arab Emirates. We manage athlete careers, operate youth football and basketball tournaments across the GCC, produce sports media, and develop sports-related mobile games.</p>
+  <p>For the purposes of data protection law, the data controller is <span class="ph">[LEGAL ENTITY NAME]</span>, trade licence <span class="ph">[TRADE LICENCE NO.]</span>, registered at <span class="ph">[REGISTERED ADDRESS]</span>.</p>
+  <p>Questions about this policy, or any request about your data, should go to <span class="ph">[PRIVACY CONTACT EMAIL]</span>.</p>
+
+  <h2 id="scope">2. What this policy covers</h2>
+  <p>This policy applies to:</p>
+  <ul>
+    <li><strong>Our website</strong> at deltagroup-me.com, including the contact form and the tournament registration page</li>
+    <li><strong>Our tournament app</strong>, used to run competitions, accreditation and matchday operations</li>
+    <li><strong>Our mobile games</strong>, including <em>Dribble Dodge Dash</em></li>
+  </ul>
+  <p>It does not cover other organisations' websites or services that we link to, such as our social media pages. Those have their own privacy policies.</p>
+
+  <h2 id="website">3. The website</h2>
+
+  <h3>Browsing the site</h3>
+  <p>We want to be direct about this, because it is unusual: <strong>our website contains no analytics, no advertising trackers and no third-party tracking cookies.</strong> We do not use Google Analytics, advertising pixels, session recording, or any comparable tool. We do not build profiles of visitors, and we do not track you across other websites.</p>
+  <p>Our hosting provider keeps standard server logs, which include IP addresses, for security and reliability purposes.</p>
+  <p>Loading the site also requests fonts from Google Fonts and Fontshare. As with any resource loaded from another provider, this means your IP address is visible to them. We use these services purely to display the site's typefaces.</p>
+
+  <h3>The contact form</h3>
+  <p>When you send us a message we collect your first name, last name, email address, subject and message. We use this only to reply to you and to keep a record of the enquiry. The form is delivered through Formspree, and the resulting email is received in our Google Workspace inbox.</p>
+
+  <h2 id="registration">4. Tournament registration</h2>
+  <p>Our registration page collects different information depending on whether you are registering an individual player or an academy squad.</p>
+
+  <h3>Player registration</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>What we collect</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Player's full name</td><td>To identify the player in team sheets, fixtures and results</td></tr>
+      <tr><td>Date of birth</td><td>To confirm eligibility for the correct age category</td></tr>
+      <tr><td>Nationality</td><td>Competition eligibility and federation reporting</td></tr>
+      <tr><td>Academy or club</td><td>To assign the player correctly, or record them as independent</td></tr>
+      <tr><td>Playing position (optional)</td><td>Squad and fixture planning</td></tr>
+      <tr><td>Parent or guardian name and phone</td><td>To obtain consent and to reach a responsible adult about the player</td></tr>
+      <tr><td>Email and phone</td><td>To confirm the registration and send tournament information</td></tr>
+      <tr><td>Tournament</td><td>To enter the player into the right competition</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Academy and club registration</h3>
+  <p>We collect the academy or club name, a contact person's name, email and phone, the number of players in the squad, the tournament, your city, and any notes you choose to add.</p>
+
+  <h3>Protecting the form from abuse</h3>
+  <p>To stop automated abuse we apply a rate limit per internet connection. We do this without storing your IP address: the address is converted into an irreversible cryptographic hash (SHA-256), and only that hash is kept. It cannot be turned back into your IP address, and these records are deleted automatically after 24 hours.</p>
+
+  <h2 id="tournament-app">5. The tournament app</h2>
+  <p>Our tournament app is used by organisers, teams, coaches, officials and players to run competitions. It is a more comprehensive system than the website, and handles more sensitive information. It holds:</p>
+  <ul>
+    <li><strong>People records</strong> — full name, date of birth, phone, email and a profile photograph, along with the person's role (player, coach, official, staff)</li>
+    <li><strong>Team and squad records</strong> — team membership, jersey numbers, and staff assignments to tournaments and venues</li>
+    <li><strong>Digital ID cards</strong> — an accreditation credential issued for a tournament, with an associated QR token, status and expiry</li>
+    <li><strong>Accreditation scans</strong> — when a digital ID is scanned at a match, we record which credential was scanned, at which match, by whom, when, and whether it was accepted. These records show attendance at specific matches and venues.</li>
+    <li><strong>Match records</strong> — fixtures, results and match events such as goals and cards</li>
+    <li><strong>Notifications</strong> — a record of match-related notifications sent to a person</li>
+    <li><strong>Push notification tokens</strong> — a device token and platform, used only to deliver notifications to your device</li>
+  </ul>
+  <p>We use this information solely to organise and deliver competitions: registering teams, issuing accreditation, verifying who may enter a venue or take part in a match, recording results, and sending fixture information.</p>
+  <p>Accreditation scan records deserve particular attention because they show where and when a person was present. We use them only to verify eligibility and attendance at the event itself. We do not use them to track people outside tournament venues and matchdays, and we do not use them for any purpose unrelated to running the competition.</p>
+
+  <h2 id="games">6. Our mobile games</h2>
+  <p><em>Dribble Dodge Dash</em> is a mobile football runner game. We want to be clear about what it does <em>not</em> do: it contains <strong>no advertising and no analytics or tracking SDKs</strong>. Many mobile games, especially free ones, are built around advertising identifiers. Ours is not.</p>
+  <p>The game does offer player accounts, leaderboards and in-app purchases. Where you use these features we process <span class="ph">[GAME ACCOUNT FIELDS — e.g. display name, email, scores]</span>. Leaderboard entries are <span class="ph">[PUBLIC / VISIBLE TO OTHER PLAYERS — CONFIRM]</span>.</p>
+  <p>In-app purchases are processed by Apple and Google through their app stores. We never receive or store your payment card details.</p>
+
+  <h2 id="children">7. Children's privacy</h2>
+
+  <div class="callout">
+    <p><strong>Much of what we do involves children.</strong> We run youth football and basketball competitions, so a significant amount of the personal data we hold relates to players under 18. We treat that data with corresponding care.</p>
+  </div>
+
+  <h3>Consent</h3>
+  <p>A player under 18 must be registered by their parent or legal guardian, or by an academy or club acting with the guardian's authority. When you register a young player you confirm that you are their parent or guardian, or that you are authorised to act for them, and you consent to us processing their details as described in this policy. We record that consent together with the registration.</p>
+
+  <h3>What we collect about children, and what we do not</h3>
+  <p>For a young player we collect the information listed in sections 4 and 5 — name, date of birth, nationality, club, position, contact details, and where the tournament app is used, a profile photograph and accreditation records.</p>
+  <p>We do not use children's data for marketing. We do not sell it. We do not use it to build advertising profiles, and our games contain no advertising SDKs.</p>
+
+  <h3>Photographs and accreditation</h3>
+  <p>Where the tournament app is used, a player's photograph appears on their digital ID so that officials can confirm the right person is taking part. This is a safeguarding measure. The photograph is used for accreditation and is not published.</p>
+
+  <h3>Media at events</h3>
+  <p>We also film and photograph matches and events as part of our media and sponsorship work. Where images of young players may be published or broadcast, we handle consent for that separately from tournament registration. <span class="ph">[DESCRIBE MEDIA CONSENT PROCESS — how it is obtained and how to opt out]</span></p>
+
+  <h3>Guardian rights</h3>
+  <p>A parent or guardian may at any time ask to see what we hold about their child, have it corrected, have it deleted, or withdraw consent. Contact us at <span class="ph">[PRIVACY CONTACT EMAIL]</span> and we will act on the request. Withdrawing consent may mean the player can no longer take part in a competition, because we need this information to run it safely.</p>
+
+  <h2 id="why">8. Why we process your data</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Purpose</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Registering players and teams into competitions</td><td>Consent, and performance of our agreement with you</td></tr>
+      <tr><td>Issuing accreditation and verifying eligibility at venues</td><td>Legitimate interest in running competitions safely and fairly</td></tr>
+      <tr><td>Contacting you about a registration, fixture or enquiry</td><td>Performance of our agreement, and consent</td></tr>
+      <tr><td>Federation and governing-body reporting where required</td><td>Legal and regulatory obligation</td></tr>
+      <tr><td>Protecting our systems from abuse</td><td>Legitimate interest in security</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>We do not sell personal data, and we do not share it with advertisers.</p>
+
+  <h2 id="sharing">9. Who we share data with</h2>
+  <p>We share personal data only with service providers who process it on our behalf, and with governing bodies where a competition requires it.</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Provider</th><th>What they handle</th></tr></thead>
+    <tbody>
+      <tr><td>Supabase</td><td>Database hosting for registrations and the tournament app</td></tr>
+      <tr><td>Formspree</td><td>Delivery of website contact form messages</td></tr>
+      <tr><td>Vercel</td><td>Website hosting and delivery</td></tr>
+      <tr><td>Google Workspace</td><td>Our email, where enquiries are received</td></tr>
+      <tr><td>Google Fonts, Fontshare</td><td>Typefaces used by the website</td></tr>
+      <tr><td>Apple, Google</td><td>App distribution and in-app purchases</td></tr>
+      <tr><td>Football and basketball federations</td><td>Competition registration and eligibility, where required</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 id="transfers">10. Where your data is stored</h2>
+  <p>Our databases are hosted in <strong>Mumbai, India</strong>. Some of our service providers, including Formspree and Vercel, are based in the <strong>United States</strong> and may process data there or in other countries.</p>
+  <p>This means personal data collected in the UAE may be transferred outside the UAE. Where we do this we rely on providers offering appropriate contractual and technical safeguards.</p>
+
+  <h2 id="retention">11. How long we keep it</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Data</th><th>Retention</th></tr></thead>
+    <tbody>
+      <tr><td>Rate-limiting records (hashed)</td><td>24 hours, deleted automatically</td></tr>
+      <tr><td>Contact form enquiries</td><td><span class="ph">[e.g. 24 months]</span></td></tr>
+      <tr><td>Tournament registrations</td><td><span class="ph">[e.g. duration of the competition plus 2 seasons]</span></td></tr>
+      <tr><td>Accreditation and scan records</td><td><span class="ph">[e.g. end of the tournament plus 12 months]</span></td></tr>
+      <tr><td>Push notification tokens</td><td>Until the app is uninstalled or the token expires</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>When data is no longer needed we delete it. We may keep anonymous, aggregated statistics — such as how many teams entered a tournament — which cannot identify anyone.</p>
+
+  <h2 id="security">12. How we protect it</h2>
+  <p>Some specifics, rather than vague reassurance:</p>
+  <ul>
+    <li>Registration data is <strong>not publicly readable</strong>. The public key used by our website has no ability to read, change or delete registrations — it cannot even list them. This is enforced both by database permissions and by row-level security, independently of one another.</li>
+    <li>Registrations are written only through a controlled server-side endpoint that validates every submission. The website never writes to the database directly.</li>
+    <li>IP addresses used for rate limiting are <strong>irreversibly hashed</strong>, never stored in the clear.</li>
+    <li>All traffic to our website and services is encrypted in transit using HTTPS.</li>
+    <li>Access to registration data is limited to staff who need it to run the competition.</li>
+  </ul>
+  <p>No system is perfectly secure, but we design deliberately so that a failure in one layer does not expose your data.</p>
+
+  <h2 id="rights">13. Your rights</h2>
+  <p>Under the UAE Personal Data Protection Law (Federal Decree-Law No. 45 of 2021), and other data protection laws that may apply to you, you have the right to:</p>
+  <ul>
+    <li>Ask what personal data we hold about you and receive a copy</li>
+    <li>Have inaccurate data corrected</li>
+    <li>Ask us to delete your data</li>
+    <li>Withdraw consent you previously gave</li>
+    <li>Object to or ask us to restrict certain processing</li>
+    <li>Ask for your data in a portable format</li>
+    <li>Complain to the relevant data protection authority</li>
+  </ul>
+  <p>To exercise any of these, email <span class="ph">[PRIVACY CONTACT EMAIL]</span>. We will respond within <span class="ph">[e.g. 30 days]</span>. A parent or guardian may exercise these rights for their child.</p>
+  <p>If you are in the European Economic Area or the United Kingdom, the GDPR or UK GDPR may also apply to our processing of your data, and you have equivalent rights under those laws.</p>
+
+  <h2 id="storage">14. Cookies and browser storage</h2>
+  <p>Our website sets <strong>no tracking or advertising cookies</strong>. It stores three small items in your own browser, purely so the site works the way you left it:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Item</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>delta-theme</code></td><td>Remembers whether you chose light or dark mode</td></tr>
+      <tr><td><code>delta-sound</code></td><td>Remembers whether you turned background music on</td></tr>
+      <tr><td><code>delta-gate-entered</code></td><td>Remembers that you have passed the intro screen, so it is not shown again during your visit</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>These stay on your device, are never sent to us, and contain nothing that identifies you. Because they are strictly necessary for the site to function as intended and are not used for tracking, we do not show a cookie consent banner. You can clear them at any time through your browser settings.</p>
+
+  <h2 id="changes">15. Changes to this policy</h2>
+  <p>If we change this policy we will update the date at the top of the page. Where a change materially affects how we handle your data — particularly children's data — we will take reasonable steps to tell you directly.</p>
+
+  <h2 id="contact">16. How to contact us</h2>
+  <p>For any privacy question, or to exercise any right described above:</p>
+  <ul>
+    <li><strong>Email:</strong> <span class="ph">[PRIVACY CONTACT EMAIL]</span></li>
+    <li><strong>Post:</strong> <span class="ph">[LEGAL ENTITY NAME]</span>, <span class="ph">[REGISTERED ADDRESS]</span></li>
+    <li><strong>General enquiries:</strong> <a href="index.html#contact">through our contact form</a></li>
+  </ul>
+  <p>If you are not satisfied with our response, you may complain to the UAE Data Office or to the data protection authority in your country.</p>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+  © 2026 Delta Allied Sports. All rights reserved.
+</footer>
+
+<script>
+(function(){
+  var toggle = document.getElementById('theme-toggle');
+  function flip(){
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('delta-theme', next); } catch(e){}
+    window.dispatchEvent(new CustomEvent('delta-theme-change', {detail:{theme:next}}));
+  }
+  toggle.addEventListener('click', flip);
+  toggle.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
+  });
+})();
+</script>
+</body>
+</html>

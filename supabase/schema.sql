@@ -46,6 +46,16 @@ create table if not exists public.player_registrations (
   phone               text not null,
   tournament_category text not null,
 
+  -- Consent. Players are minors, so a guardian must actively confirm. The
+  -- CHECK makes it structurally impossible to store a registration without
+  -- consent, whatever the client or Edge Function does. consent_version
+  -- records which wording was agreed, so changing the text later does not
+  -- rewrite what past registrants actually saw.
+  guardian_consent    boolean not null default false,
+  consented_at        timestamptz not null default now(),
+  consent_version     text not null default '2026-09-27',
+  constraint player_consent_required check (guardian_consent = true),
+
   constraint player_tournament_valid check (tournament_category in (
     'DOFA', 'ADOFA', 'UAE GIRLS FOOTBALL', 'AEC', 'AEC RIYADH', 'UAE BASKETBALL'
   )),
@@ -76,6 +86,13 @@ create table if not exists public.academy_registrations (
   age_category   text not null,
   city           text not null,
   notes          text,                        -- optional
+
+  -- The academy registers other people's children, so it must confirm it
+  -- holds the authority to do so. Same CHECK-enforced pattern as players.
+  authority_confirmed boolean not null default false,
+  consented_at        timestamptz not null default now(),
+  consent_version     text not null default '2026-09-27',
+  constraint academy_authority_required check (authority_confirmed = true),
 
   constraint academy_tournament_valid check (age_category in (
     'DOFA', 'ADOFA', 'UAE GIRLS FOOTBALL', 'AEC', 'AEC RIYADH', 'UAE BASKETBALL'

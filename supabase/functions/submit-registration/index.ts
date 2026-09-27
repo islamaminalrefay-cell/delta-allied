@@ -41,6 +41,10 @@ const ALLOWED_ORIGINS = [
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MINUTES = 60;
 
+// Bump when the consent wording on register.html changes, so each stored
+// registration records which version its registrant actually agreed to.
+const CONSENT_VERSION = "2026-09-27";
+
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 function cors(origin: string | null): Record<string, string> {
@@ -117,11 +121,18 @@ function validatePlayer(d: Record<string, unknown>): { row?: Record<string, unkn
   if (!tournament_category || !TOURNAMENTS.includes(tournament_category as typeof TOURNAMENTS[number])) {
     return { error: "Please choose a tournament from the list." };
   }
+  // Players are minors. Guardian consent is mandatory and checked here as well
+  // as by a CHECK constraint, so it cannot be bypassed by posting directly.
+  if (d.guardian_consent !== true) {
+    return { error: "A parent or guardian must confirm consent before the player can be registered." };
+  }
 
   return {
     row: {
       full_name, date_of_birth, nationality, academy_affiliation, position,
       guardian_name, guardian_phone, email, phone, tournament_category,
+      guardian_consent: true,
+      consent_version: CONSENT_VERSION,
     },
   };
 }
@@ -148,8 +159,19 @@ function validateAcademy(d: Record<string, unknown>): { row?: Record<string, unk
   }
   if (!city || !lenOk(city, 2, 80)) return { error: "Please enter a city." };
   if (notes && notes.length > 2000) return { error: "That note is too long — please keep it under 2000 characters." };
+  // The academy is registering other people's children, so it must confirm it
+  // holds the authority to do so.
+  if (d.authority_confirmed !== true) {
+    return { error: "Please confirm your academy is authorised to register these players." };
+  }
 
-  return { row: { academy_name, contact_name, email, phone, team_size, age_category, city, notes } };
+  return {
+    row: {
+      academy_name, contact_name, email, phone, team_size, age_category, city, notes,
+      authority_confirmed: true,
+      consent_version: CONSENT_VERSION,
+    },
+  };
 }
 
 // ---------------------------------------------------------------------------

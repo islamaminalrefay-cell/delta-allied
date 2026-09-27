@@ -208,6 +208,36 @@ nav{
 .reg-submit:disabled{ opacity:0.7; cursor:default; }
 .reg-note{ font-size:12px; color:var(--color-ash); line-height:1.6; margin-top:14px; text-align:center; }
 
+/* Consent — a deliberate, required action rather than a passive notice.
+   Players are minors, so a guardian has to actively confirm. */
+.reg-consent{
+  display:flex; gap:11px; align-items:flex-start;
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  border-radius:12px; padding:14px 16px; margin:4px 0 18px;
+  transition:border-color .25s ease;
+}
+.reg-consent:focus-within{ border-color:var(--color-electric); }
+.reg-consent input[type="checkbox"]{
+  appearance:none; -webkit-appearance:none;
+  width:18px; height:18px; flex-shrink:0; margin-top:1px;
+  border:1px solid var(--color-border); border-radius:5px;
+  background:var(--color-ink); cursor:pointer; position:relative;
+  transition:background .2s ease, border-color .2s ease;
+}
+.reg-consent input[type="checkbox"]:checked{
+  background:var(--color-electric); border-color:var(--color-electric);
+}
+.reg-consent input[type="checkbox"]:checked::after{
+  content:''; position:absolute; left:5px; top:1px;
+  width:5px; height:10px; border:solid #fff; border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+.reg-consent input[type="checkbox"]:focus-visible{ outline:2px solid var(--color-electric); outline-offset:2px; }
+.reg-consent label{
+  font-size:12.5px; line-height:1.6; color:var(--color-ash); cursor:pointer;
+}
+.reg-consent a{ color:var(--color-electric); text-decoration:underline; }
+
 /* ---------- SUCCESS (mirrors .contact-success) ---------- */
 .reg-success{ text-align:center; padding:16px 0 8px; }
 .reg-success-check{ width:84px; height:84px; margin:0 auto 22px; display:block; }
@@ -343,8 +373,13 @@ footer{
           </div>
         </div>
 
+        <div class="reg-consent">
+          <input type="checkbox" id="p-consent" name="guardian_consent" required>
+          <label for="p-consent">I am the parent or legal guardian of this player, or I am authorised to act for them. I consent to Delta Allied Sports processing their details as described in the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+        </div>
+
         <button type="submit" class="reg-submit"><span class="reg-submit-label">Submit registration</span></button>
-        <p class="reg-note">By registering you agree to be contacted about this tournament.</p>
+        <p class="reg-note">We'll only use these details to run the tournament and contact you about it.</p>
       </form>
     </div>
 
@@ -410,8 +445,13 @@ footer{
           <textarea id="a-notes" name="notes" rows="3" maxlength="2000"></textarea>
         </div>
 
+        <div class="reg-consent">
+          <input type="checkbox" id="a-consent" name="authority_confirmed" required>
+          <label for="a-consent">I confirm my academy or club is authorised to register these players, and that a parent or guardian has consented for every player under 18. I agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+        </div>
+
         <button type="submit" class="reg-submit"><span class="reg-submit-label">Submit registration</span></button>
-        <p class="reg-note">By registering you agree to be contacted about this tournament.</p>
+        <p class="reg-note">We'll only use these details to run the tournament and contact you about it.</p>
       </form>
     </div>
 
@@ -429,7 +469,10 @@ footer{
   </div>
 </div>
 
-<footer>© 2026 Delta Allied Sports. All rights reserved.</footer>
+<footer>
+  <a href="privacy.html" style="color:var(--color-ash);text-decoration:none;border-bottom:1px solid var(--color-border);">Privacy Policy</a>
+  <div style="margin-top:10px;">© 2026 Delta Allied Sports. All rights reserved.</div>
+</footer>
 
 <script>
 (function(){
@@ -721,7 +764,10 @@ footer{
       guardian_phone:      val(form, 'guardian_phone'),
       email:               val(form, 'email'),
       phone:               val(form, 'phone'),
-      tournament_category: val(form, 'tournament_category')
+      tournament_category: val(form, 'tournament_category'),
+      // Sent as a real boolean. The edge function and a database CHECK both
+      // reject anything but true, so this cannot be faked away client-side.
+      guardian_consent:    form.elements['guardian_consent'].checked === true
     };
   });
 
@@ -734,7 +780,8 @@ footer{
       team_size:    parseInt(val(form, 'team_size'), 10),
       age_category: val(form, 'age_category'),
       city:         val(form, 'city'),
-      notes:        val(form, 'notes')                     // nullable
+      notes:        val(form, 'notes'),                    // nullable
+      authority_confirmed: form.elements['authority_confirmed'].checked === true
     };
   });
 })();
