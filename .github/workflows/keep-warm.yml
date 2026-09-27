@@ -1,24 +1,26 @@
 # ============================================================================
-# Keep the Supabase registration project awake
+# Keep the Supabase projects awake
 # ============================================================================
 # Supabase pauses free-plan projects after ~7 days of low activity, and a
-# paused project does NOT wake on its own. That happened once already and took
-# tournament registration down silently for twelve days: visitors saw an error,
-# and nothing alerted us.
+# paused project does NOT wake on its own. This is not hypothetical: on
+# 27 Sep 2026 BOTH projects were found paused. delta-registrations had been
+# down for roughly twelve days, so every attempt to register for a tournament
+# failed silently — visitors saw an error, and nothing alerted anyone.
 #
-# This pings a tiny Edge Function that runs one trivial query (public.keep_warm,
-# which reads no tables and no personal data). Supabase's docs say "a few user
-# requests to the database each day" is enough, so this runs three times daily
-# rather than once — scheduled GitHub runs can be delayed or skipped under load,
-# and the cost of a missed run is another silent outage.
+# Each job pings a tiny Edge Function that runs one trivial query
+# (public.keep_warm — returns now(), reads no tables and no personal data).
+# Supabase's docs say "a few user requests to the database each day" is enough,
+# so this runs three times daily rather than once: scheduled GitHub runs can be
+# delayed or skipped under load, and a missed run risks another silent outage.
 #
-# Deliberately NOT pg_cron: that runs inside the database, and Supabase's
+# Deliberately NOT pg_cron: that runs inside the database, while Supabase's
 # pausing docs describe external API calls as the remedy. An internal job that
-# doesn't count would look installed and silently fail.
+# doesn't count as user activity would look installed and silently fail — the
+# exact failure mode this exists to prevent.
 #
 # NOTE: GitHub disables scheduled workflows on repositories with no activity
 # for 60 days. If this repo goes quiet that long, re-enable it from the Actions
-# tab — or the pause risk returns.
+# tab, or the pause risk returns.
 # ============================================================================
 
 name: Keep Supabase warm
@@ -31,19 +33,32 @@ on:
 jobs:
   ping:
     runs-on: ubuntu-latest
+    strategy:
+      # One project failing must not stop the other from being pinged.
+      fail-fast: false
+      matrix:
+        include:
+          - name: delta-registrations
+            ref: omijppvwphqbuozqxliq
+            key: sb_publishable_j960XCS2me-UI3swy3kU2A_m__YzUOt
+          - name: delta-tournament
+            ref: ejcokxagxtyjymdiepjr
+            key: sb_publishable_3wgfikfOLRNiGMUiQj5HvQ_ZlK4I8Vt
+
+    name: Ping ${{ matrix.name }}
     steps:
       - name: Ping keep-warm endpoint
         run: |
-          # This is the publishable key. It is public by design and already
-          # visible in register.html's source, so it is not a secret and needs
-          # no repo secret. The service_role key is never used here.
-          KEY='sb_publishable_j960XCS2me-UI3swy3kU2A_m__YzUOt'
-          URL='https://omijppvwphqbuozqxliq.supabase.co/functions/v1/keep-warm'
+          # These are publishable keys. They are public by design — the
+          # registrations one already appears in register.html's source — so
+          # they are not secrets and need no repo secret. The service_role key
+          # is never used here.
+          URL="https://${{ matrix.ref }}.supabase.co/functions/v1/keep-warm"
 
-          echo "Pinging $URL"
+          echo "Pinging ${{ matrix.name }}"
           RESPONSE=$(curl -sS -w '\n%{http_code}' -X POST "$URL" \
-            -H "apikey: $KEY" \
-            -H "Authorization: Bearer $KEY" \
+            -H "apikey: ${{ matrix.key }}" \
+            -H "Authorization: Bearer ${{ matrix.key }}" \
             --max-time 30)
 
           BODY=$(echo "$RESPONSE" | sed '$d')
@@ -55,8 +70,8 @@ jobs:
           # Fail loudly. A red run in the Actions tab is the whole point — a
           # keep-warm that fails quietly is worse than none at all.
           if [ "$CODE" != "200" ]; then
-            echo "::error::keep-warm failed with HTTP $CODE. The project may be paused — check the Supabase dashboard."
+            echo "::error::keep-warm failed for ${{ matrix.name }} with HTTP $CODE. The project may be paused — check the Supabase dashboard."
             exit 1
           fi
 
-          echo "Project is awake."
+          echo "${{ matrix.name }} is awake."

@@ -16,6 +16,13 @@
 // the exact failure mode this exists to prevent.
 //
 // It reads no tables and touches no personal data. See public.keep_warm().
+//
+// Deployed to BOTH Supabase projects, identically:
+//   - delta-registrations (omijppvwphqbuozqxliq) — this website's registrations
+//   - delta-tournament    (ejcokxagxtyjymdiepjr) — the tournament app's backend
+// Both were found paused on 27 Sep 2026. The workflow pings each as a separate
+// matrix job with fail-fast disabled, so one being down cannot stop the other
+// from being kept alive.
 // ============================================================================
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
