@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Football League - DOFA</title>
+<meta name="description" content="Privacy policy for the Football League - DOFA mobile application by Delta Allied Sports.">
+<link rel="icon" href="../images/img-a5a8aa3d.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('delta-theme');
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  } catch(e){}
+})();
+</script>
+<style>
+:root{
+  --color-void-black:#040506;
+  --color-ink:#07080a;
+  --color-obsidian:#111214;
+  --color-graphite:#1b1c1e;
+  --color-ash:#9c9c9d;
+  --color-mist:#e6e6e6;
+  --color-pure-white:#ffffff;
+  --color-border:#363739;
+  --color-electric:#ff2d55;
+  --font-inter:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,Monaco,Consolas,monospace;
+  --radius-pills:9999px;
+}
+[data-theme="light"]{
+  --color-void-black:#f7f6f4;
+  --color-ink:#ffffff;
+  --color-obsidian:#eeece9;
+  --color-graphite:#e5e3df;
+  --color-ash:#5b5d60;
+  --color-mist:#17181a;
+  --color-pure-white:#111213;
+  --color-border:#ddd9d4;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:var(--font-inter);
+  background:var(--color-void-black);
+  color:var(--color-mist);
+  transition:background .4s ease, color .4s ease;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+.doc a{color:var(--color-electric); text-decoration:none; border-bottom:1px solid rgba(255,45,85,0.35);}
+.doc a:hover{border-bottom-color:var(--color-electric);}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  z-index:100; width:calc(100% - 32px); max-width:920px;
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:8px 8px 8px 16px;
+  border-radius:var(--radius-pills);
+  border:1px solid var(--color-border);
+  background:rgba(4,5,6,0.6);
+  backdrop-filter:blur(48px); -webkit-backdrop-filter:blur(48px);
+}
+[data-theme="light"] nav{ background:rgba(247,246,244,0.7); }
+.logo{display:flex; align-items:center; gap:9px; font-size:13px; font-weight:500; text-decoration:none;}
+.logo-dot{width:9px; height:9px; border-radius:50%; background:var(--color-electric);}
+.theme-toggle-track{
+  display:flex; align-items:center; width:52px; height:28px; padding:3px;
+  border-radius:var(--radius-pills); background:var(--color-obsidian);
+  border:1px solid var(--color-border); cursor:pointer;
+}
+.theme-toggle-thumb{
+  width:20px; height:20px; border-radius:50%; background:var(--color-electric);
+  transition:transform .4s ease;
+}
+[data-theme="light"] .theme-toggle-thumb{ transform:translateX(24px); }
+.nav-btn{
+  padding:10px 18px; border-radius:var(--radius-pills);
+  background:var(--color-electric); color:#fff; font-size:13px; font-weight:600;
+  border:none; cursor:pointer; white-space:nowrap; text-decoration:none;
+}
+@media (max-width:430px){
+  nav{ gap:10px; padding:8px 8px 8px 12px; }
+  .logo-text{ display:none; }
+  .nav-btn{ padding:8px 12px; font-size:12px; }
+}
+
+/* ---------- DOC ---------- */
+.doc-head{ padding:140px 24px 0; max-width:760px; margin:0 auto; }
+.eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--color-electric); font-weight:500; margin-bottom:14px;
+}
+.doc-head h1{
+  font-size:clamp(30px,5vw,46px); line-height:1.1; font-weight:600;
+  color:var(--color-pure-white); margin-bottom:16px; letter-spacing:-0.01em;
+}
+.doc-meta{ font-family:var(--font-mono); font-size:12px; color:var(--color-ash); margin-bottom:8px; }
+
+.doc{ max-width:760px; margin:0 auto; padding:0 24px 100px; }
+
+.callout{
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  border-left:3px solid var(--color-electric);
+  border-radius:12px; padding:20px 22px; margin:32px 0;
+}
+.callout strong{ color:var(--color-pure-white); }
+.callout p + p{ margin-top:10px; }
+
+.doc h2{
+  font-size:22px; font-weight:600; color:var(--color-pure-white);
+  margin:52px 0 14px; letter-spacing:-0.01em; scroll-margin-top:100px;
+}
+.doc h3{
+  font-size:16px; font-weight:600; color:var(--color-pure-white);
+  margin:28px 0 10px;
+}
+.doc p{ font-size:15.5px; line-height:1.75; color:var(--color-mist); margin-bottom:16px; }
+.doc ul, .doc ol{ margin:0 0 18px 22px; }
+.doc li{ font-size:15.5px; line-height:1.75; color:var(--color-mist); margin-bottom:9px; }
+.doc .lede{ font-size:17px; line-height:1.7; color:var(--color-ash); margin-bottom:8px; }
+
+/* ---------- ROUTE CARDS ---------- */
+.route{
+  background:var(--color-obsidian); border:1px solid var(--color-border);
+  border-radius:16px; padding:24px 26px; margin:24px 0;
+}
+.route-tag{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--color-electric); margin-bottom:10px;
+}
+.route h3{ margin:0 0 12px; font-size:18px; }
+.route p:last-child, .route ol:last-child, .route ul:last-child{ margin-bottom:0; }
+.route-btn{
+  display:inline-block; margin-top:8px; padding:12px 22px;
+  border-radius:var(--radius-pills); background:var(--color-electric);
+  color:#fff !important; font-size:14px; font-weight:600;
+  text-decoration:none; border:none !important;
+}
+
+.tbl-wrap{ overflow-x:auto; margin:20px 0 26px; }
+table{ border-collapse:collapse; width:100%; min-width:520px; font-size:14px; }
+th, td{
+  text-align:left; padding:11px 14px; border-bottom:1px solid var(--color-border);
+  vertical-align:top; line-height:1.55;
+}
+th{ color:var(--color-pure-white); font-weight:600; font-size:12px;
+  text-transform:uppercase; letter-spacing:0.06em; }
+td{ color:var(--color-mist); }
+tbody tr:last-child td{ border-bottom:none; }
+
+.ph{
+  font-family:var(--font-mono); font-size:0.9em;
+  background:rgba(255,45,85,0.12); border:1px solid rgba(255,45,85,0.3);
+  color:var(--color-electric); padding:1px 6px; border-radius:4px;
+}
+
+footer{
+  padding:32px 24px; text-align:center; font-size:12px; color:var(--color-ash);
+  border-top:1px solid var(--color-border);
+}
+.footer-links{ margin-bottom:10px; display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+.footer-links a{ color:var(--color-ash); text-decoration:none; font-size:13px; }
+.footer-links a:hover{ color:var(--color-pure-white); }
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">
+    <span class="logo-dot"></span>
+    <span class="logo-text">Delta Allied Sports</span>
+  </a>
+  <div class="theme-toggle-track" id="theme-toggle" role="button" tabindex="0" aria-label="Toggle light/dark theme">
+    <div class="theme-toggle-thumb"></div>
+  </div>
+  <a href="../index.html#contact" class="nav-btn">Get in touch</a>
+</nav>
+
+<section class="doc-head">
+  <div class="eyebrow">Mobile Application</div>
+  <h1>Privacy Policy</h1>
+  <div class="doc-meta">Football League - DOFA &nbsp;·&nbsp; Effective 14 February 2026 &nbsp;·&nbsp; Updated 28 September 2026</div>
+</section>
+
+<div class="doc">
+  <p class="lede">This Privacy Policy applies to the mobile application &ldquo;Football League - DOFA&rdquo;, published by Delta Allied Sports.</p>
+
+  <div class="callout">
+    <p>This page covers the mobile app. Delta Allied Sports also runs tournaments, a registration service and a tournament app through its website &mdash; those are covered by our <a href="../privacy.html">full privacy policy</a>.</p>
+  </div>
+
+  <h2 id="collect">1. Information we collect</h2>
+  <p>We collect limited user data to operate the app, including:</p>
+  <ul>
+    <li>Basic account information (such as login via Apple or Google)</li>
+    <li>In-app activity (game progress, team data, and usage)</li>
+    <li>Purchase information (processed securely via Apple and Google; we do not store payment details)</li>
+  </ul>
+
+  <h2 id="use">2. How we use it</h2>
+  <p>Data is used only to:</p>
+  <ul>
+    <li>Provide and improve app functionality</li>
+    <li>Enable gameplay features</li>
+    <li>Process in-app purchases</li>
+  </ul>
+
+  <h2 id="children">3. Children</h2>
+  <p>We do not knowingly collect personal data from children. The app is designed for general audiences, and any features involving purchases or external links are protected by a parental gate.</p>
+
+  <h2 id="sharing">4. Sharing of information</h2>
+  <p>We do not sell, rent, or share personal data with third parties.</p>
+  <p>In-app purchases are processed by Apple and Google through their app stores. They handle the payment and hold their own records of it; we never receive or store your card details.</p>
+
+  <h2 id="security">5. Data storage and security</h2>
+  <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, loss, misuse, or alteration.</p>
+  <p>Your data may be stored on secure servers within or outside the UAE, in compliance with applicable regulations.</p>
+
+  <h2 id="retention">6. Data retention</h2>
+  <p>We retain your personal data only for as long as necessary to fulfill the purposes outlined in this policy, unless a longer retention period is required by law.</p>
+
+  <h2 id="rights">7. Your rights</h2>
+  <p>Depending on applicable UAE laws, you may have the right to:</p>
+  <ul>
+    <li>Access your personal data</li>
+    <li>Request correction of inaccurate data</li>
+    <li>Request deletion of your data</li>
+    <li>Withdraw consent where applicable</li>
+  </ul>
+  <p>To exercise your rights, please contact us using the details below.</p>
+
+  <h2 id="deletion">8. Deleting your account</h2>
+  <p>You can ask us to delete your game account and the data held with it at any time, by emailing <a href="mailto:Info@deltagroup-me.com?subject=Football%20League%20-%20DOFA%20account%20deletion%20request">Info@deltagroup-me.com</a>.</p>
+  <p>Our <a href="../delete-account-game.html">account deletion page</a> sets out exactly what is deleted, what is kept and why, how long it takes, and what happens to purchases.</p>
+
+  <h2 id="links">9. Third-party links</h2>
+  <p>Our platforms may contain links to third-party websites. We are not responsible for the privacy practices or content of such external sites.</p>
+
+  <h2 id="updates">10. Updates to this policy</h2>
+  <p>We may update this Privacy Policy from time to time. Any changes will be posted on our website with the updated effective date.</p>
+
+  <h2 id="contact">11. Contact us</h2>
+  <p>If you have any questions about this Privacy Policy or how your data is handled, please contact us:</p>
+  <ul>
+    <li>Delta Allied Sports &mdash; DELTA ALLIED SPORT TOURNAMENTS ORGANIZING SERVICES L.L.C, trade licence 1027734</li>
+    <li>Email: <a href="mailto:Info@deltagroup-me.com">Info@deltagroup-me.com</a></li>
+    <li>Phone: +971 50 922 6989</li>
+    <li>Location: United Arab Emirates</li>
+  </ul>
+  <p>By using our services, you agree to the terms of this Privacy Policy.</p>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../privacy.html">Full Privacy Policy</a>
+    <a href="../delete-account-game.html">Delete Game Account</a>
+  </div>
+  © 2026 Delta Allied Sports. All rights reserved.
+</footer>
+
+<script>
+(function(){
+  var toggle = document.getElementById('theme-toggle');
+  function flip(){
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('delta-theme', next); } catch(e){}
+    window.dispatchEvent(new CustomEvent('delta-theme-change', {detail:{theme:next}}));
+  }
+  toggle.addEventListener('click', flip);
+  toggle.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
+  });
+})();
+</script>
+</body>
+</html>

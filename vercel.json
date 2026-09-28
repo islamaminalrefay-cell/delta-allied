@@ -21,17 +21,5 @@
         }
       ]
     }
-  ],
-  "redirects": [
-    {
-      "source": "/privacy-policy",
-      "destination": "/privacy.html",
-      "permanent": true
-    },
-    {
-      "source": "/privacy-policy/",
-      "destination": "/privacy.html",
-      "permanent": true
-    }
   ]
 }
